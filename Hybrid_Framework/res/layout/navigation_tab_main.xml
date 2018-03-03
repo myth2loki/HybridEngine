@@ -13,7 +13,7 @@
             android:id="@+id/ll_tab"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
-        <com.xhrd.mobile.hybridframework.framework.Manager.tabmark.SyncHorizontalScrollView
+        <com.xhrd.mobile.hybrid.framework.Manager.tabmark.SyncHorizontalScrollView
             android:id="@+id/mHsv"
             android:layout_width="0dip"
             android:layout_weight="1"
@@ -45,7 +45,7 @@
                     android:background="#5AB0EB"
                     android:scaleType="matrix" />
             </RelativeLayout>
-        </com.xhrd.mobile.hybridframework.framework.Manager.tabmark.SyncHorizontalScrollView>
+        </com.xhrd.mobile.hybrid.framework.Manager.tabmark.SyncHorizontalScrollView>
 
             <ImageView
                 android:id="@+id/ivMany"
@@ -78,7 +78,7 @@
         </ImageView>
     </RelativeLayout>
 
-    <com.xhrd.mobile.hybridframework.framework.Manager.tabmark.TabViewPager
+    <com.xhrd.mobile.hybrid.framework.Manager.tabmark.TabViewPager
         android:id="@+id/mViewPager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

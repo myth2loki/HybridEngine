@@ -1,0 +1,24 @@
+package com.xhrd.mobile.hybrid.framework.Manager.progress;
+
+import android.app.Dialog;
+import android.content.Context;
+
+import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+
+/**
+ * Created by maxinliang on 15/6/28.
+ */
+public class RDDialog extends Dialog{
+
+    //public int height;
+    //public int width;
+
+    public RDDialog(Context context) {
+        super(context, RDResourceManager.getInstance().getStyleId("progressRDDialog"));
+    }
+
+    
+    public RDDialog(Context context, int theme) {
+        super(context, theme);
+    }
+}

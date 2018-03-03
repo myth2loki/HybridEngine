@@ -38,7 +38,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
-        android:name="com.xhrd.mobile.hybridframework.framework.RDCloudApplication"
+        android:name="com.xhrd.mobile.hybrid.framework.RDCloudApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="${HARDWAREACCELERATED}"
         android:icon="@drawable/ic_rd_icon"
@@ -56,7 +56,7 @@
 
         <!-- 启动页 -->
         <activity
-            android:name="com.xhrd.mobile.hybridframework.framework.WelcomeActivity"
+            android:name="com.xhrd.mobile.hybrid.framework.WelcomeActivity"
             android:screenOrientation="${SCREENROTATION}"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
@@ -73,12 +73,12 @@
 
         <!-- 引导页 -->
         <activity
-            android:name="com.xhrd.mobile.hybridframework.framework.GuideActivity"
+            android:name="com.xhrd.mobile.hybrid.framework.GuideActivity"
             android:screenOrientation="portrait"></activity>
 
         <!-- App -->
         <activity
-            android:name=".engine.HybridActivity"
+            android:name="com.xhrd.mobile.com.wangqianyu.hybrid.engine.HybridActivity"
             android:screenOrientation="${SCREENROTATION}"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
@@ -87,21 +87,21 @@
 
         <!--增量更新服务-->
         <service
-            android:name="com.xhrd.mobile.hybridframework.framework.Manager.module.DownloadServices"
+            android:name="com.xhrd.mobile.hybrid.framework.Manager.module.DownloadServices"
             android:exported="false" />
 
         <!-- 内部插件的Activity -->
         <activity
-            android:name="com.xhrd.mobile.hybridframework.framework.Manager.gallery.ImageActivity"
+            android:name="com.xhrd.mobile.com.wangqianyu.hybrid.framework.Manager.gallery.ImageActivity"
             android:screenOrientation="${SCREENROTATION}"/>
         <activity
-            android:name="com.xhrd.mobile.hybridframework.framework.Manager.gallery.VideoActivity"
+            android:name="com.xhrd.mobile.com.wangqianyu.hybrid.framework.Manager.gallery.VideoActivity"
             android:screenOrientation="${SCREENROTATION}"/>
         <activity
-            android:name="com.xhrd.mobile.hybridframework.framework.Manager.gallery.NoneActivity"
+            android:name="com.xhrd.mobile.com.wangqianyu.hybrid.framework.Manager.gallery.NoneActivity"
             android:screenOrientation="${SCREENROTATION}"/>
         <activity
-            android:name="com.xhrd.mobile.hybridframework.framework.Manager.gallery.NoneMultiActivity"
+            android:name="com.xhrd.mobile.com.wangqianyu.hybrid.framework.Manager.gallery.NoneMultiActivity"
             android:screenOrientation="${SCREENROTATION}"/>
 
 
@@ -111,7 +111,7 @@
 
 
         <!-- 银联支付 -->
-        <activity android:name="com.xhrd.mobile.hybridframework.plugin.UnionPayActivity"></activity>
+        <activity android:name="com.xhrd.mobile.hybrid.plugin.UnionPayActivity"></activity>
         <activity android:name="com.unionpay.uppay.PayActivity"></activity>
 
 
@@ -127,7 +127,7 @@
         </activity>
 
         <activity
-            android:name="com.xhrd.mobile.hybridframework.plugin.WXEntryActivity"
+            android:name="com.xhrd.mobile.hybrid.plugin.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -136,7 +136,7 @@
             android:name="com.renn.rennsdk.oauth.OAuthActivity"
             android:configChanges="orientation|navigation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name="com.xhrd.mobile.hybridframework.plugin.XiaomiLoginActivity"></activity>
+        <activity android:name="com.xhrd.mobile.hybrid.plugin.XiaomiLoginActivity"></activity>
 
 
         <!-- 友盟更新  -->
