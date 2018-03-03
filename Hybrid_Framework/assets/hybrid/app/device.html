@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+	<body>
+
+    <div class="ui-content" id="divContent">
+           <center><pre><%xhrd(demo_device_plugn)%></pre></center>
+            <h5 class="ui-content-padded"><%xhrd(demo_is_enter_call)%></h5>
+                <form class="ui-input-group">
+                    <div class="ui-input-row ui-radio">
+                        <label><%xhrd(demo_yes)%></label>
+                        <input name="isConfirm" type="radio" value="true" checked>
+                    </div>
+                    <div class="ui-input-row ui-radio">
+                        <label><%xhrd(demo_no)%></label>
+                        <input name="isConfirm" type="radio" value="false" >
+                    </div>
+                    <div class="ui-button-row">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="dial()"><%xhrd(demo_call)%>
+                        </button>
+                    </div>
+                </form>
+            <div class="ui-content-padded" style="margin: 5px;">
+                <h5><%xhrd(demo_looping_number)%></h5>
+                <div class="ui-input-row ui-search">
+                    <input id="txtLooping" type="text" value="2" class="ui-input-clear">
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="beep();"><%xhrd(demo_open_ring)%>
+                        </button>
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="pauseBeep();"><%xhrd(demo_pause_ring)%></button>
+                </div>
+                <h5><%xhrd(demo_vibrate_duration)%></h5>
+                <div class="ui-input-row ui-search">
+                    <input id="txtMS" type="text" value="1000" class="ui-input-clear" >
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="vibrate();"><%xhrd(demo_vibrate)%></button>
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="setWakelock('true');"><%xhrd(demo_open_high_light)%></button>
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="setWakelock('false');"><%xhrd(demo_close_high_light)%></button>
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="isWakelock();"><%xhrd(demo_is_high_light)%></button>
+                </div>
+                <h5><%xhrd(demo_volume)%></h5>
+                <div class="ui-input-row ui-search">
+                    <input id="txtVolume" type="text" value="0-1" class="ui-input-clear">
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="setVolume();"><%xhrd(demo_setting_volume)%></button>
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="getVolume();"><%xhrd(demo_get_volume)%></button>
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="getOSInfo();"><%xhrd(demo_os_info)%></button>
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="display();"><%xhrd(demo_w_h)%></button>
+                </div>
+                <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="networkInfo();"><%xhrd(demo_network_info)%></button>
+                </div>
+                <h5><%xhrd(demo_res_schame)%></h5>
+                <div id = "selectEl" class="select uba bc-border bc-text" >
+                    <div class="text">请选择</div>
+                    <div class="icon"></div>
+                    <select  id="selectSchema">
+                        <option value="res://hybrid/app/component">res://hybrid/app/component</option>
+                        <option value="res://cache">res://cache</option>
+                        <option value="res://data">res://data</option>
+                        <option value="res://hybrid/plugin">res://hybrid/plugin</option>
+                        <option value="res://i18n/string">res://i18n/string</option>
+                        <option value="res://">res://</option>
+                        <option value="cpts://">cpts://</option>
+                        <option value="cpt://">cpt://</option>
+                        <option value="data://">data://</option>
+                        <option value="cache://">cache://</option>
+                    </select>
+                </div>
+                
+            
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="getPath();"><%xhrd(demo_get_path)%></button>
+        </div>
+
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="getOs('language');"><%xhrd(demo_system_language)%></button>
+        </div>
+
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="getOs('version');"><%xhrd(demo_system_version)%></button>
+        </div>
+
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="getOs('name');"><%xhrd(demo_system_name)%></button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="getOs('vendor');"><%xhrd(demo_system_vendor)%></button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="getScreenInfo('wh');"><%xhrd(demo_resolution_w_h)%></button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="getScreenInfo('scale');"><%xhrd(demo_scale)%></button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="getScreenInfo('dpi');"><%xhrd(demo_dpi)%></button>
+        </div>
+        <h5><%xhrd(demo_brightness)%></h5>
+                <div class="ui-input-row ui-search">
+                    <input id="txtBrightness" type="text" value="0-1" class="ui-input-clear">
+                </div>
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="setScreenInfo('set');"><%xhrd(demo_set_brightness)%></button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="setScreenInfo('get');"><%xhrd(demo_get_brightness)%></button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="setScreenInfo('lock');"><%xhrd(demo_lock_orientation)%></button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="setScreenInfo('unlock');"><%xhrd(demo_unlock_orientation)%></button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" id="btnZh" class="ui-btn ui-btn-primary" onclick="switchLanguage('zh_CN');"><%xhrd(demo_zh_cn)%></button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" id="btnEn" class="ui-btn ui-btn-primary" onclick="switchLanguage('en_US');"><%xhrd(demo_en_us)%></button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="switchLanguage2('zh_CN');">中文单个</button>
+        </div>
+        <div class="ui-content-padded">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="switchLanguage2('en_US');">英文单个</button>
+        </div>
+
+                <div class="ui-content-padded">
+                    <button type="button" class="ui-btn ui-btn-primary" onclick="getLanguage();">获取语言</button>
+                </div>
+
+                <div class="ui-content-padded">
+                    <button type="button" class="ui-btn ui-btn-primary" onclick="getIMEI();">获取IMEI</button>
+                </div>
+
+
+                
+            </div>
+    </div>
+    <div id="divMsg"/>
+        <script src="co/co.js"></script>
+    </body>
+         <script type="text/javascript">
+            var device = null;
+            var i18n = null;
+            var htmlContent = null;
+            
+            function $(id) {
+                return document.getElementById(id);
+            }
+            
+            function onSuccess(p) {
+                alert(p);
+            }
+            
+            function onSuccessJson(p) {
+                alert("对象信息："+JSON.stringify(p));
+            }
+            
+            function onError(errMsg) {
+                alert(errMsg);
+            }
+            
+            function GetRadioValue() {
+                var obj;
+                obj=document.getElementsByName("isConfirm");
+                if(obj!=null) {
+                    var i;
+                    for(i=0;i<obj.length;i++) {
+                        if(obj[i].checked) {
+                            return obj[i].value;
+                        }
+                    }
+                }
+                return null;
+            }
+            
+            function dial() {
+                var isConfirm = GetRadioValue();
+                device.dial('10086',isConfirm);
+            }
+            
+            function beep() {
+                device.beep($("txtLooping").value);
+            }
+            
+            function pauseBeep() {
+                device.pauseBeep();
+            }
+            
+            function vibrate() {
+                var ms = $("txtMS").value;
+                device.vibrate(ms);
+            }
+            
+            function setWakelock(isOpen) {
+                var isO = false;
+                if(isOpen=="true")
+                {
+                    isO = true;
+                }
+                device.setWakelock(isO,onSuccess.toString());
+            }
+            
+            function isWakelock() {
+                var isWL = device.isWakelock();
+                $("divMsg").innerHTML = "是否常亮："+isWL;
+                //alert(typeof(isWL));
+            }
+            
+            function setVolume() {
+                device.setVolume($("txtVolume").value,onSuccess.toString());
+            }
+            
+            function getVolume() {
+                $("divMsg").innerHTML = device.getVolume(onSuccess.toString());
+            }
+            function getOSInfo() {
+                var arr = device.imsi;
+
+                $("divMsg").innerHTML = "imei:"+device.imei+"<br/>imsi:"+arr+"<br/>model:"
+                +device.model+"<br/>vendor:"+device.vendor+"<br/>uuid:"+device.uuid;
+                //alert(device.model);
+                //device.getOSInfo(onSuccessJson.toString());
+            }
+            
+            function display() {
+                var dis = rd.display;
+                $("divMsg").innerHTML = "逻辑分辨率："+dis.getResolutionWidth()+"*"+dis.getResolutionHeight();
+            }
+            
+            function networkInfo() {
+                var network = rd.networkinfo;
+                <!--var currType = network.getCurrentType();-->
+
+                var networkinfo = rd.networkinfo.getCurrentType();
+                alert(networkinfo);
+                var currType =  networkinfo;
+                var networkType = "网络连接状态未知";
+                if(currType == network.CONNECTION_UNKNOW) {
+                    networkType = "网络连接状态未知";
+                }else if(currType == network.CONNECTION_NONE) {
+                    networkType = "未连接网络";
+                }else if(currType == network.CONNECTION_ETHERNET) {
+                    networkType = "有线网络";
+                }else if(currType == network.CONNECTION_WIFI) {
+                    networkType = "无线WIFI网络";
+                }else if(currType == network.CONNECTION_CELL2G) {
+                    networkType = "2G网络";
+                }else if(currType == network.CONNECTION_CELL2G) {
+                    networkType = "2G网络";
+                }else if(currType == network.CONNECTION_CELL3G) {
+                    networkType = "3G网络";
+                }else if(currType == network.CONNECTION_CELL4G) {
+                    networkType = "4G网络";
+                }
+
+                //switch失效
+                <!--switch(currType) {-->
+                    <!--case network.CONNECTION_UNKNOW:-->
+                        <!--networkType = "网络连接状态未知";-->
+                        <!--break;-->
+                    <!--case network.CONNECTION_NONE:-->
+                        <!--networkType = "未连接网络";-->
+                        <!--break;-->
+                    <!--case network.CONNECTION_ETHERNET:-->
+                        <!--networkType = "有线网络";-->
+                        <!--break;-->
+                    <!--case network.CONNECTION_WIFI:-->
+                        <!--networkType = "无线WIFI网络";-->
+                        <!--break;-->
+                    <!--case network.CONNECTION_CELL2G:-->
+                        <!--networkType = "2G网络";-->
+                        <!--break;-->
+                    <!--case network.CONNECTION_CELL3G:-->
+                        <!--networkType = "3G网络";-->
+                        <!--break;-->
+                    <!--case network.CONNECTION_CELL4G:-->
+                        <!--networkType = "4G网络";-->
+                        <!--break;-->
+                <!--}-->
+                $("divMsg").innerHTML = networkType;
+            }
+            
+            function getPath() {
+                var rm = rd.resource;
+                var listBox = $("selectSchema");
+                var value = listBox.options[listBox.selectedIndex].getAttribute("value");
+                $("divMsg").innerHTML = "真实路径："+rm.getPath(value);
+            }
+            
+            function switchLanguage(language) {
+                if(i18n==null) {
+                    i18n = rd.i18n;
+                }
+                i18n.setLanguage(language);
+                var divContent = $("divContent");
+                divContent.innerHTML = i18n.replaceAll(htmlContent);
+            }
+            
+            function switchLanguage2(language) {
+                if(i18n==null) {
+                    i18n = rd.i18n;
+                }
+                i18n.setLanguage(language);
+
+                $("divMsg").innerHTML = i18n.getString("demo_zh_cn")+","+i18n.getString("demo_en_us");
+                
+                $("btnZh").innerHTML = i18n.getString("demo_zh_cn");
+                $("btnEn").innerHTML = i18n.getString("demo_en_us");
+            }
+
+            function getLanguage() {
+                var str = i18n.getLanguage();
+
+                $("divMsg").innerHTML = str;
+            }
+
+            function getOs(type) {
+                var os = rd.os;
+                switch(type) {
+                    case "language":
+                        $("divMsg").innerHTML = type +":"+ os.language;
+                        break;
+                    case "version":
+                        $("divMsg").innerHTML = type +":"+os.version;
+                        break;
+                    case "name":
+                        $("divMsg").innerHTML = type +":"+os.name;
+                        break;
+                    case "vendor":
+                        $("divMsg").innerHTML = type +":"+os.vendor;
+                        break;
+                }
+            }
+            
+            function getScreenInfo(type) {
+                var screen = rd.screen;
+                switch(type) {
+                    case "wh":
+                        $("divMsg").innerHTML = type +":"+ screen.resolutionWidth+"*"+screen.resolutionHeight;
+                        break;
+                    case "dpi":
+                        $("divMsg").innerHTML = type +":"+screen.dpiX+"*"+screen.dpiY;
+                        break;
+                    case "scale":
+                        $("divMsg").innerHTML = type +":"+screen.scale;
+                        break;
+                }
+            }
+            
+            function setScreenInfo(type) {
+                var screen = rd.screen;
+                switch(type) {
+                    case "set":
+                        screen.setBrightness($("txtBrightness").value);
+                        alert("设置成功");
+                        break;
+                    case "get":
+                        $("divMsg").innerHTML = "Brightness:"+screen.getBrightness(10);
+                        break;
+                    case "lock":
+                        screen.lockOrientation(10);
+                        break;
+                    case "unlock":
+                        screen.unlockOrientation(10);
+                        break;
+                }
+            }
+            function getIMEI() {
+                $("divMsg").innerHTML = device.getIMEI();
+            }
+
+            function onLoad() {
+                device = rd.device;
+                i18n = rd.i18n;
+                var divContent = $("divContent");
+                if(htmlContent==null) {
+                    htmlContent = divContent.innerHTML;
+                }
+                divContent.innerHTML = i18n.replaceAll(htmlContent);
+            }
+            
+            <!--setTimeout(onLoad,500);-->
+ </script>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="request_permission_error">权限申请失败，您可能无法使用部分功能</string>
+    <string name="request_permission_msg">您拒绝了权限申请，部分功能无法使用。可手动进入设置->应用,找到您的App开启权限</string>
+
+    <string name="request_audio_permission_msg">您拒绝了Audio插件权限申请，部分功能无法使用。可手动进入设置->应用,找到您的App开启权限</string>
+    <string name="request_camera_permission_msg">您拒绝了Camera插件权限申请，部分功能无法使用。可手动进入设置->应用,找到您的App开启权限</string>
+    <string name="request_contacts_permission_msg">您拒绝了Contacts插件权限申请，部分功能无法使用。可手动进入设置->应用,找到您的App开启权限</string>
+    <string name="request_device_dial_permission_msg">您拒绝了Device插件权限申请，部分功能无法使用。可手动进入设置->应用,找到您的App开启权限</string>
+    <string name="request_device_read_hpone_permission_msg">您拒绝了Device插件权限申请，部分功能无法使用。可手动进入设置->应用,找到您的App开启权限</string>
+    <string name="request_gallery_permission_msg">您拒绝了Gallery插件权限申请，部分功能无法使用。可手动进入设置->应用,找到您的App开启权限</string>
+    <string name="request_geolocation_permission_msg">您拒绝了GeoLocation插件权限申请，部分功能无法使用。可手动进入设置->应用,找到您的App开启权限</string>
+    <string name="request_message_permission_msg">您拒绝了Message插件权限申请，部分功能无法使用。可手动进入设置->应用,找到您的App开启权限</string>
+    <string name="request_zip_permission_msg">您拒绝了Zip插件权限申请，部分功能无法使用。可手动进入设置->应用,找到您的App开启权限</string>
+    <string name="request_special_permission_msg">您拒绝了特殊权限的请求</string>
+
+</resources>

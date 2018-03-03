@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <meta name="apple-itunes-app" content="app-id=698076980" />
+    <meta name="Keywords" content="多玩游戏">
+    <meta name="description" content="">
+    <title>Hello UI Button</title>
+
+    <!-- Style -->
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+            input, button, .mui-btn {
+                margin-top: 10px;
+                margin-left: 10px;
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body  >
+
+<input class="btn1" type="button" value="初始化" onclick="init();"><br/><br/>
+<input class="btn1" type="button" value="检测微信是否安装" onclick="exit();"><br/><br/>
+<input class="btn1" type="button" value="分享文字" onclick="sharetext();"><br/><br/>
+<input class="btn1" type="button" value="分享图片" onclick="shareimage();"><br/><br/>
+<input class="btn1" type="button" value="分享视频" onclick="sharevideo();"><br/><br/>
+<input class="btn1" type="button" value="分享网页" onclick="shareweb();"><br/><br/>
+<input class="btn1" type="button" value="分享音乐" onclick="sharemusic();"><br/><br/>
+
+ <span id="text1">
+
+
+ </span>
+<script type="text/javascript">
+
+
+
+
+   function init(){
+     var appid='wx2e92173226fb825b';
+     var wechat=rd.wechat;
+     var register=wechat.init(appid);
+     alert(register);
+    }
+
+    function exit(){
+     var b=rd.wechat.isWeixinInstalled();
+     alert(b);
+    }
+
+    function t(a){
+     alert(a);
+    }
+
+    function sharemusic(){
+    var option = {
+            content : 'hello world',
+            defaultContent: 'hi',
+            imageUrl : 'http://a.hiphotos.baidu.com/image/pic/item/a8ec8a13632762d0677d08c6a3ec08fa513dc60c.jpg',
+            title : 'nihao',
+            url :'music.musicUrl="http://staff2.ustc.edu.cn/~wdw/softdown/index.asp/0042515_05.ANDY.mp3',
+            mediaType : rd.wechat.MediaTypeMusic,
+            //scene:rd.wechat.MediaTypeText
+            scene:rd.wechat.WeixinTimeline
+        };
+      rd.wechat.shareContent(option, t);
+    }
+    function sharetext(){
+    var option = {
+            content : 'hello world',
+            defaultContent: 'hi减肥啦时间飞逝的离开肌肤绿色的肌肤绿色的就放手的就分手的减肥',
+            imageUrl : 'http://a.hiphotos.baidu.com/image/pic/item/a8ec8a13632762d0677d08c6a3ec08fa513dc60c.jpg',
+             title : 'nihao',
+             url : 'http://www.baidu.com',
+             mediaType:rd.wechat.MediaTypeText,
+             //mediaType:2,
+            //scene:rd.wechat.WeixinSession
+            scene:rd.wechat.WeixinTimeline
+        };
+      rd.wechat.shareContent(option, t);
+    }
+    function shareweb(){
+    var option = {
+            content : 'hello world',
+            defaultContent: 'hi',
+            imageUrl : 'http://a.hiphotos.baidu.com/image/pic/item/a8ec8a13632762d0677d08c6a3ec08fa513dc60c.jpg',
+            title : 'nihao',
+            url : 'http://www.qq.com',
+            mediaType:rd.wechat.MediaTypeWebPage,
+            //scene:rd.wechat.WeixinSession
+            scene:rd.wechat.WeixinTimeline
+        };
+      rd.wechat.shareContent(option, t);
+    }
+    function shareimage(){
+    var option = {
+            content : 'hello world',
+            defaultContent: 'hi',
+            imageUrl : 'http://a.hiphotos.baidu.com/image/pic/item/a8ec8a13632762d0677d08c6a3ec08fa513dc60c.jpg',
+            title : 'nihao',
+            url : 'http://www.baidu.com',
+            mediaType:rd.wechat.MediaTypeImage,
+            //scene:rd.wechat.WeixinSession
+            scene:rd.wechat.WeixinTimeline
+        };
+      rd.wechat.shareContent(option, t);
+    }
+    function sharevideo(){
+    var option = {
+            content : 'hello world',
+            defaultContent: 'hi',
+            imageUrl : 'http://a.hiphotos.baidu.com/image/pic/item/a8ec8a13632762d0677d08c6a3ec08fa513dc60c.jpg',
+            title : 'nihao',
+            url : 'http://www.baidu.com',
+            mediaType:rd.wechat.MediaTypeVideo,
+            //scene:rd.wechat.WeixinSession
+            scene:rd.wechat.WeixinTimeline
+        };
+      rd.wechat.shareContent(option, t);
+    }
+
+
+
+</script>
+</body>
+</html>

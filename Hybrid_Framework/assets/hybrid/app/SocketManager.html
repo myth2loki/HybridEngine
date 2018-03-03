@@ -1,0 +1,99 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>SocketManager</title>
+
+<script type="text/javascript">
+    function stateUpdateCallback(state,info){
+        var stateStr = "";
+        if(rd.socketManager.CREATESUCCEED === state){
+            stateStr = "创建成功";
+        }else if(rd.socketManager.CONNECTSUCCEED === state){
+            stateStr = "连接成功";
+        }else if(rd.socketManager.RECEIVEDMSG === state){
+            stateStr = "收到消息";
+        }else if(rd.socketManager.CREATEFAILED === state){
+            stateStr = "创建失败";
+        }else if(rd.socketManager.CONNECTFAILED === state){
+            stateStr = "连接失败";
+        }else if(rd.socketManager.DISSCONNECTWITHERROR === state){
+            stateStr = "异常断开";
+        }else if(rd.socketManager.DISCONNECTNORMAL === state){
+            stateStr = "正常断开";
+        }else {
+        	stateStr=state;
+        }
+        alert('state: '+stateStr+'\ndata: '+(info?info:''));
+    }
+    
+    function createTCPSocket(){
+        var parames={
+            type : 'tcp',
+            udpMode : 'r',
+            host : '192.168.168.101',
+            port : '60010',
+            localPort : '80',
+            timeOut : '30000',
+            bufferSize : '0',
+            charset : 'utf-8'
+        }
+        rd.require("socketManager").createSocket(parames, stateUpdateCallback);
+    }
+    function createUDPUniSocket(){
+        var parames={
+            type : 'udp',
+            udpMode : 'unicast',
+            host : '192.168.170.140',
+            port : '60010',
+            localPort : '60011',
+            timeOut : '30000',
+            bufferSize : '0',
+            charset : 'utf-8'
+        }
+        rd.require("socketManager").createSocket(parames, stateUpdateCallback);
+    }
+    function createUDPMultiSocket(){
+        var parames={
+            type : 'udp',
+            udpMode : 'multicast',
+            host : '224.0.0.1',
+            port : '60010',
+            localPort : '60011',
+            timeOut : '30',
+            bufferSize : '0',
+            charset : 'utf-8'
+        }
+        rd.require("socketManager").createSocket(parames, stateUpdateCallback);
+    }
+    function createUDPBroadcastSocket(){
+        var parames={
+            type : 'udp',
+            udpMode : 'broadcast',
+            host : '255.255.255.255',
+            port : '60010',
+            localPort : '60011',
+            timeOut : '30',
+            bufferSize : '1024',
+            charset : 'utf-8'
+        }
+        rd.require("socketManager").createSocket(parames, stateUpdateCallback);
+
+    }
+    function closeSocket(){
+   		 rd.require("socketManager").closeSocket();
+    }
+    function sendMSG(){
+        var cc = 'dddddddddddddddd';
+         rd.require("socketManager").write(cc,cc);
+    }
+	</script>
+</head>
+<body>
+	<input type="submit" value="创建tcp socket" onclick="createTCPSocket();"/>
+	<input type="submit" value="创建udp 单播 socket" onclick="createUDPUniSocket();"/>
+	<input type="submit" value="创建udp 组播 socket" onclick="createUDPMultiSocket();"/>
+	<input type="submit" value="创建udp 广播 socket" onclick="createUDPBroadcastSocket();"/>
+	<input type="submit" value="关闭socket" onclick="closeSocket();"/>
+	<input type="submit" value="发送消息" onclick="sendMSG();"/>
+</body>
+</html>

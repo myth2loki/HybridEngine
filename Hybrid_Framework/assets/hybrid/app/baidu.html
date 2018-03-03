@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+        </style>
+   <!--  Style -->
+   
+</head>
+<body>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">百度视频播放</h1>
+        </header>
+        <div class="ui-content component">
+            <video width="100%" height="100%" controls="controls">
+               <source src="/i/movie.ogg" type="video/ogg">
+               <source src="/i/movie.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="ui-button-row">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="return false;">Open</button>&nbsp;&nbsp;
+                        <button type="button" class="ui-btn ui-btn-danger" onclick="return false;">Close</button>
+            </div>
+        </div>
+<script src="co/co.js"></script>
+</body>
+<script>
+    domReady(function(require){
+              $('button.ui-btn').button(function(el,evt){
+                  var text = el.innerText;
+                  switch (text) {
+                        case 'Close':
+                            closeHybridWindow();
+                            break;
+                        case '检查账户':
+                            openHybridWindow();
+                            break;
+                    }
+              })
+          });
+
+    function closeHybridWindow(){
+        var rdWindow = RD.framework.get('Rdwindow');
+        var compName = 'component';
+        var windowName = 'windowName';
+        rdWindow.close(compName,  windowName);
+    }
+
+     function openHybridWindow(){
+
+            var componentName = 'component';
+            var windowName = 'windowName';
+            var pageName = 'page';
+            var type = 0;
+            var url = 'sina.html';
+            var x = 0;
+            var y = 0;
+            var width=window.screen.width;
+            var height=window.screen.height;
+            var rdWindow = RD.framework.get('Rdwindow');
+
+            rdWindow.open(componentName, windowName, pageName, type, url, x, y, width, height);
+
+        }
+</script>
+</html>

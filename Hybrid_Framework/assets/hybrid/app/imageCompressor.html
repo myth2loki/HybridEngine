@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+	<body>
+         <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">图片压缩</h1>
+        </header>
+        <div class="ui-content component">
+            <div class="ui-input-row">
+                <input type="text" id="src"  class="ui-input-clear" value="res://icon/ic_launcher.png" placeholder="请给出要压缩的图片">
+            </div>
+            <div class="ui-input-row">
+                <input type="text" id="dest" class="ui-input-clear" value="/sdcard/ziptest/icon.zip" placeholder="请给出压缩后图片的存放位置">
+            </div>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+              按大小压缩
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+              按像素压缩
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+              按大小压缩错误
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+              按像素压缩错误
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+              获取元数据
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+              获取压缩后元数据
+            </button>
+        </div>
+	 <script src="co/co.js"></script>
+</body>
+    <script type="text/javascript">
+             domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '按大小压缩':
+                            //compress($('#src').val(),$('#dest').val());
+                            compress();
+                            break;
+                        case '按像素压缩':
+                            //compress($('#src').val(),$('#dest').val());
+                            compressByPixel();
+                            break;
+                        case '按大小压缩错误':
+                            //compress($('#src').val(),$('#dest').val());
+                            compress();
+                            break;
+                        case '按像素压缩错误':
+                            //compress($('#src').val(),$('#dest').val());
+                            compressByPixel();
+                            break;
+                        case '获取元数据':
+                            getMetaData();
+                            break;
+                        case '获取压缩后元数据':
+                            getCompressedMetaData();
+                            break;
+                    }
+                })
+            });
+
+            var imageCompressor = null;
+            function compressCB(ret, e){
+                if (ret == imageCompressor.SUCCESS) {
+                    alert('success');
+                } else {
+                    alert('failed');
+                }
+            }
+
+            function metaDataCB(ret,e){
+                if (ret == imageCompressor.SUCCESS) {
+                    alert(JSON.stringify(e));
+                } else {
+                    alert('failed');
+                }
+            }
+
+            function compress(){
+                var imgSrc = '/sdcard/test.jpg';
+                var savedPath = '/sdcard/test_compressed.jpg';
+                var options = {type : imageCompressor.JPG,
+                                size : 100 * 1024
+                               };
+                imageCompressor.compress(imgSrc, savedPath, options, compressCB);
+            }
+
+            function compressByPixel(){
+                var imgSrc = '/sdcard/test.jpg';
+                var savedPath = '/sdcard/test_compressed.jpg';
+                var options = {type : imageCompressor.JPG,
+                                width : 1024,
+                                height : 768
+                               };
+                imageCompressor.compress(imgSrc, savedPath, options, compressCB);
+            }
+
+            function getMetaData() {
+                var imgSrc = '/sdcard/test.jpg';
+                imageCompressor.getMetaData(imgSrc, metaDataCB);
+            }
+
+            function compressByPixelErr(){
+                var imgSrc = '/sdcard/test123.jpg';
+                var savedPath = '/sdcard/test_compressed.jpg';
+                var options = {type : imageCompressor.JPG,
+                                width : 1024,
+                                height : 768
+                               };
+                imageCompressor.compress(imgSrc, savedPath, options, compressCB);
+            }
+
+            function getMetaDataErr() {
+                var imgSrc = '/sdcard/test123.jpg';
+                imageCompressor.getMetaData(imgSrc, metaDataCB);
+            }
+
+            function getCompressedMetaData() {
+                var imgSrc = '/sdcard/test_compressed.jpg';
+                imageCompressor.getMetaData(imgSrc, metaDataCB);
+            }
+            
+            rd.onLoad = function() {
+                imageCompressor = rd.imageCompressor;
+            }
+        </script>
+</html>

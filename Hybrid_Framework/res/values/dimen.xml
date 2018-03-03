@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 加载框属性 -->
+    <dimen name="progress_dialog_padding_top">30dp</dimen>
+    <dimen name="progress_dialog_padding_left">50dp</dimen>
+
+    <!-- 正在加载文本上边距 -->
+    <dimen name="picture_loading_text_top_margin">12dp</dimen>
+    <!-- 下拉刷新字体 -->
+    <dimen name="picture_pull_to_refresh_loading_text_size">14dp</dimen>
+    <dimen name="picture_pull_to_refresh_last_update_time_text_size">10dp</dimen>
+    <dimen name="picture_pull_to_refresh_last_update_time_top_margin">6dp</dimen>
+    <dimen name="picture_pull_to_refresh_footer_height">40dp</dimen>
+
+    <dimen name="url_title_bar_height">50dp</dimen>
+    <dimen name="url_bottom_bar_height">50dp</dimen>
+
+</resources>

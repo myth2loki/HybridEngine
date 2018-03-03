@@ -1,0 +1,46 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>ff</title>
+
+<script type="text/javascript">
+
+	function jscallback(info){
+		var state = rd.require("RenrenLoginManager");
+		if(state.login_success === info){
+		alert('登录成功');
+		}else if(state.login_fail === info){
+		alert('登录失败');
+		}else if(state.loginout_fail === info){
+		alert('注销失败');
+		}else if(state.loginout_success === info){
+		alert('注销成功');
+		}else if(state.share_success === info){
+		alert('分享成功');
+		}else if(state.share_fail === info){
+		alert('分享失败');
+		}else if(state.unLogin === info){
+		alert('没有登录');
+		}else{
+		}
+	}
+
+    function login(){
+     rd.require("RenrenLoginManager").login(jscallback);
+    }
+    function loginout(){
+        rd.require("RenrenLoginManager").loginout(jscallback);
+    }
+    function share(){
+    	var comment = 'fenxiangceshi';
+    	var url = 'http://www.sohu.com';
+        rd.require("RenrenLoginManager").share(comment,url,jscallback);
+    }
+	</script>
+</head>
+<body>
+	<input type="submit" value="登录" onclick="login();"/>
+	<input type="submit" value="注销" onclick="loginout();"/>
+	<input type="submit" value="分享" onclick="share();"/>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+    <style>
+        html,body {
+        background-color: #efeff4;
+        }
+        .component{
+        padding: 10px
+        }
+        .ui-btn-block{
+        padding: 10px
+        }
+        .ui-btn-green{
+        color: #fff;
+        background-color: #4cd964;
+        border: 1px solid #4cd964;
+        }
+        .ui-btn-blue{
+        color: #fff;
+        background-color: #007aff;
+        border: 1px solid #007aff;
+        }
+        .ui-btn-red{
+        color: #fff;
+        background-color: #dd524d;
+        border: 1px solid #dd524d;
+        }
+        .ui-btn-black{
+        color: #fff;
+        background-color: #44243d;
+        border: 1px solid #44243d;
+        }
+        .ui-bar-nav ~ .ui-content{
+        padding-top: 60px
+        }
+    </style>
+    <!--  Style -->
+</head>
+<body>
+<header class="ui-bar ui-bar-nav">
+    <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+    <h1 class="ui-title">listview</h1>
+</header>
+<div class="ui-content component">
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        打开ListView
+    </button>
+    <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+        隐藏ListView
+    </button>
+    <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+        关闭ListView
+    </button>
+    <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+        是否正在显示
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        打开VP
+    </button>
+</div>
+<script src="co/co.js"></script>
+</body>
+<script type="text/javascript">
+    domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '打开ListView':
+
+                            var IgnoreParams = {
+
+                                        x:0,
+
+                                        y:0,
+
+                                        width:rd.screen.resolutionWidth,
+
+                                        height:rd.screen.resolutionHeight
+
+                                    };
+
+                            rd.window.addIgnoreArea(IgnoreParams);
+
+                            openListView();
+                            break;
+                        case '隐藏ListView':
+                            hideListView();
+                            break;
+                        case '关闭ListView':
+                            removeListView();
+                            break;
+                        case 'ListView是否正在显示':
+                            isShowing();
+                            break;
+                        case '打开VP':
+                            openVp();
+                            break;
+                    }
+                })
+            });
+
+
+    var vp;
+    function openVp(){
+        if (!vp){
+            vp = rd.require("slidingPage");
+
+            console.log("vp--------> " + JSON.stringify(vp));
+
+            var rect = {
+                "x":"0",
+                "y":"0",
+                "width":"0",
+                "height":"400"
+            }
+
+            vp.setFrame(rect);
+
+            var data = {
+                "images":[
+                            "res://icon/ic_launcher.png",
+                            "res://icon/ic_launcher.png",
+                            "res://icon/ic_launcher.png"
+                          ],
+                "dotNormalColor":"#aaaaaa",// 未选中状态
+                "dotFocusedColor":"#11ddaa",// 选中状态
+                'align':'center'
+            }
+
+            vp.setData(function() {
+                alert('序号：'+arguments[0]);
+            },data);
+
+            vp.show();
+        }else{
+            vp.show()
+        }
+    }
+
+    var listview;
+    function openListView(){
+        if (!listview){
+
+            listview = rd.require("listView");
+
+            console.log("listview--------> " + listview.STYLE_SAMPLE_1);
+
+            listview.setStyle(listview.STYLE_SAMPLE_4,'#111111');
+
+            var rect = {
+                "x":"0",
+                "y":"0",
+                "width":"0",
+                "height":"0"
+            }
+            listview.setFrame(rect);
+
+            listview.addDeleteClickListener(function() {
+               alert('右侧自定义方法：'+arguments[0]);
+            });
+            listview.addItemClickListener(function() {
+                alert('序号：'+arguments[0]);
+            });
+
+            var jsonData = [
+			    {
+			        "image": "res://icon/ic_launcher.png",
+			        "data": [
+			            {
+			                "text": "人气周边限时发售",
+			                "color": "#ff0f00",
+			                "size": "16"
+			            },
+			            {
+			                "text": "深受网友喜爱的灵感版本出新款了，欢迎围观围观围观",
+			                "color": "#999999",
+			                "size": "14"
+			            },
+			            {
+			                "text": "8:12PM",
+			                "color": "#c4c4c4",
+			                "size": "16"
+			            }
+			        ]
+			    },
+			    {
+			        "image": "res://icon/ic_launcher.png",
+			        "data": [
+			            {
+			                "text": "人气周边限时发售",
+			                "color": "#ff0f00",
+			                "size": "16"
+			            },
+			            {
+			                "text": "深受网友喜爱的灵感版本出新款了，欢迎围观围观围观",
+			                "color": "#999999",
+			                "size": "14"
+			            },
+			            {
+			                "text": "8:12PM",
+			                "color": "#c4c4c4",
+			                "size": "16"
+			            }
+			        ]
+			    },
+			    {
+			        "image": "res://icon/ic_launcher.png",
+			        "data": [
+			            {
+			                "text": "人气周边限时发售",
+			                "color": "#ff0f00",
+			                "size": "16"
+			            },
+			            {
+			                "text": "深受网友喜爱的灵感版本出新款了，欢迎围观围观围观",
+			                "color": "#999999",
+			                "size": "14"
+			            },
+			            {
+			                "text": "8:12PM",
+			                "color": "#c4c4c4",
+			                "size": "16"
+			            }
+			        ]
+			    },
+			    {
+			        "image": "res://icon/ic_launcher.png",
+			        "data": [
+			            {
+			                "text": "人气周边限时发售",
+			                "color": "#ff0f00",
+			                "size": "16"
+			            },
+			            {
+			                "text": "深受网友喜爱的灵感版本出新款了，欢迎围观围观围观",
+			                "color": "#999999",
+			                "size": "14"
+			            },
+			            {
+			                "text": "8:12PM",
+			                "color": "#c4c4c4",
+			                "size": "16"
+			            }
+			        ]
+			    },
+			    {
+			        "image": "res://icon/ic_launcher.png",
+			        "data": [
+			            {
+			                "text": "人气周边限时发售",
+			                "color": "#ff0f00",
+			                "size": "16"
+			            },
+			            {
+			                "text": "深受网友喜爱的灵感版本出新款了，欢迎围观围观围观",
+			                "color": "#999999",
+			                "size": "14"
+			            },
+			            {
+			                "text": "8:12PM",
+			                "color": "#c4c4c4",
+			                "size": "16"
+			            }
+			        ]
+			    },
+			    {
+			        "image": "res://icon/ic_launcher.png",
+			        "data": [
+			            {
+			                "text": "人气周边限时发售",
+			                "color": "#ff0f00",
+			                "size": "16"
+			            },
+			            {
+			                "text": "深受网友喜爱的灵感版本出新款了，欢迎围观围观围观",
+			                "color": "#999999",
+			                "size": "14"
+			            },
+			            {
+			                "text": "8:12PM",
+			                "color": "#c4c4c4",
+			                "size": "16"
+			            }
+			        ]
+			    }
+			];
+
+            listview.setData(listview.ADD_DATA_FROM_ALL,jsonData);
+
+            listview.openPullFromHead(function() {
+                alert('下拉刷新：'+arguments[0]);
+            });
+            listview.show();
+            console.log("show ListView........");
+        } else {
+            listview.show();
+        }
+    }
+
+    function hideListView() {
+        if (listview) {
+            listview.hide();
+        }
+    }
+
+    function removeListView() {
+        if (listview) {
+            listview.remove();
+            listview = null;
+        }
+    }
+
+    function isShowing() {
+        if (listview) {
+            alert(listview.isShowing());
+        }
+    }
+</script>
+</html>

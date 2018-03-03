@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+    <style>
+        html,body {
+        background-color: #efeff4;
+        }
+        .component{
+        padding: 10px
+        }
+        .ui-btn-block{
+        padding: 10px
+        }
+        .ui-btn-green{
+        color: #fff;
+        background-color: #4cd964;
+        border: 1px solid #4cd964;
+        }
+        .ui-btn-blue{
+        color: #fff;
+        background-color: #007aff;
+        border: 1px solid #007aff;
+        }
+        .ui-btn-red{
+        color: #fff;
+        background-color: #dd524d;
+        border: 1px solid #dd524d;
+        }
+        .ui-btn-black{
+        color: #fff;
+        background-color: #44243d;
+        border: 1px solid #44243d;
+        }
+        .ui-bar-nav ~ .ui-content{
+        padding-top: 60px
+        }
+    </style>
+    <!--  Style -->
+</head>
+<body>
+<header class="ui-bar ui-bar-nav">
+    <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+    <h1 class="ui-title">tab导航</h1>
+</header>
+<div class="ui-content component">
+
+    <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+        tab导航
+    </button>
+    <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+        切换页面
+    </button>
+</div>
+<script src="co/co.js"></script>
+</body>
+<script type="text/javascript">
+		domReady(function(require) {
+                $('button.ui-btn').button(function(el,evt) {
+                    var text = el.innerText;
+                    switch (text) {
+                        case 'tab导航':
+                            getNavigationTab();
+                            break;
+                        case '切换页面':
+                            showContentAtIndex();
+                            break;
+                    }
+                })
+            });
+        var tab;
+	    function getNavigationTab() {
+	        tab = rd.require("tabMark");
+	        tab.addIgnoreArea("二维码",{x:0,y:0,width:500,height:700});
+	        tab.setFrame({x:0, y:200, width:500, height:0});
+	        setDataSource(tab);
+	        tab.addEditCallback(callback);
+	        <!--tab.addScrollCallback(scrollCallback);-->
+	        <!--setMenuOption(tab);-->
+            tab.show();
+	    }
+        function showContentAtIndex() {
+            tab.showContentAtIndex(2);
+        }
+        function scrollCallback(obj) {
+            alert(obj);
+        }
+        function setDataSource(tab){
+
+            var  dataSource = {
+                titleFont:14.0, //文字大小
+                titleHighlightFont:16.0,//文字高亮大小
+                titleColor:"#7FFF00",//文字颜色
+                titleHighlightColor:"#FF8C00",//文字高亮颜色
+                vernierColor:"#FF8C00",//游标颜色
+                naviBgColor:"#00FFFF",//导航栏背景色
+                btnHeight:90.0,//导航栏/按钮高度
+                manyBtn:true,//多按钮(自适应按钮宽度)  false:自动等距分割
+                editButtonImg:"cpt://img/a.png",//编辑按钮图片
+                interval: true, //分割线  张菲菲要求要有
+                naviHidden:false, //是否隐藏导航条
+                <!--defaultIndex:3,//默认开启的页面-->
+                dataSource:[
+                    {
+                        menu:'二维码',
+                        url:'barcode.html',
+                        windowName:'barcode',
+                        type:0
+                        <!--img:'res://icon/ic_launcher.png'-->
+                    }
+                    ,
+                    {
+                        menu:'日历',
+                        url:'calendar.html',
+                        windowName:'calendar',
+                        type:0
+                        <!--img:'res://splash/android/1.jpg'-->
+                    }
+                    ,
+                    {
+                        menu:'设备',
+                        url:'device.html',
+                        windowName:'device',
+                        type:0
+                    }
+                    ,
+                    {
+                        menu:'蓝本',
+                        url:'bluetooth.html',
+                        windowName:'bluetooth',
+                        type:0
+                    },
+                    {
+                        menu:'网络',
+                        url:'http.html',
+                        windowName:'http',
+                        type:0
+                    },
+                    {
+                        menu:'百度',
+                        url:'http://www.baidu.com',
+                        windowName:'baidu',
+                        type:2
+                    }
+                ]
+                };
+           tab.setDataSource(dataSource);
+        }
+
+        function callback() {
+            alert("你想干嘛");
+        }
+
+        function setMenuOption(tab){
+            var  menuOption = {
+                vernierColor: '#7FFF00',
+                bgColor: '#00FFFF',
+                textColor: '#FF8C00',
+                textFont : '16.0',
+                intervalLine : true,
+                menuHeight: 100
+            }
+            tab.setMenuOption(menuOption);
+        }
+
+	</script>
+</html>

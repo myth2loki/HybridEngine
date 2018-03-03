@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+                color: #fff;
+                background-color: #dd524d;
+                border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+                color: #fff;
+                background-color: #44243d;
+                border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">pop2</h1>
+        </header>
+        <div class="ui-content component">
+            <center><pre>This is pop2</pre></center>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                打开pop3
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                关闭pop3
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                关闭
+            </button>
+        </div>
+        <script src="co/co.js"></script>
+<script type="text/javascript">
+        domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '关闭pop3':
+                            closePop3();
+                            break;
+                        case '关闭':
+                            closeSelf();
+                            break;
+                        case '打开pop3':
+                            openPop3();
+                            break;
+                        case '放到pop2后面':
+                            belowPop2();
+                            break;
+                    }
+                })
+            });
+        function belowPop2() {
+            rd.window.sendPopoverToBack('pop2', {x:0,y:64,width:0,height:0});
+        }
+        function openPop3() {
+            openPop('pop3', 'pop3.html', 300, 300, 600, 600);
+        }
+
+        function openPop(popName, url, x1, y1, w1, h1){
+            var type = 0;
+            var window = rd.window;
+            window.openPopover(popName, type, url, {x:x1, y:y1, width:w1, height:h1});
+            //window.addHeaderRefreshing(currentFunc);
+        }
+
+        function closePop3() {
+            rd.window.closePopover("pop3", {x:0,y:64,width:0,height:0});
+        }
+
+        function setPopFrame(){
+            var x1 = 100;
+            var y1 = 200;
+            var w = 500;
+            var h = 800;
+            rd.window.setPopoverRect({x:x1, y:y1, width:w, height:h});
+        }
+
+        function closeSelf() {
+            rd.window.closeSelfPopover({x:0,y:64,width:0,height:0});
+        }
+</script>
+</body>
+</html>

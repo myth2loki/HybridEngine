@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+     <link rel="stylesheet" href="co/css/co.css">
+     <style type="text/css">
+        html,body {
+                background-color: #efeff4;
+            }
+        .ui-bar-nav ~ .ui-content{
+              padding-top: 60px
+            }
+     </style>
+</head>
+<script type="text/javascript">
+    var wx=null;
+	function docheckWx() {
+		wx = rd.WxShareManager;
+		wx.isWeixinInstalled(shareCallback);
+	}
+	function shareCallback(state) {
+		alert(state);
+	}
+	function doinit() {
+		var APPID = document.getElementById("APPID").value;
+		wx = rd.WxShareManager;
+		wx.init(APPID);
+	}
+	function doshareContent() {
+		var shareMode = document.getElementById("shareMode").value;
+		var url = document.getElementById("url").value;
+		var title = document.getElementById("title").value;
+		var desc = document.getElementById("desc").value;
+		var imgUrl = document.getElementById("imgUrl").value;
+		wx = rd.WxShareManager;
+		wx.shareContent(shareMode, url, title,desc,imgUrl);
+	}
+	
+</script>
+<body>
+		<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">微信分享</h1>
+  </header>
+  <div class="ui-content">
+        <div class="ui-content-padded" style="margin: 5px;">
+        <button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="docheckWx();">是否安装微信</button>
+			<div class="ui-input-row">
+                <p>在微信开发平台为应用申请的APPID</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="APPID" id="APPID"
+			value="wx7e4a0b4cbcba19a1" class="ui-input-clear" />
+            </div>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="doinit();">初始化</button>
+			<div class="ui-input-row">
+                <p>微信分享模式，选择0是分享给好友，选择1是分享到朋友圈，选择2是收藏,默认选择0</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="shareMode" id="shareMode"
+			value="0" class="ui-input-clear" />
+            </div>
+            <div class="ui-input-row">
+                <p>请输入您分享的标题</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="title" id="title"
+			value="标题" class="ui-input-clear" />
+            </div>
+            <div class="ui-input-row">
+                <p>请输入您分享的描述，如果需要换行，输入\n，即可换行</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="desc" id="desc"
+			value="这是一个微信分享的测试\n是否换行" class="ui-input-clear" />
+            </div>
+            <div class="ui-input-row">
+                <p>请输入您分享的链接地址</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="url" id="url"
+			value="http://www.baidu.com" class="ui-input-clear" />
+            </div>
+            <div class="ui-input-row">
+                <p>请输入您分享的图片链接地址</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="imgUrl" id="imgUrl"
+			value="http://h.hiphotos.baidu.com/image/w%3D310/sign=58272176271f95caa6f594b7f9177fc5/aa18972bd40735fa29e06ab19c510fb30f2408a1.png" class="ui-input-clear" />
+            </div>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="doshareContent();">分享</button>
+        </div> 
+     </div>   
+</body>
+</html>
+

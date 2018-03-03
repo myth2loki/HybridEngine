@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="" />
+    <title></title>
+    <script>
+		var calendarManager;
+        function Date8(){
+        	   calendarManager = rd.require("calendar");
+        	   calendarManager.setFrame({x:0, y:0, width:0, height:320});
+        	   calendarManager.addClickListener(function(city){alert(city)});
+	           calendarManager.show();
+    }
+        
+        function Date9(){     	            
+               calendarManager.remove();
+        }
+        
+        function Date10(){  
+        	   calendarManager.hide();
+        }  
+      
+      
+       function Date11(){
+        	   calendarManager = rd.require("calendar");
+        	   calendarManager.setFrame({x:0, y:20, width:0, height:800});
+        	   calendarManager.addClickListener(function(city){alert(city)});
+        	   calendarManager.show();
+        } 
+        function Date12(){
+        	var showing = calendarManager.isShowing();
+        	if(showing){
+        		alert("a");
+        	}
+        }
+		</script>
+</head>
+<body>
+<h2 id="foo" onclick="Date8()">显示日历(当前)</h2>
+<h2 id="foo" onclick="Date9()">移除日历</h2>
+<h2 id="foo" onclick="Date10()">隐藏日历</h2>
+<h2 id="foo" onclick="Date11()">设置显示窗口的位置</h2>
+<h2 id="foo" onclick="Date12()">当前窗口是否显示</h2>
+</body>
+</html>

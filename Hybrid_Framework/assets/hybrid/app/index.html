@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+    <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">插件</h1>
+    </header>
+<div  class="ui-content component" id='treeview'>
+    <ul class="ui-table-view">
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                           内部插件
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            外部插件
+                        </a>
+                    </li>
+                </ul>
+</div>
+
+<script src="co/co.js"></script>
+</body>
+<script>
+    domReady(function(require){
+        require('treeview')
+        $('#treeview').treeview({
+                    callback:function(el,evt){
+                        var url = evt.target.innerText;
+                        switch (url) {
+                            case '内部插件':
+                                openInternalPlugin();
+                                break;
+                            case '外部插件':
+                                openExternalPlugin();
+                                break;
+                    }
+                    }
+                });
+   })
+
+        function openCpt1() {
+            //var rdWindow = RD.framework.get('Rdwindow');
+            rd.window.openComponent("cpt1");
+        }
+
+        function openInternalPlugin(){
+            var name = 'internal_plugin';
+            var url = 'internal_plugin.html';
+            openWindow(name, url);
+        }
+
+        function openExternalPlugin(){
+            var name = 'external_plugin';
+            var url = 'external_plugin.html';
+            openWindow(name, url);
+        }
+
+        onLoad = function() {
+            console.log(rd.window.name + ' onload.................');
+        };
+
+       onSizeChanged = function() {
+             console.log(rd.window.name + " onSizeChanged...........");
+       }
+
+       function openWindow(name,url){
+            var componentName = 'main';
+            var windowName = name;
+            var type = 0;
+            openWindow1(windowName, type, url);
+        }
+        
+        function openWindow1(windowName, type, data){
+            rd.window.openWindow(windowName, type, data);
+        }
+        
+        onDestroy = function() {
+            console.log(rd.window.name + ' onDestroy...............');
+        }
+        function plugin_push(type,obj) {
+            alert("推送类型："+type+"，推送信息："+JSON.stringify(obj));
+            var name = 'device';
+            var url = 'device.html';
+            openWindow(name, url);
+        }
+        function plugin_push(type,obj) {
+            alert("推送类型："+type+"，推送信息："+JSON.stringify(obj));
+            var name = 'device';
+            var url = 'device.html';
+            openWindow(name, url);
+        }
+
+   </script>
+</html>

@@ -1,0 +1,27 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+	<script type="text/javascript">
+	
+		var option = {
+			url : '/storage/sdcard0/File/xhrd1.mp4',
+			fuScreen : true,
+			x : 0,
+			y : 0,
+			w : 100,
+			h : 100
+		};
+		function VideoError(){
+			
+		}
+		function openVideo(){
+			var video = rd.VideoPlayer;
+			video.openVideo(option, VideoError)
+		}
+	</script>
+</head>
+<body>
+	<input type="button" value="打开视频播放器" onclick="openVideo();"/>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+	<link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+            	padding: 10px
+            }
+            .ui-btn-block{
+            	padding: 10px
+            }
+            .ui-btn-green{
+            	color: #fff;
+			  	background-color: #4cd964;
+			  	border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+            	color: #fff;
+  				background-color: #007aff;
+  				border: 1px solid #007aff;
+            }
+            .ui-bar-nav ~ .ui-content{
+            	padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+	<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">添加联系人</h1>
+        </header>
+         <div class="ui-content component">
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+				添加联系人
+            </button>
+
+			 <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+				 查找联系人
+			 </button>
+
+			 <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+				 删除联系人
+			 </button>
+        </div>
+	<script src="co/co.js"></script>
+</body>
+
+	<script type="text/javascript">
+		domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '添加联系人':
+                            addContact();
+                        case '查找联系人':
+                            findContact();
+                            break;
+                        case '删除联系人':
+                        	removeContact();
+                        	break;
+                    }
+                })
+            });
+		function ContactsSuccessCallback(){
+			alert("success");
+		}
+	
+		function ContactsErrorCallback(e){
+			console.log(e);
+		}
+	
+		function FindSuccessCallback(contacts){
+			alert(contacts.length);
+		}
+	
+		var FindOptions = {
+			name : "maxinliang"
+		};
+	
+		function findBookSuccessCallback(addressbook){
+			addressbook.find(FindSuccessCallback, ContactsErrorCallback, FindOptions);
+		}
+
+		function AddressBookSuccessCallback(addressbook){
+			var contact = addressbook.create();
+			contact.displayName = '兰敬民1'
+			contact.name = {givenName:"敬民",familyName:"兰"};
+        	contact.phoneNumbers = [{type:"mobile",value:"1516919978"},{type:"main",value:"999999999"}];
+        	contact.emails = [{type:"home",value:"lanjingmin@datang.com"},{type:"work",value:"maxinliang@datang.com"}];
+        	contact.addresses = [{type:"home",streetAddress:"aaaa",locality:"bbbb",region:"ccccc",country:"dddd",postalCode:"eeeee"},{type:"work",streetAddress:"aaaa",locality:"bbbb",region:"ccccc",country:"dddd",postalCode:"eeeee"}];
+        	contact.organizations = [{name:"大唐",department:"研发中心",title:"瑞德"}];
+        	contact.nickName = "白兰地";
+        	contact.save(ContactsSuccessCallback,ContactsErrorCallback);
+		}
+
+		function removeBookSuccessCallback(addressbook){
+			addressbook.find(removeSuccessCallback, ContactsErrorCallback, FindOptions);
+		}
+
+		function removeSuccessCallback(s){
+			var contact = s[0];
+			contact.remove(ContactsSuccessCallback, ContactsErrorCallback);
+		}
+
+		function ContactsErrorCallback(e){
+			console.log(e);
+		}
+
+		// 添加联系人
+		function addContact(){
+			rd.contacts.getAddressBook(0, AddressBookSuccessCallback, ContactsErrorCallback);
+		}
+
+		function findContact(){
+			var obj = rd.contacts;
+			obj.getAddressBook(0, findBookSuccessCallback, ContactsErrorCallback);
+		}
+
+		function removeContact(){
+			var obj = rd.contacts;
+			obj.getAddressBook(0, removeBookSuccessCallback, ContactsErrorCallback);
+		}
+	</script>
+</html>

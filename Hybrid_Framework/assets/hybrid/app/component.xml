@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component>
+    <name>main</name>
+    <className>test</className>
+    <description>test</description>
+    <version>1.0</version>
+    <bgcolor>#ffffff</bgcolor>
+    <url>index.html</url>
+</component>

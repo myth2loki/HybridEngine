@@ -1,0 +1,101 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <meta name="apple-itunes-app" content="app-id=698076980" />
+    <meta name="Keywords" content="多玩游戏">
+    <meta name="description" content="">
+    <title>Hello UI Button</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/mui.css">
+    <style>
+        html,body {
+        background-color: #efeff4;
+        }
+        input, button, .mui-btn {
+        margin-top: 10px;
+        margin-left: 10px;
+        }
+    </style>
+    <!--  Style -->
+</head>
+<body>
+
+param：<input id="body" type="text" value="id"/><br/>
+value：<input id="body1" type="text" value="11"/><br/>
+folderName文件夹名字：<input id="body2" type="text" value="jpush"/><br/>
+properties文件名字：<input id="body3" type="text" value="jpush"/><br/>
+
+
+
+
+<center>
+
+    <input class="btn1" type="button" value="添加" onclick="putProperties();"><br/><br/>
+
+    <input class="btn1" type="button" value="获取" onclick="getProperties();"><br/><br/>
+
+    <input class="btn1" type="button" value="删除某个Key" onclick=" deleteProperties();"><br/><br/>
+
+    <input class="btn1" type="button" value="全部删除" onclick=" clean();"><br/><br/>
+</center>
+
+<span id="text1"> </span>
+
+
+    <script type="text/javascript">
+
+
+
+
+                 var pro;
+           function putProperties(){
+           var param  =document.getElementById("body").value;
+                  var value  =document.getElementById("body1").value;
+                  var folderName  =document.getElementById("body2").value;
+                  var propertiesName  =document.getElementById("body3").value;
+
+                 pro = rd.propertiesManager.openProperties(folderName,propertiesName);
+			 	 var sucess= pro.putProperty(param,value);
+			 	 currentFunc(sucess);
+
+
+            }
+             function getProperties(){
+                  var param  =document.getElementById("body").value;
+                  var value  =document.getElementById("body1").value;
+                  var folderName  =document.getElementById("body2").value;
+                  var propertiesName  =document.getElementById("body3").value;
+				  var id=pro.getProperty(param);
+				  currentFunc(id);
+
+
+            }
+             function deleteProperties(){
+                  var param  =document.getElementById("body").value;
+                  var value  =document.getElementById("body1").value;
+                  var folderName  =document.getElementById("body2").value;
+                  var propertiesName  =document.getElementById("body3").value;
+				  var sucess= pro.deleteProperty(param);
+				  currentFunc(sucess);
+
+
+            }
+             function clean(){
+
+
+				   pro.clean();
+
+            }
+           function currentFunc(a){
+				  document.getElementById("text1").innerHTML =a;
+			}
+
+
+
+    </script>
+
+</body>
+</html>

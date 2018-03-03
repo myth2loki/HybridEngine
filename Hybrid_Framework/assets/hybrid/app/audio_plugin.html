@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+        <link rel="stylesheet" href="css/mui.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+            input, button, .mui-btn {
+                margin-top: 10px;
+                margin-left: 10px;
+            }
+        </style>
+		<title>Untitled Document</title>
+		<script type="text/javascript">
+		    var am = null;
+            var player = null;
+			function play() {
+			    if (!player) {
+			        console.log("paly----------------------------");
+			        player = am.createPlayer('/sdcard/guoan.mp3');
+                    player.play(sucFunc, function(){console.log(arguments[0]);});
+                }
+			}
+
+			function stop() {
+			    if (player != null) {
+			        player.stop();
+			        player = null;
+			    }
+			}
+			
+			function pause(){
+				if(player !=null){
+					player.pause();
+				}
+			}
+			
+			function resume(){
+				if(player !=null){
+					player.resume();
+				}
+			}
+			
+			function getDuration(){
+				if(player !=null){
+					var number = player.getDuration();
+					alert(number);
+				}
+			}
+			
+			function getPosition(){
+				if(player !=null){
+					var time = player.getPosition();
+					alert(time);
+				}
+			}
+
+			var playerOnline = null;
+			function playOnline() {
+			    if (!playerOnline) {
+			        console.log("paly online----------------------------");
+			        playerOnline = am.createPlayer('http://mp3.itingwa.com/2014-04/10/20140410050150-MTYyMDAw.mp3');
+			        <!--playerOnline = am.createPlayer('http://ra03.sycdn.kuwo.cn/952e20d68acdc3a32180e6e753d1c5a8/5566e9df/resource/a2/48/37/99/2833414321.aac');-->
+                    playerOnline.play(sucFunc, function(){console.log(arguments[0]);});
+                }
+			}
+
+			function stopOnline() {
+			    if (playerOnline != null) {
+			        playerOnline.stop();
+			        playerOnline = null;
+			    }
+			}
+
+			function errFunc(e) {
+                console.log(e);
+            }
+
+            function sucFunc() {
+                //document.getElementById("x").innerHTML = "正在播放！";
+                console.log("正在播放：" + arguments[0]);
+            }
+
+            function change() {
+                if (player) {
+                    player.setRoute(player.getMode() == player.ROUTE_EARPIECE ? player.ROUTE_SPEAKER : player.ROUTE_EARPIECE);
+                }
+                if (playerOnline) {
+                    playerOnline.setRoute(playerOnLine.getMode() == playerOnLine.ROUTE_EARPIECE ? playerOnLine.ROUTE_SPEAKER : playerOnLine.ROUTE_EARPIECE);
+                }
+            }
+
+            var windowName = RD.window.name;
+            function onLoad() {
+                console.log(windowName + ' onload.................');
+                am = rd.am;
+            };
+
+            function onForeground() {
+                console.log(windowName + ' onforeground.............');
+            }
+
+            function onBackground() {
+                console.log(windowName + ' onBackground............');
+            }
+
+            function onDestroy() {
+                console.log(windowName + ' onDestroy...............');
+            }
+		</script>
+	</head>
+	<body>
+        <div>
+        <center>
+            <H3>播放本地音乐</H3>
+            <input class="btn0" type="submit" value="播放" onclick="play();"/><br/><br/>
+            <input class="btn1" type="submit" value="停止" onclick="stop();"><br/><br/>
+            <input class="btn1" type="submit" value="暂停" onclick="pause();"><br/><br/>
+            <input class="btn1" type="submit" value="继续" onclick="resume();"><br/><br/>
+            <input class="btn1" type="submit" value="获取音频流的总长度" onclick="getDuration();"><br/><br/>
+            <input class="btn1" type="submit" value="获取音频流当前播放的位置" onclick="getPosition();"><br/><br/>
+            <input class="btn1" type="submit" value="切换声音通道" onclick="change();"><br/><br/>
+        </center>
+        <br/>
+        <br/>
+        <br/>
+        <center>
+            <H3>播放在线音乐</H3>
+            <!--h6>http://files.canon8.com/files/music/07eeebd9-8d5d-47be-b746-19022e122373.mp3</h6-->
+            <h6>http://mp3.itingwa.com/2014-04/10/20140410050150-MTYyMDAw.mp3</h6>
+            <input class="btn2" type="submit" value="播放" onclick="playOnline();"/><br/><br/>
+            <input class="btn3" type="submit" value="停止" onclick="stopOnline();"><br/><br/>
+        </center>
+        </div>
+	</body>
+</html>

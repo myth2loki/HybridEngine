@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Accelerometer Example</title>
+        <script type="text/javascript">
+          function onCallback(index) {
+                alert(index);
+            }
+
+        var cover1,cover2;
+        function isCover1Showing() {
+            if (cover1 && cover1.isShowing()) {
+                alert("cover1正在显示。");
+            } else {
+                alert("cover1没显示。");
+            }
+        }
+
+        function openCoverFlow(){
+            var option = {imageWidth:200,imageHeight:200,bgColor:'#234323',isReflected:'true',images:['cpts://main/img/a.png', 'cpts://main/img/b.png', 'cpts://main/img/c.png', 'cpts://main/img/d.png', 'cpts://main/img/e.png', 'cpts://main/img/f.png']};
+            if(!cover1 || cover1==null){
+            	cover1 = rd.require('coverFlow');
+            }
+            <!--cover1 = rd.require('coverFlow');-->
+            cover1.setFrame({x:0,y:600,width:0,height:400});
+            cover1.show();
+            cover1.setViewStyle(option,onCallback);
+        }
+        function openReflectionCoverFlow(){
+            var option = {imageWidth:150,imageHeight:150,bgColor:'#000000',isReflected:'true',images:['cpts://main/img/a.png', 'cpts://main/img/b.png', 'cpts://main/img/c.png', 'cpts://main/img/d.png', 'cpts://main/img/e.png', 'cpts://main/img/f.png']};
+            if(!cover2 || cover2==null){
+            	cover2 = rd.require('coverFlow');
+            }
+            cover2.setFrame({x:0,y:200,width:320,height:200});
+            cover2.setViewStyle(option,onCallback);
+            cover2.show();
+        }
+        function hide1CoverFlow(){
+            cover1.hide();
+        }
+        function hide2CoverFlow(){
+            cover2.hide();
+        }
+        function showCoverFlow(){
+            cover1.show();
+        }
+        function closeCoverFlow(){
+            cover1.close();
+        }
+        </script>
+    </head>
+    <body>
+    	<br/>
+        <a onclick="openCoverFlow()" style="color:blue;">打开视图</a> aaaaaaaa<a onclick="hide1CoverFlow()" style="color:red;">隐藏1视图</a><br/><br/>
+        <a onclick="showCoverFlow()" style="color:blue;">显示视图1</a> aaaaaaaaa <a onclick="closeCoverFlow()" style="color:red;">关闭视图1</a><br/><br/>
+        <a onclick="hide2CoverFlow()" style="color:blue;">隐藏2视图</a> aaaaaaaaa <a onclick="openReflectionCoverFlow()" style="color:red;">打开倒影视图</a>
+        <a onclick="isCover1Showing()" style="color:blue;">视图1是否在显示</a>
+    </body>
+</html>

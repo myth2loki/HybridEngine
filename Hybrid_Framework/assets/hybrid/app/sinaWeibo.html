@@ -1,0 +1,117 @@
+<html>
+    <head>
+        <meta charset = "UTF-8"/>
+        <title>My Awesome Page</title>
+        <script type = "text/javascript">
+            
+            function shareCallback(state){
+                var stateStr = "";
+                if(rd.sinaWeibo.share_success == state){
+                    stateStr = "分享成功";
+                }else if(rd.sinaWeibo.share_cancel == state){
+                    stateStr = "取消分享";
+                }else if(rd.sinaWeibo.share_fail == state){
+                    stateStr = "分享失败";
+                } else {
+                    stateStr = "取消授权";
+                }
+                alert('state = '+ stateStr);
+            }
+        
+        function Share1(){
+       
+            var option = {
+                content : 'share text',
+                mediaTitle:'饭纲落各种武器',
+                mediaDescription:'视频内容为。。。。。。。。。。。。。。。。就是这样了，脑补中'
+            };
+            
+            rd.sinaWeibo.share(rd.sinaWeibo.share_text, option, shareCallback);
+            
+        }
+        function Share2(){
+        
+            var option = {
+                content : 'share text',
+                imageUrl : 'http://www.369cloud.com/img/phone.png',
+                mediaTitle:'饭纲落各种武器',
+                mediaDescription:'视频内容为。。。。。。。。。。。。。。。。就是这样了，脑补中'
+            };
+            
+            rd.sinaWeibo.share(rd.sinaWeibo.share_image, option, shareCallback);
+          
+        }
+        function Share3(){
+            var option = {
+                content : 'stay with me  kkkkkkkkkkkk',
+                mediaTitle:'web title',
+                mediaDescription:'web webpageDescription',
+                mediaThumbnail:'http://cc.cocimg.com/api/uploads/150701/c6fc11ad17203d01cb5a571d264f3ba6.jpg',
+                mediaUrl:'http://www.cocoachina.com/'
+            };
+            alert("aaa");
+            rd.sinaWeibo.share(rd.sinaWeibo.share_webpage, option, shareCallback);
+        }
+        
+        function Share4(){
+            var option = {
+                content :'听个音乐啦啦啦啦啦啦啦',
+                mediaTitle:'东西南北中',
+                mediaDescription:'视频内容为。。。。。。。。。。。。。。。。就是这样了脑补中',
+                mediaThumbnail:'http://cc.cocimg.com/api/uploads/150701/c6fc11ad17203d01cb5a571d264f3ba6.jpg',
+                mediaUrl:'http://sc1.111ttt.com/2015/5/08/25/101251011120.mp3'
+            };
+            rd.sinaWeibo.share(rd.sinaWeibo.share_audio,option, shareCallback);
+        }
+
+        function Share5(){
+            var option = {
+                content : '共享个视频给大家看看',
+                mediaTitle:'饭纲落各种武器',
+                mediaDescription:'视频内容为。。。。。。。。。。。。。。。。就是这样了，脑补中',
+                mediaThumbnail:'http://cc.cocimg.com/api/uploads/150701/c6fc11ad17203d01cb5a571d264f3ba6.jpg',
+                mediaUrl:'http://my.tv.sohu.com/us/63276340/54086719.shtml'
+            };
+            rd.sinaWeibo.share(rd.sinaWeibo.share_video, option, shareCallback);
+        }
+        
+        
+        function Share6(){
+            var option = {
+                content : '本地图片分享',
+                imageUrl : '/sdcard/222.jpg',
+            };            
+            rd.sinaWeibo.share(rd.sinaWeibo.share_image, option, shareCallback);
+           
+        }
+        
+        
+        function Share7(){
+            var option = {
+                content : '分享个视频给大家看看',
+                mediaTitle:'哈哈哈哈哈',
+                mediaDescription:'就是这样了，脑补中',
+                mediaUrl:'http://my.tv.sohu.com/us/63276340/54086719.shtml',
+            };
+            rd.sinaWeibo.share(rd.sinaWeibo.share_video, option, shareCallback);
+        }
+        
+        
+        
+       
+        </script>
+    </head>
+    <body>
+    <br /><br />
+        <h2 id="foo"  onclick ="Share1()">分享文字</h2>
+        <h2 id="foo"  onclick ="Share2()">分享图片</h2>
+        <h2 id="foo"  onclick ="Share3()">分享网页</h2>
+        <h2 id="foo"  onclick ="Share4()">分享音乐</h2>
+        <h2 id="foo"  onclick ="Share5()">分享视频</h2>
+        
+        <h2 id="foo"  onclick ="Share6()">分享图片（本地）</h2>
+        <h2 id="foo"  onclick ="Share7()">分享视频（ddd）</h2>
+           
+       
+    </body>
+</html>

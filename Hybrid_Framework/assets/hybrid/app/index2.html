@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Untitled Document</title>
+    <script type="text/javascript">
+            function errFunc(e) {
+                console.log(e);
+            }
+
+            function getXYZ(a){
+				document.getElementById("x").innerHTML="x轴："+a.xAxis;
+				document.getElementById("y").innerHTML="y轴"+a.yAxis;
+				document.getElementById("z").innerHTML="z轴"+a.zAxis;
+			}
+
+			function getAccelerometer(){
+
+			    //var Accelerometer = RD.framework.get("Accelerometer");
+                alert(RD);
+
+				//window.accelerometer.getCurrentAcceleration([getXYZ.toString(), errFunc.toString()]);
+			}
+
+			 var id = -1;
+			function watchAcceleration(){
+			    var json = {frequency:5};
+			    console.log(JSON.stringify(json));
+				id = window.accelerometer.watchAcceleration([getXYZ.toString(), errFunc.toString(), JSON.stringify(json)]);
+			}
+			
+			function clearWatch(){
+			    if (id > -1) {
+				    window.accelerometer.clearWatch(jo([id]));
+				    console.log("已关闭");
+				    id = -1;
+				} else {
+				    console.log("设备未监听");
+				}
+			}
+		</script>
+</head>
+<body>
+<input class="btn" type="button" value="获取手机传感器信息" onclick="getAccelerometer();"/><br/><br/>
+<input class="btn1" type="button" value="监听变化" onclick="watchAcceleration();"><br/><br/>
+<input class="btn2" type="button" value="关闭监听" onclick="clearWatch();"><br/><br/>
+
+<span id='x'>x轴变化</span><br/>
+<span id='y'>y轴变化</span><br/>
+<span id='z'>z轴变化</span><br/>
+
+</body>
+</html>

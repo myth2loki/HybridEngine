@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+                color: #fff;
+                background-color: #dd524d;
+                border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+                color: #fff;
+                background-color: #44243d;
+                border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">pop1</h1>
+        </header>
+        <div class="ui-content component">
+            <center><pre id="content">This is pop1</pre></center>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设定pop窗口大小
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                隐藏自己
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                关闭(closeSelf)
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                关闭(closePopover)
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                开新窗口
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                开pop2
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                把自己放最下面
+            </button>
+        </div>
+        <script src="co/co.js"></script>
+<script type="text/javascript">
+        domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '设定pop窗口大小':
+                            setPopFrame();
+                            break;
+                        case '隐藏自己':
+                            hideSelf();
+                            break;
+                        case '关闭(closeSelf)':
+                            close();
+                            break;
+                        case '关闭(closePopover)':
+                            closePopover();
+                            break;
+                        case '开新窗口':
+                            openNewWindow();
+                            break;
+                        case '开pop2':
+                            openPop2();
+                            break;
+                        case '把自己放最下面':
+                            sendSelfToBack();
+                            break;
+                    }
+                })
+            });
+
+        function onLoad() {
+          $('a.ui-pull-left').button(function(el,evt){
+                this.back();
+            })
+
+            var opts = {bounces : true,
+				bgColor : '#2BD52B',
+				vScrollBarEnabled : false,
+				hScrollBarEnabled : false,
+				scaleEnabled : true,
+				keyboard : true,
+				dragDismiss : true,
+				slideBack : true};
+            //{bgColor:"#FF8C00"}
+            rd.window.setAttr(opts);
+            <!--rd.window.addHeaderRefreshing(currentFunc);-->
+            var opts = {statusLabel:{hidden:false, color:"#FF3030",pullText:"xialashuaxin",
+                                        releaseText:"songkaishuaxin",refreshingText:"zhengzaishuaxin"},
+                             timeLabel:{hidden:false, color:"#EE7AE9"}, image:"res://test.png"};
+
+            var rdWindow = rd.window;
+            rdWindow.addHeaderRefreshing(function() {
+                var rdWindow = rd.window;
+                rdWindow.endHeaderRefresh('0');
+                },
+                opts);
+        }
+
+        function currentFunc(){
+        alert('sss');
+        }
+
+
+
+        function changeTitle(title) {
+            $('#content').text(title);
+        }
+
+        function setPopFrame(){
+            var x1 = 100;
+            var y1 = 0;
+            var w = 500;
+            var h = 800;
+            rd.window.setPopoverRect({x:x1, y:y1, width:w, height:h});
+        }
+
+        function close() {
+            rd.window.closeSelf();
+            //rd.window.closePopover('pop1');
+        }
+
+        function hideSelf() {
+            rd.window.setPopoverVisible(false, 'pop1');
+        }
+
+        function closePopover() {
+            rd.window.closePopover("pop1", 0);
+        }
+
+        function openPop2(){
+            var popName = 'pop2';
+            var url = 'pop2.html';
+            var x =0;
+            var y=300;
+            var width = 600;
+            var height = 800;
+
+            openPop(popName, url, x, y, width, height);
+        }
+
+         function openPop(popName, url, x1, y1, w1, h1){
+            var type = 0;
+            var window = rd.window;
+            window.openPopover(popName, type, url, {x:x1, y:y1, width:w1, height:h1});
+          //window.addHeaderRefreshing(currentFunc);
+        }
+
+        function openNewWindow() {
+            rd.window.openWindow('audio', 0, "audio.html");
+        }
+        function sendSelfToBack() {
+            rd.window.sendPopoverToBack("pop1");
+        }
+</script>
+</body>
+</html>

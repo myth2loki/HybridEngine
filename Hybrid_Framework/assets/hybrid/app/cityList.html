@@ -1,0 +1,65 @@
+<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1'/>
+
+    <script type="text/javascript">
+            var myCityList;
+            function listener(city){
+                alert(city);
+            }
+            function  showCityList(){
+                
+
+                var data = [{index:"三明",content:["梅列区","三元区","明溪县"]},{index:"济南",content:["历下区","市中区","槐荫区"]},{index:"威海",content:["环翠区","文登市","荣成市"]},{index:"巴中",content:["巴州区","通江县","南江县"]},{index:"北京",content:["海淀区","朝阳区","东城区"]}];
+                var style = {searchBar:{bgColor:'#ffffff',placeHolder:'搜索城市'},listBg:'#DDDDDD',index:{bgColor:'#70DDDDDD',color:'#5e5e5e'},section:{bgColor:'#E0E0E0',color:'#454545',size:20},content:{bgColor:'#ffffff',color:'#000000',size:17}};
+                myCityList = rd.require('cityList');
+                 var rect = {
+                x:0,
+                y:0,
+                width:0,
+                height:0
+                }
+                myCityList.setFrame(rect);
+                myCityList.setStyle(style);
+                myCityList.setData(data);
+                myCityList.addClickListener(listener);
+                myCityList.show();
+            }
+        
+            function  hide(){
+                myCityList.hide();
+            }
+            function  show(){
+                myCityList.show();
+            }
+            function  isShowing(){
+                alert(myCityList.isShowing());
+            }
+            function  remove_(){
+                myCityList.remove();
+                myCityList = null;
+            }
+
+
+    </script>
+</head>
+<body>
+<br>
+
+<div onclick="showCityList()">打开城市选择</div>
+<br>
+
+<div onclick="hide()">隐藏</div>
+<br>
+
+<div onclick="show()">显示</div>
+<br>
+
+<div onclick="isShowing()">是否显示</div>
+<br>
+
+<div onclick="remove_()">移除</div>
+<br>
+</body>
+</html>

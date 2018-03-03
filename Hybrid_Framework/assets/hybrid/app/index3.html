@@ -1,0 +1,62 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Untitled Document</title>
+
+</head>
+<body>
+<center>
+    <input class="btn1" type="button" value="打开toast" onclick="openAccelerometer();"><br/><br/>
+    <input class="btn1" type="button" value="打开alert" onclick="openAudio();"><br/><br/>
+    <input class="btn1" type="button" value="打开Pop" onclick=" openPopPage();"><br/><br/>
+</center>
+
+
+    <script type="text/javascript">
+
+
+             var content='世界那么大，我想去看看。';
+             var title='辞职信';
+             var ok='提交';
+             var cancle ='放弃';
+
+
+
+
+           function openAccelerometer(){
+				 var rdWindow = RD.framework.get('Rdwindow');
+				 rdWindow.confirm(content,title,ok,cancle,currentFunc,errFunc);
+
+
+            }
+
+            function openWindow(name,url){
+
+            var componentName = 'main';
+            var windowName = name;
+            var pageName = 'page';
+            var type = 0;
+            var rdWindow = RD.framework.get('Rdwindow');
+            rdWindow.openWindow(componentName, windowName, pageName, type, url);
+
+        }
+
+           function errFunc(e) {
+                  console.log(e);
+            }
+
+           function currentFunc(a){
+				 console.log(a);
+			}
+
+			function openPopPage(){
+		    var name = 'popWindow';
+		    var url = 'pop.html';
+		    openWindow(name,url);
+		}
+
+    </script>
+
+</body>
+</html>

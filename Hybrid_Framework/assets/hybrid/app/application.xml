@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application id="351">
+    <name>Hi Hybrid</name>
+    <description>This is first Hybrid app</description>
+    <author>
+        <name>DaTang</name>>
+        <email>lang@123.com</email>
+        <tel>1331011466</tel>
+        <address >北京市海淀区永佳北路6号</address>
+    </author>
+    <icon>icon.png</icon>
+    <license url="http://www.baidu.com" />
+    <version>01.01.001</version>
+    <obfuscation>true</obfuscation>
+    <orientation>true</orientation>
+    <entry>main</entry>
+    <bgcolor>#00FFFFFF</bgcolor>
+    <appkey>12121212</appkey>
+    <logServer>192.168.169.19</logServer>
+    <logPort>40050</logPort>
+</application>

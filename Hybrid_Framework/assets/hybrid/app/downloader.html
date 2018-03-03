@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+        <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+            .component{
+            	padding: 10px
+            }
+            .ui-btn-block{
+            	padding: 10px
+            }
+            .ui-btn-green{
+            	color: #fff;
+			  	background-color: #4cd964;
+			  	border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+            	color: #fff;
+  				background-color: #007aff;
+  				border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+            	color: #fff;
+  				background-color: #dd524d;
+  				border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+            	color: #fff;
+			  	background-color: #44243d;
+			  	border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+            	padding-top: 60px
+            }
+        </style>
+		
+	</head>
+<body>
+		<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">下载器</h1>
+  		</header>
+		 <div class="ui-content component">
+		 	<div class="ui-input-row">
+                <input type="text" class="ui-input-clear" placeholder="请输入下载地址">
+            </div>
+	        <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+	            新建下载
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+	            添加状态监听
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+	            开始下载
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+	            暂停下载
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+	            继续下载
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+	            取消下载
+	        </button>
+	         <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+	            查看所有下载
+	        </button>
+	         <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+	            移除下载任务
+	        </button>
+	         <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+	            清除下载任务
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+	            开始所有任务
+	        </button>
+		</div>
+        <script src="co/co.js"></script>
+</body>
+
+<script type="text/javascript">
+	domReady(function(require){
+		$('button.ui-btn').button(function(el,evt){
+			var text = el.innerText;
+			switch (text) {
+				case '新建下载':
+					createDownload();
+					break;
+				case '添加状态监听':
+					console.log("1执行添加所有事件监听方法");
+					addAllEventListener();
+					console.log("2执行添加所有事件监听方法");
+					break;
+				case '添加完成监听':
+					addCompletedListener();
+					break;
+				case '开始下载':
+					start();
+					break;
+				case '暂停下载':
+					pause();
+					break;
+				case '继续下载':
+					resume();
+					break;
+				case '取消下载':
+					abort();
+					break;
+				case '查看所有下载':
+					enumerate();
+					break;
+				case '移除下载任务':
+					removeDownload();
+					break;
+				case '清除下载任务':
+					clearDownload();
+					break;
+				case '开始所有任务':
+					startAll();
+					break;
+			}
+		})
+	});
+
+	function onStateChanged(download) {
+		alert(download);
+		 if (download.state == 0) {
+			alert("Download ready");
+		} else if (download.state == 1) {
+			alert("Download downloading");
+		} else if (download.state == 2) {
+			alert("Download paused");
+		} else if (download.state == 3) {
+			alert("Download aborted");
+		} else if (download.state == 4) {
+			alert("Download finished");
+		} else if (download.state == 5) {
+			alert("Download error");
+		}
+	}
+
+	function onCompleted(download) {
+		alert("Download success: " + download.filename);
+	}
+
+	var downloadOption = {
+		filePath : 'data://download.zip',
+		method : 'get',
+		priority : 0,
+		timeout : 120,
+		retry : 3
+	};
+
+	var downObj;
+	function createDownload() {
+		var url = 'http://cloud.test-pan.369cloud.com/cloud/1111/1119001_14621_01.00.001_151119110852.ipa';
+		downObj = rd.downloader.createDownload(url,downloadOption);
+	}
+	function start() {
+		downObj.start();
+	}
+	function pause() {
+		downObj.pause();
+	}
+	function resume() {
+		downObj.resume();
+	}
+	function abort() {
+		downObj.abort();
+	}
+
+	function addAllEventListener() {
+		console.log("3执行添加所有事件监听方法");
+		downObj.addEventListener(onStateChanged);
+		console.log("4执行添加所有事件监听方法");
+	}
+	function addCompletedListener() {
+		downObj.addCompletedListener(onCompleted);
+		console.log("执行添加完成事件监听");
+	}
+	function enumerate() {
+		alert(rd.downloader.enumerate(6)[0].url);
+	}
+	function removeDownload() {
+		alert(rd.downloader.remove(downObj.id));
+	}
+	function clearDownload() {
+		alert(rd.downloader.clear(4));
+	}
+	function startAll() {
+		alert(rd.downloader.startAll());
+	}
+</script>
+</html>

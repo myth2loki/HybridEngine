@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+        </style>
+   <!--  Style -->
+   
+</head>
+<body>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">appwidget</h1>
+        </header>
+        <div class="ui-content component">
+            <input type="text" id="tv" value="com.qihoo.appstore"/>
+            <div class="ui-button-row">
+                <button type="button" class="ui-btn ui-btn-primary" onclick="return false;">是否安装</button>&nbsp;&nbsp;
+                <button type="button" class="ui-btn ui-btn-primary" onclick="return false;">是否安装异步</button>&nbsp;&nbsp;
+                <button type="button" class="ui-btn ui-btn-danger" onclick="return false;">注册App事件</button>
+                <button type="button" class="ui-btn ui-btn-danger" onclick="return false;">安装</button>
+                <button type="button" class="ui-btn ui-btn-danger" onclick="return false;">打开</button>
+                <button type="button" class="ui-btn ui-btn-danger" onclick="return false;">批量检查是否安装</button>    <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+                注册事件
+            </button>
+                <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+                    撤除事件
+                </button>
+            </div>
+        </div>
+<script src="co/co.js"></script>
+</body>
+<script>
+    domReady(function(require){
+              $('button.ui-btn').button(function(el,evt){
+                  var text = el.innerText;
+                  switch (text) {
+                        case '注册App事件':
+                            setAppInstallListener();
+                            break;
+                        case '是否安装':
+                            existsApp();
+                            break;
+                        case '是否安装异步':
+                            isAppInstalled();
+                            break;
+                        case '安装':
+                            installApp();
+                            break;
+                        case '打开':
+                            openApp();
+                            break;
+                        case '批量检查是否安装':
+                            checkAppsInstalled();
+                            break;
+                        case '注册事件':
+                            addEvent();
+                            break;
+                        case '撤除事件':
+                            deleteEvent();
+                            break;
+                    }
+              })
+          });
+
+     function installApp(){
+        <!--setAppInstallListener();-->
+        rd.apkTools.installApp("/sdcard/登山赛车破解版_20150707.apk");
+     }
+
+     function openApp(){
+        <!--var params = {-->
+            <!--uri:document.getElementById("tv").value,-->
+            <!--mime:'application/vnd.android.package-archive'-->
+        <!--};-->
+        <!--rd.apkTools.openApp(params,callback);-->
+        rd.apkTools.openApp(document.getElementById("tv").value);
+     }
+
+
+
+     function setAppInstallListener() {
+        rd.apkTools.setAppInstallListener(callback);
+     }
+     function checkAppsInstalled(){
+        rd.apkTools.checkAppsInstalled(["com.qihoo.appstore","com.qihoo.appstore2","com.lewa.player","com.qihoo.appstore3"],callback);
+     }
+     function existsApp(){
+        var result = rd.apkTools.existsApp(document.getElementById("tv").value,callback);
+        alert(result+"test");
+     }
+     function isAppInstalled(){
+        rd.apkTools.isAppInstalled(document.getElementById("tv").value,callback);
+     }
+     function callback(obj) {
+        alert(JSON.stringify(obj));
+     }
+
+     	    function addEvent(){
+            rd.networkstate.addEventListener(rd.networkstate.NETWORK_STATE_CHANGED,eventcallback);
+        }
+
+        function eventcallback(sysEvent){
+            alert(sysEvent);
+        }
+
+        function deleteEvent(){
+            rd.networkstate.removeEventListener(rd.networkstate.NETWORK_STATE_CHANGED);
+        }
+</script>
+</html>

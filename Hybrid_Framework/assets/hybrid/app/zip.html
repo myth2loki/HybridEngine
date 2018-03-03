@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+	<body>
+         <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">zip压缩</h1>
+        </header>
+        <div class="ui-content component">
+            <div class="ui-input-row">
+                <input type="text" id="src"  class="ui-input-clear" value="res://icon/ic_launcher.png" placeholder="请给出要压缩的文件或文件夹">
+            </div>
+            <div class="ui-input-row">
+                <input type="text" id="dest" class="ui-input-clear" value="/sdcard/ziptest/icon.zip" placeholder="请给出压缩后文件的存放位置">
+            </div>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+              压缩Zip文件
+            </button>
+            <div class="ui-input-row">
+                <input type="text" id="src1" class="ui-input-clear" value="/sdcard/ziptest/icon.zip" placeholder="请给出要解压缩的zip文件">
+            </div>
+            <div class="ui-input-row">
+                <input type="text" id="dest1" class="ui-input-clear" value="/sdcard/ziptest/icon" placeholder="请给出解压缩后文件的存放位置">
+            </div>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+              解压Zip文件
+            </button>
+        </div> 
+	 <script src="co/co.js"></script>
+</body>
+    <script type="text/javascript">
+             domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '压缩Zip文件':
+                            compress($('#src').val(),$('#dest').val());
+                            break;
+                        case '解压Zip文件':
+                            decompress($('#src1').val(),$('#dest1').val());
+                            break;  
+                    }
+                })
+            });
+
+            var zip = null;
+            function successCB(e){
+                alert(e);
+            }
+            function errorCB(e){
+                alert(e);
+            }
+            function compress(src,dest){
+                //TODO 方法代码要使用RD.framework.get()的方法调用。
+                //TODO 参数也不能主动穿数组，也不要转成字符串
+                zip.compress(src,dest,successCB,errorCB);
+            }
+            
+            function decompress(zipfile,target){
+                zip.decompress(zipfile,target,successCB,errorCB);
+            }
+
+            function onLoad() {
+                zip = rd.zip;
+            }
+        </script>
+</html>

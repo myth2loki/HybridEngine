@@ -1,0 +1,167 @@
+﻿<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.xhrd.mobile.hybridframework"
+    android:versionCode="2">
+
+    <!-- 系统允许的权限，不需要请求 -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.change_network_state" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!--涉及到系统安全 需要请求权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+
+    <!-- 未分配的 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:name="com.xhrd.mobile.hybridframework.framework.RDCloudApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="${HARDWAREACCELERATED}"
+        android:icon="@drawable/ic_rd_icon"
+        android:label="${APP_NAME}"
+        android:largeHeap="true"
+        android:theme="${APP_STYLE}"
+        tools:replace="theme, label, icon, name, hardwareAccelerated">
+        <meta-data
+            android:name="ENGINE_VERSION"
+            android:value="${ENGINE_VERSION}" />
+        <!-- 统计地址，版本、增量更新-->
+        <meta-data
+            android:name="rd_statistics_url"
+            android:value="${rd_statistics_url}" />
+
+        <!-- 启动页 -->
+        <activity
+            android:name="com.xhrd.mobile.hybridframework.framework.WelcomeActivity"
+            android:screenOrientation="${SCREENROTATION}"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- 微信分享 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="sdksample" />
+            </intent-filter>
+        </activity>
+
+        <!-- 引导页 -->
+        <activity
+            android:name="com.xhrd.mobile.hybridframework.framework.GuideActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <!-- App -->
+        <activity
+            android:name=".engine.HybridActivity"
+            android:screenOrientation="${SCREENROTATION}"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!--增量更新服务-->
+        <service
+            android:name="com.xhrd.mobile.hybridframework.framework.Manager.module.DownloadServices"
+            android:exported="false" />
+
+        <!-- 内部插件的Activity -->
+        <activity
+            android:name="com.xhrd.mobile.hybridframework.framework.Manager.gallery.ImageActivity"
+            android:screenOrientation="${SCREENROTATION}"/>
+        <activity
+            android:name="com.xhrd.mobile.hybridframework.framework.Manager.gallery.VideoActivity"
+            android:screenOrientation="${SCREENROTATION}"/>
+        <activity
+            android:name="com.xhrd.mobile.hybridframework.framework.Manager.gallery.NoneActivity"
+            android:screenOrientation="${SCREENROTATION}"/>
+        <activity
+            android:name="com.xhrd.mobile.hybridframework.framework.Manager.gallery.NoneMultiActivity"
+            android:screenOrientation="${SCREENROTATION}"/>
+
+
+<!--##################################################################################################################-->
+<!--#################################################上面代码为引擎组件#################################################-->
+<!--##################################################################################################################-->
+
+
+        <!-- 银联支付 -->
+        <activity android:name="com.xhrd.mobile.hybridframework.plugin.UnionPayActivity"></activity>
+        <activity android:name="com.unionpay.uppay.PayActivity"></activity>
+
+
+        <activity
+            android:name="com.xiaomi.account.openauth.AuthorizeActivity"
+            android:configChanges="orientation"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="com.xiaomi.account.openauth.action.AUTH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.xhrd.mobile.hybridframework.plugin.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.renn.rennsdk.oauth.OAuthActivity"
+            android:configChanges="orientation|navigation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.xhrd.mobile.hybridframework.plugin.XiaomiLoginActivity"></activity>
+
+
+        <!-- 友盟更新  -->
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService"></service>
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="557e734167e58e0f3800038c" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
+
+        <!-- 设置环信应用的appkey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="mouooo#mou" />
+        <!-- 声明sdk所需的service SDK核心功能-->
+        <service android:name="com.easemob.chat.EMChatService" />
+
+
+    </application>
+
+</manifest>

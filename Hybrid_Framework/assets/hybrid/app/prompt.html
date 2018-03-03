@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+    <style>
+        html,body {
+        background-color: #efeff4;
+        }
+        .component{
+        padding: 10px
+        }
+        .ui-btn-block{
+        padding: 10px
+        }
+        .ui-btn-green{
+        color: #fff;
+        background-color: #4cd964;
+        border: 1px solid #4cd964;
+        }
+        .ui-btn-blue{
+        color: #fff;
+        background-color: #007aff;
+        border: 1px solid #007aff;
+        }
+        .ui-btn-red{
+        color: #fff;
+        background-color: #dd524d;
+        border: 1px solid #dd524d;
+        }
+        .ui-btn-black{
+        color: #fff;
+        background-color: #44243d;
+        border: 1px solid #44243d;
+        }
+        .ui-bar-nav ~ .ui-content{
+        padding-top: 60px
+        }
+    </style>
+    <!--  Style -->
+</head>
+<body>
+<header class="ui-bar ui-bar-nav">
+    <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+    <h1 class="ui-title">提醒弹框</h1>
+</header>
+<div class="ui-content component">
+    <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+        警告alert
+    </button>
+    <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+        确认confirm
+    </button>
+    <div class="select uba bc-border bc-text" >
+        <div class="text">请选择文本类型</div>
+        <div class="icon"></div>
+        <select  id="selectEditType">
+            <option value="text">text</option>
+            <option value="password">password</option>
+            <option value="number">number</option>
+            <option value="email">email</option>
+            <option value="url">url</option>
+        </select>
+    </div>
+    <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+        内容提示确认prompt
+    </button>
+</div>
+<script src="co/co.js"></script>
+</body>
+<script type="text/javascript">
+		domReady(function(require) {
+                $('button.ui-btn').button(function(el,evt) {
+                    var text = el.innerText;
+                    switch (text) {
+                        case '警告alert':
+                            rdAlert();
+                            break;
+                        case '确认confirm':
+                            rdConfirm();
+                            break;
+                        case '内容提示确认prompt':
+                            rdPrompt();
+                            break;
+                    }
+                })
+            });
+        function jsCallback(args,err)
+        {
+                    alert(JSON.stringify(args));
+                    alert(err);
+            if(args!=null) {
+                <!--if(args.text!=null) -->
+                <!--{-->
+                    alert(args.buttonIndex);
+
+                <!--}-->
+            }
+        }
+		function rdAlert() {
+             var  alertparames={
+                    title : '单按钮alert',
+                    msg : '警告',
+                    buttons : ['确定','取消']
+                };
+			rd.window.alert(alertparames,jsCallback);
+		}
+		function rdConfirm() {
+             var  parames={
+                    title : '双按钮',
+                    msg : '内容',
+                    buttons : ['确定']
+                };
+			rd.window.confirm(parames,jsCallback);
+		}
+		function rdPrompt() {
+
+		     var listBox = document.getElementById("selectEditType");
+             var editType = listBox.options[listBox.selectedIndex].getAttribute("value");
+             var  parames={
+                    title : '多按钮',
+                    msg : '警告',
+                    text:'文本内容',
+                    type:editType
+                };
+			rd.window.prompt(parames,jsCallback);
+		}
+	</script>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+        <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+            .component{
+            	padding: 10px
+            }
+            .ui-btn-block{
+            	padding: 10px
+            }
+            .ui-btn-green{
+            	color: #fff;
+			  	background-color: #4cd964;
+			  	border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+            	color: #fff;
+  				background-color: #007aff;
+  				border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+            	color: #fff;
+  				background-color: #dd524d;
+  				border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+            	color: #fff;
+			  	background-color: #44243d;
+			  	border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+            	padding-top: 60px
+            }
+        </style>
+		
+	</head>
+	<body>
+		<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">监听传感器</h1>
+  		</header>
+		 <div class="ui-content component">
+	        <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+	            获取手机传感器信息
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+	            监听变化
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+	            关闭监听
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+	            关闭窗口
+	        </button>
+	        <span id='x'>x轴变化</span><br/>
+			<span id='y'>y轴变化</span><br/>
+			<span id='z'>z轴变化</span><br/>
+		</div>
+        <script src="co/co.js"></script>
+	</body>
+	<script type="text/javascript">
+
+			domReady(function(require){
+	            $('button.ui-btn').button(function(el,evt){
+	                var text = el.innerText;
+	                switch (text) {
+                        case '获取手机传感器信息':
+                            getAccelerometer();
+                            break;
+                        case '监听变化':
+                            watchAcceleration();
+                            break;
+                        case '关闭监听':
+                            clearWatch();
+                            break;
+                        case '关闭窗口':
+                            closeWindow();
+                            break;        
+                    }
+	            })
+	        });
+
+            function errFunc(e) {
+                console.log(e);
+            }
+
+            function getXYZ(a){
+				document.getElementById("x").innerHTML="x轴："+a.xAxis;
+				document.getElementById("y").innerHTML="y轴："+a.yAxis;
+				document.getElementById("z").innerHTML="z轴："+a.zAxis;
+			}
+
+			function getAccelerometer(){
+				var accelerometer = rd.accelerometer;
+                accelerometer.getCurrentAcceleration(getXYZ, errFunc);
+			}
+
+			var accelerometer = null;
+			function watchAcceleration(){
+			    var json = {frequency:5000};
+			    console.log(JSON.stringify(json));
+				accelerometer = rd.accelerometer;
+                accelerometer.watchAcceleration(getXYZ, errFunc, json);
+			}
+			
+			function clearWatch(){
+				accelerometer.clearWatch();
+				console.log("已关闭");
+			}
+
+			function closeWindow(){
+			    var rdWindow = rd.window;
+			    rdWindow.close('Accelerometer');
+			}
+
+			//var windowName = RD.window.name;
+            windowName = "Accelerometer";
+            onLoad = function() {
+                console.log(windowName + ' onload.................');
+            };
+
+            onForeground = function() {
+                console.log(windowName + ' onforeground.............');
+            }
+
+            onBackground = function() {
+                console.log(windowName + ' onBackground............');
+            }
+
+            onDestroy = function() {
+                console.log(windowName + ' onDestroy...............');
+            }
+		</script>
+</html>

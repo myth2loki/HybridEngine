@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+        <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+            .component{
+            	padding: 10px
+            }
+            .ui-btn-block{
+            	padding: 10px
+            }
+            .ui-btn-green{
+            	color: #fff;
+			  	background-color: #4cd964;
+			  	border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+            	color: #fff;
+  				background-color: #007aff;
+  				border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+            	color: #fff;
+  				background-color: #dd524d;
+  				border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+            	color: #fff;
+			  	background-color: #44243d;
+			  	border: 1px solid #44243d;
+            }
+
+        </style>
+		
+	</head>
+	<body>
+		<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">音乐播放</h1>
+  		</header>
+		<div class="ui-content component">
+			<center><pre>播放本地音乐</pre></center>
+	        <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+	            播放
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+	            停止
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+	            暂停
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+	            继续
+	        </button>
+			<button type="button" class="ui-btn ui-btn-green ui-btn-block">
+				是否正在播放
+			</button>
+	        <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+	            获取音频流的总长度
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+	            获取音频流当前播放的位置
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+	            切换声音通道
+	        </button>
+	        <center><pre>播放在线音乐</pre></center>
+	        <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+	            播放+
+	        </button>
+	         <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+	            停止+
+	        </button>
+		</div>
+        <script src="co/co.js"></script>
+	</body>
+	<script type="text/javascript">
+
+			domReady(function(require){
+              $('button.ui-btn').button(function(el,evt){
+                  var text = el.innerText;
+                  switch (text) {
+                        case '播放':
+                            play();
+                            break;
+                        case '停止':
+                            stop();
+                            break;
+                        case '暂停':
+                            pause();
+                            break;   
+                        case '继续':
+                            resume();
+                            break;
+                        case '是否正在播放':
+                            isPlaying();
+                            break;
+                        case '获取音频流的总长度':
+                            getDuration();
+                            break; 
+                        case '获取音频流当前播放的位置':
+                            getPosition();
+                            break; 
+                        case '切换声音通道':
+                            change();
+                            break;  
+                        case '播放+':
+                            playOnline();
+                            break;    
+                        case '停止+':
+                            stopOnline();
+                            break;                             
+                    }
+              })
+          });
+
+
+		    var am = null;
+            var player = null;
+			function play() {
+			    if (!player) {
+			        console.log("paly----------------------------");
+			        //var am = RD.framework.get("AudioManager");
+			        //var am = rd.AudioManager;
+			        //var am = rd.require('AudioManager');
+			        player = am.createPlayer('/sdcard/Download/lpxkl.mp3');
+			        //alert(player.toString());
+                    player.play(sucFunc, function(){console.log(arguments[0]);});
+                }
+			}
+
+			function stop() {
+			    if (player != null) {
+			        player.stop();
+			        player = null;
+			    }
+			}
+			
+			function pause(){
+				if(player !=null){
+					player.pause();
+				}
+			}
+			
+			function resume(){
+				if(player !=null){
+					player.resume();
+				}
+			}
+
+			function isPlaying(){
+				if(player != null){
+					alert(player.isPlaying());
+				}
+			}
+			
+			function getDuration(){
+				if(player !=null){
+					var number = player.getDuration();
+					alert(number);
+				}
+			}
+			
+			function getPosition(){
+				if(player !=null){
+					var time = player.getPosition();
+					alert(time);
+				}
+			}
+
+			var playerOnline = null;
+			function playOnline() {
+			    if (!playerOnline) {
+			        console.log("paly online----------------------------");
+			        //var am = RD.framework.get("AudioManager");
+			        //var am = rd.require('AudioManager');
+			        //var am = rd.AudioManager;
+			        //playerOnline = am.createPlayer('http://mp3.itingwa.com/2014-04/10/20140410050150-MTYyMDAw.mp3');
+			        playerOnline = am.createPlayer('http://mp3.itingwa.com/2014-04/10/20140410050150-MTYyMDAw.mp3');
+                    playerOnline.play(sucFunc, function(){console.log(arguments[0]);});
+                }
+			}
+
+			function stopOnline() {
+			    if (playerOnline != null) {
+			        playerOnline.stop();
+			        playerOnline = null;
+			    }
+			}
+
+			function errFunc(e) {
+                console.log(e);
+            }
+
+            function sucFunc() {
+                //document.getElementById("x").innerHTML = "正在播放！";
+                console.log("正在播放：" + arguments[0]);
+            }
+
+            function change() {
+                if (player) {
+                    player.setRoute(player.getMode() == player.ROUTE_EARPIECE ? player.ROUTE_SPEAKER : player.ROUTE_EARPIECE);
+                }
+                if (playerOnline) {
+                    playerOnline.setRoute(playerOnLine.getMode() == playerOnLine.ROUTE_EARPIECE ? playerOnLine.ROUTE_SPEAKER : playerOnLine.ROUTE_EARPIECE);
+                }
+            }
+
+            var windowName = rd.window.name;
+            function onLoad() {
+                console.log(windowName + ' onload.................');
+                am = rd.audio;
+            };
+
+            function onForeground() {
+                console.log(windowName + ' onforeground.............');
+            }
+
+            function onBackground() {
+                console.log(windowName + ' onBackground............');
+            }
+
+            function onDestroy() {
+                console.log(windowName + ' onDestroy...............');
+            }
+		</script>
+</html>

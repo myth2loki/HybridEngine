@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+    <style>
+        html,body {
+        background-color: #efeff4;
+        }
+        .component{
+        padding: 10px
+        }
+        .ui-btn-block{
+        padding: 10px
+        }
+        .ui-btn-green{
+        color: #fff;
+        background-color: #4cd964;
+        border: 1px solid #4cd964;
+        }
+        .ui-btn-blue{
+        color: #fff;
+        background-color: #007aff;
+        border: 1px solid #007aff;
+        }
+        .ui-btn-red{
+        color: #fff;
+        background-color: #dd524d;
+        border: 1px solid #dd524d;
+        }
+        .ui-btn-black{
+        color: #fff;
+        background-color: #44243d;
+        border: 1px solid #44243d;
+        }
+        .ui-bar-nav ~ .ui-content{
+        padding-top: 60px
+        }
+    </style>
+    <!--  Style -->
+</head>
+<body>
+<header class="ui-bar ui-bar-nav">
+    <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+
+    <h1 class="ui-title">listview</h1>
+</header>
+<div class="ui-content component">
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        打开Progress
+    </button>
+    <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+        关闭Progress
+    </button>
+</div>
+<script src="co/co.js"></script>
+</body>
+
+<script type="text/javascript">
+    domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '打开Progress':
+                            openProgress();
+                            //showToast();
+                            //showProgress();
+                            break;
+                        case '关闭Progress':
+                            hideProgress();
+                            break;
+                    }
+                })
+            });
+
+function showProgress()
+    {
+        var params = {
+		        title:{
+		            name:'努力加载中...',
+		            fontSize:'20',
+		            color:'#D21A1A'	//红色
+		        },
+		        detailTitle:{
+		            name:'哈哈哈哈',
+		            fontSize:'22',
+		            color:'#1FF81F'	//绿色
+		        },
+		      images:['res://icon/icon150x150.png','res://icon/icon150x150.png'],
+		        bgColor:'#CDCDF8',	//淡紫色
+		        bgOpacity:'0.1'
+            };
+        rd.progress.showProgress(rd.progress.ANIMATIONTYPE_FADE,params);
+        //setTimeout('hidenProgress()',4000);
+    }
+
+    function openProgress(){
+        var params = {
+             title:{
+                 name:'努力加载中...',
+                 fontSize:'16',
+                 color:'#3300cc'
+             },
+             detailTitle:{
+                name:'哈哈哈哈',
+                fontSize:'16',
+                color:'#3300cc'
+            },
+            images:['res://icon/ic_launcher.png'],
+            //images:['res://icon/ic_rd_progress1.png','res://icon/ic_rd_progress2.png','res://icon/ic_rd_progress3.png','res://icon/ic_rd_progress4.png'],
+            bgColor:'#9900ff',
+            bgOpacity:'0.6'
+        };
+        rd.progress.showProgress(rd.progress.ANIMATIONTYPE_FADE,params);
+    }
+
+    function hideProgress(){
+        rd.progress.hideProgerss();
+    }
+
+    function showToast()
+    {
+        var params = {
+            title:{
+                name:'努力加载中...'
+                //fontSize:'16',
+                //color:'#F8F81F'	//黄色
+            },
+            detailTitle:{
+                name:'哈哈哈哈'
+                //fontSize:'16',
+                //color:'#8D8DAB'	//灰色
+            },
+            images:['res://icon/progress1.png','res://icon/progress.png']
+
+            //bgColor:'#CDF8CD',	//浅绿色
+            //bgOpacity:'0.6'
+        };
+        var time = 3;
+        rd.progress.showToast(time,params);
+    }
+
+</script>
+
+</html>

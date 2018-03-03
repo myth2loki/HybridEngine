@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+                color: #fff;
+                background-color: #dd524d;
+                border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+                color: #fff;
+                background-color: #44243d;
+                border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">极光推送</h1>
+        </header>
+        <div class="ui-content component">
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                初始化极光推送
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                注册监听
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置tag
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置别名
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置tag标签和别名
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置接收消息的时段
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                查看状态
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                停止推送服务
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                恢复推送服务
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                获取注册极光推送的唯一id
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置通知栏最多显示的通知数量
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                清除所有通知
+            </button>
+        </div>
+        <script src="co/co.js"></script>
+</body>
+<script type="text/javascript">
+     domReady(function(require){
+            $('button.ui-btn').button(function(el,evt){
+                var text = el.innerText;
+                switch (text) {
+                    case '初始化极光推送':
+                        init();
+                        break;
+                    case '设置tag':
+                        setTags();
+                        break;
+                    case '设置tag':
+                        setTags();
+                        break;
+                    case '设置tag':
+                        setAlias();
+                        break;
+                    case '设置tag标签和别名':
+                        setAliasAndTags();
+                        break;
+                    case '设置接收消息的时段':
+                        setPushTime();
+                        break;
+                    case '查看状态':
+                        getJPushStatus();
+                        break;
+                    case '停止推送服务':
+                        stopPush();
+                        break;
+                    case '恢复推送服务':
+                        resumePush();
+                        break;
+                    case '获取注册极光推送的唯一id':
+                        getRegId();
+                        break;
+                    case '设置通知栏最多显示的通知数量':
+                        setLatesNotificationNumber();
+                        break;
+                    case '清除所有通知':
+                        clearAllNotifies();
+                        break;
+                    case '注册监听':
+                        registerCallBack();
+                        break;
+                }
+            })
+        });
+
+    function showToast(msg){
+        if(msg!=null&&msg.aps!=null) {
+            rd.ToastManager.showToast(msg.aps.alert);
+        }else{
+            rd.ToastManager.showToast(msg+"");
+        }
+    }
+
+    function errorCallBack(msg) {
+        alert(msg);
+    }
+
+    function init() {
+       rd.JPush.init();
+       showToast('初始化成功');
+    }
+
+    function setTags() {
+        var tags = ['aaa','bbb','ccc'];
+        rd.JPush.setTags(tags);
+        showToast('Tags设置成功');
+    }
+
+    function setAlias() {
+        rd.JPush.setAlias("d");
+        showToast('Alias设置成功');
+    }
+
+    function setAliasAndTags() {
+        rd.JPush.setAliasAndTags('d', ['a','b','c']);
+        showToast('Alias和Tags设置成功');
+    }
+
+    function setPushTime() {
+        rd.JPush.setPushTime('9','20','1,2,3,6');
+        showToast(推送时间设置成功);
+    }
+
+    function getJPushStatus() {
+        var status = rd.JPush.getJPushStatus();
+        showToast(status);
+    }
+
+    function stopPush() {
+        rd.JPush.stopPush();
+        showToast('停止推送');
+    }
+
+    function resumePush() {
+        rd.JPush.resumePush();
+        showToast('回复推送');
+    }
+
+    function getRegId() {
+        var regId = rd.JPush.getRegId();
+        showToast('注册ID='+resId);
+    }
+
+    function setLatesNotificationNumber() {
+        rd.JPush.setLatesNotificationNumber('8');
+        showToast('设置通知栏最多显示数量');
+    }
+
+    function clearAllNotifies() {
+        rd.JPush.clearAllNotifies();
+        showToast('清除通知栏');
+    }
+
+    function registerCallBack(){
+        rd.JPush.addCallBack(showToast,errorCallBack);
+        <!--showToast('注册监听');-->
+    }
+    function onLoad()
+    {
+        registerCallBack();
+    }
+
+</script>
+</html>

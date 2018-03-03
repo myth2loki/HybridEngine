@@ -1,0 +1,136 @@
+apply plugin: 'com.android.application'
+
+apply from: 'dependencies.gradle'
+apply from: 'buildTypes.gradle'
+
+android {
+    compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
+    buildToolsVersion project.BUILD_TOOLS_VERSION
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        applicationId project.APPLICATION_ID
+        minSdkVersion Integer.parseInt(project.MINI_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
+        versionCode Integer.parseInt(project.VERSION_CODE)
+        versionName project.VERSION_NAME
+        manifestPlaceholders = [APP_NAME : project.name, APP_STYLE : getStyle(), HARDWAREACCELERATED : HARDWAREACCELERATED, SCREENROTATION : SCREENROTATION, JPUSH_ID : applicationId, ENGINE_VERSION : ENGINE_VERSION]
+        genPackageNameNdk(project.APPLICATION_ID)
+
+        ndk {
+            moduleName "encryption"
+            ldLibs "log", "z", "m"
+            //开启armeabi-v7a及后续会导致讯飞、晕之声无法加载。
+            abiFilters "armeabi" , "armeabi-v7a", "x86", "arm64-v8a"
+        }
+    }
+
+//    productFlavors {
+//        appId {
+//        }
+//    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+            jni.srcDirs = ['jni']
+            //jni.srcDirs = []
+        }
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+    }
+
+    lintOptions{
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    aaptOptions {
+        noCompress 'foo', 'bar'
+        ignoreAssetsPattern "!.svn:!.git:!.ds_store:!*.scc:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"
+    }
+
+//    dexOptions {
+//        incremental false
+//        preDexLibraries = false
+//        jumboMode = false
+//        javaMaxHeapSize "2048M"
+//    }
+}
+
+def getStyle() {
+    if ("true".equals(project.STATUS_BAR_VISIBLE)) {
+        return "@style/AppTheme"
+    } else {
+        return "@style/AppTheme.FullScreen"
+    }
+}
+
+def genPackageNameNdk(pkgName) {
+    clean.doLast {
+        copyCppBack()
+    }
+    android.applicationVariants.all { variant ->
+        variant.assemble.doLast {
+            copyCppBack()
+        }
+    }
+
+    String appendLine = "#define PKG_NAME \"${pkgName}\"";
+    File encCpp = new File(project.projectDir, "jni/encryption.cpp")
+    BufferedInputStream bis = new BufferedInputStream(new FileInputStream(encCpp), 8 * 1024);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(encCpp)))
+    String firstLine = reader.readLine()
+    reader.close()
+    println "appendLine: " + appendLine
+    println "firstLine: " + firstLine
+    if (appendLine.equals(firstLine)) {
+        return
+    }
+
+    byte[] buffer = new byte[(int)encCpp.length()]
+    int length = bis.read(buffer)
+    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(encCpp), 8 * 1024)
+    bis.close()
+
+    if (length > -1) {
+        bos.write("${appendLine}\n".getBytes())
+        bos.write(buffer)
+    }
+    bos.close()
+}
+
+def copyCppBack() {
+//    println "----yyyyy-----"
+    File encCpp = new File(project.projectDir, "jni/encryption.cpp")
+    String os = System.getProperty("os.name")
+    String cmd = "cp"
+    def argss = []
+    if (os.toLowerCase().startsWith("window")) {
+        //cmd.exe /C
+        cmd = "cmd.exe"
+        argss += "/C"
+        argss += "copy"
+    }
+    argss += "${encCpp.parentFile.absolutePath}${File.separator}encryption.cpp_"
+    argss += encCpp.absolutePath
+    exec {
+        workingDir encCpp.parentFile.absolutePath
+        executable cmd
+        args = argss
+    }
+}
+
+/**
+ * 删除之前生成的jar
+ */
+task clearJar(type: Delete) {
+    delete "hde_${android.defaultConfig.versionName}_${android.defaultConfig.versionCode}.jar"
+}

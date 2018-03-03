@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+    <style>
+        html,body {
+        background-color: #efeff4;
+        }
+        .component{
+        padding: 10px
+        }
+        .ui-btn-block{
+        padding: 10px
+        }
+        .ui-btn-green{
+        color: #fff;
+        background-color: #4cd964;
+        border: 1px solid #4cd964;
+        }
+        .ui-btn-blue{
+        color: #fff;
+        background-color: #007aff;
+        border: 1px solid #007aff;
+        }
+        .ui-btn-red{
+        color: #fff;
+        background-color: #dd524d;
+        border: 1px solid #dd524d;
+        }
+        .ui-btn-black{
+        color: #fff;
+        background-color: #44243d;
+        border: 1px solid #44243d;
+        }
+        .ui-bar-nav ~ .ui-content{
+        padding-top: 60px
+        }
+    </style>
+    <!--  Style -->
+</head>
+<body>
+<header class="ui-bar ui-bar-nav">
+    <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+
+    <h1 class="ui-title">popoverView</h1>
+</header>
+<div class="ui-content component">
+
+    <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+        UI演示
+    </button>
+</div>
+<script src="co/co.js"></script>
+</body>
+<script type="text/javascript">
+		domReady(function(require) {
+                $('button.ui-btn').button(function(el,evt) {
+                    var text = el.innerText;
+                    switch (text) {
+                        case 'UI演示':
+                            showPopoverView();
+                            break;
+                    }
+                })
+            });
+
+		function successCallback(msg) {
+			alert(msg);
+		}
+
+		function errorCallback(errMsg) {
+			alert(errMsg);
+		}
+		function listener(index,title){
+                alert(index+title);
+            }
+        var popView;
+        var rect = {
+                x:400,
+                y:400,
+                width:500,
+                height:500
+                }
+        var data1 = {type:'BUTTONS',buttons:[{img:'/storage/emulated/0/1.png',title:'扫一扫'},{img:'/storage/emulated/0/2.png',title:'群组'},{img:'/storage/emulated/0/3.png',title:'设置'}]}
+        var data2 = {type:'AURL',url:'http://www.baidu.com'}
+	    function showPopoverView() {
+	    popView =  rd.require('popoverView');
+	    popView.setFrame(rect);
+	    popView.setDataSource(data1,errorCallback);
+	    popView.addClickedCallback(listener);
+	    popView.setOriginFrame(2000,2000,1,100);
+	    popView.show();
+	    }
+
+
+</script>
+</html>

@@ -1,0 +1,130 @@
+<html> 
+    <head>
+    <meta charset = "UTF-8"/>
+    <title>My Awesome Page</title>
+    <script type = "text/javascript">
+    
+    function speechSynCallBack(state, info){
+        var stateStr = "";
+        if(rd.yunZhiShengSpeech.YZS_SYN_SpeechStart == state){
+            stateStr = "开始语音合成";
+        }else if(rd.yunZhiShengSpeech.YZS_SYN_StartSpeaking == state){
+            stateStr = "开始朗读";
+            alert('state = '+ stateStr + 'info: '+info);
+        }else if(rd.yunZhiShengSpeech.YZS_SYN_Canceled == state){
+            stateStr = "取消语音合成";
+        }else if(rd.yunZhiShengSpeech.YZS_SYN_Paused == state){
+            stateStr = "暂停语音合成";
+        }else if(rd.yunZhiShengSpeech.YZS_SYN_Resumed == state){
+            stateStr = "恢复语音合成";
+        }else if(rd.yunZhiShengSpeech.YZS_SYN_Finished == state){
+            stateStr = "语音合成完成";
+        }else if(rd.yunZhiShengSpeech.YZS_SYN_ErrorOccurred == state){
+            stateStr = "语音合成错误 === ";
+        }
+        rd.log.i('state = '+ stateStr + 'info: '+info);
+    }
+    
+    function speechUndCallBack(state, info){
+        var stateStr = "";
+        if(rd.yunZhiShengSpeech.YZS_UND_SpeechStart == state){
+            stateStr = "检测到说话";
+        }else if(rd.yunZhiShengSpeech.YZS_UND_RecordingStart == state){
+            stateStr = "录音开始";
+        }else if(rd.yunZhiShengSpeech.YZS_UND_RecordingStop == state){
+            stateStr = "录音停止";
+        }else if(rd.yunZhiShengSpeech.YZS_UND_RecognizerStart == state){
+            stateStr = "开始语音识别";
+        }else if(rd.yunZhiShengSpeech.YZS_UND_VADTimeout == state){
+            stateStr = "语音识别超时";
+            //alert(stateStr);
+        }else if(rd.yunZhiShengSpeech.YZS_UND_RecognizerResult == state){
+            stateStr = "语音识别结果 === ";
+            alert('state = '+ stateStr + 'info: '+info);
+        }else if(rd.yunZhiShengSpeech.YZS_UND_UnderstanderResult == state){
+            stateStr = "语音理解结果 === ";
+            alert('state = '+ stateStr + 'info: '+info);
+        }else if(rd.yunZhiShengSpeech.YZS_UND_UnderstanderEnd == state){
+            stateStr = "语音识别结束 ===";
+            alert(stateStr);
+        }
+        rd.log.i('state = '+ stateStr + 'info: '+info);
+    }
+    
+    function createSpeechSynthesizer(){
+        rd.yunZhiShengSpeech.createSpeechSynthesizer('me4ooanz6eeapvl6la5ewceocraetcbxofytvzqp', speechSynCallBack);
+    }
+    function startSpeaking(){
+        rd.yunZhiShengSpeech.speaking(document.getElementById("txtSpeaking").value);
+    }
+    function pauseSpeaking(){
+        rd.yunZhiShengSpeech.pauseSpeaking();
+    }
+    function resumeSpeaking(){
+        rd.yunZhiShengSpeech.resumeSpeaking();
+    }
+    function cancelSpeaking(){
+        rd.yunZhiShengSpeech.cancelSpeaking();
+    }
+    
+    function createSpeechUnderstander(){
+        rd.yunZhiShengSpeech.createSpeechUnderstander('me4ooanz6eeapvl6la5ewceocraetcbxofytvzqp', 'ea24e3c88e0c785a2c3d67e1200bedec', speechUndCallBack);
+
+        rd.yunZhiShengSpeech.setEngine('general');
+        rd.yunZhiShengSpeech.setRecognizeLanguage(document.getElementById("txtUnder").value);
+    }
+    function startListening(){
+        rd.yunZhiShengSpeech.start();
+    }
+    function stopListening(){
+        rd.yunZhiShengSpeech.stop();
+    }
+    function cancelRecognizer(){
+        rd.yunZhiShengSpeech.cancel();
+    }
+    function textUnderstander() {
+        rd.yunZhiShengSpeech.textUnderstander(document.getElementById("txtUnder").value);
+    }
+    function setEngine() {
+        rd.yunZhiShengSpeech.setEngine(document.getElementById("txtUnder").value);
+    }
+    function setRecognizeLanguage() {
+        rd.yunZhiShengSpeech.setRecognizeLanguage(document.getElementById("txtUnder").value);
+    }
+    function setVadFrontTimeout() {
+        rd.yunZhiShengSpeech.setVadFrontTimeout(4000,1500);
+    }
+    function setBandwidth() {
+        rd.yunZhiShengSpeech.setBandwidth(9000);
+    }
+    function recognizeAudioFile() {
+        rd.yunZhiShengSpeech.recognizeAudioFile(document.getElementById("txtUnder").value);
+    }
+    </script>
+    </head>
+    
+    <center>
+    <body style="background:#ffffff">
+        
+        <input id="foo"  onclick ="createSpeechUnderstander()" type="button" value="创建语音识别"/></br></br>
+        <input id="txtUnder" type="text" value="语义讲解"><br/>
+        <input id="foo"  onclick ="textUnderstander()" type="button" value="语义讲解"/></br></br>
+        <input id="foo"  onclick ="startListening()" type="button" value="开始语音识别"/></br></br>
+        <input id="foo"  onclick ="stopListening()" type="button" value="停止语音识别"/></br></br>
+        <input id="foo"  onclick ="cancelRecognizer()" type="button" value="取消语音识别"/></br></br>
+        <input id="foo"  onclick ="setEngine()" type="button" value="设置识别领域"/></br></br>
+        <input id="foo"  onclick ="setRecognizeLanguage()" type="button" value="设置识别语言"/></br></br>
+        <input id="foo"  onclick ="setVadFrontTimeout()" type="button" value="设置vad超时时间"/></br></br>
+        <input id="foo"  onclick ="setBandwidth()" type="button" value="设置识别带宽"/></br></br>
+        <input id="foo"  onclick ="recognizeAudioFile()" type="button" value="设置识别语音文件"/></br></br></br></br>
+
+
+        <input id="foo"  onclick ="createSpeechSynthesizer()" type="button" value="创建语音合成"/></br></br>
+        <input type="text" value="兰敬民二货" id="txtSpeaking"><br/>
+        <input id="foo"  onclick ="startSpeaking()" type="button" value="开始语音合成"/></br></br>
+        <input id="foo"  onclick ="pauseSpeaking()" type="button" value="暂停语音合成"/></br></br>
+        <input id="foo"  onclick ="resumeSpeaking()" type="button" value="恢复语音合成"/></br></br>
+        <input id="foo"  onclick ="cancelSpeaking()" type="button" value="停止语音合成"/></br></br>
+    </body>
+    </center>
+</html>

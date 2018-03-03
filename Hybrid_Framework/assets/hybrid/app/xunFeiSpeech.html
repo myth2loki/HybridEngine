@@ -1,0 +1,92 @@
+<html> 
+    <head>
+    <meta charset = "UTF-8"/>
+    <title>My Awesome Page</title>
+    <script type = "text/javascript">
+    
+    function speechSynCallBack(state, info){
+        var stateStr = "";
+        if(rd.xunFeiSpeech.SpeechSynCompleted == state){
+            stateStr = "语音合成完成";
+        }else if(rd.xunFeiSpeech.SpeechSynBegin == state){
+            stateStr = "开始语音合成";
+        }else if(rd.xunFeiSpeech.SpeechSynBufferProgress == state){
+            stateStr = "语音合成缓冲进度 === ";
+        }else if(rd.xunFeiSpeech.SpeechSynSpeakProgress == state){
+            stateStr = "语音合成播放进度 ===";
+        }
+        rd.LogManager.i('state = '+ stateStr + 'info: '+info);
+    }
+    
+    function speechRecCallBack(state, info){
+        var stateStr = "";
+        if(rd.xunFeiSpeech.SpeechRecResult == state){
+            stateStr = "语音识别结果 === ";
+        }else if(rd.xunFeiSpeech.SpeechRecError == state){
+            stateStr = "语音识别错误 === ";
+        }else if(rd.xunFeiSpeech.SpeechRecBegin == state){
+            stateStr = "开始语音识别";
+        }else if(rd.xunFeiSpeech.SpeechRecEnd == state){
+            stateStr = "停止语音识别";
+        }else if(rd.xunFeiSpeech.SpeechRecCancel == state){
+            stateStr = "取消语音识别";
+        }
+        rd.LogManager.i('state = '+ stateStr + 'info: '+info);
+    }
+    
+    function initialize(){
+        rd.xunFeiSpeech.initialize('558d100c');
+    }
+    function createSpeechSynthesizer(){
+        rd.xunFeiSpeech.createSpeechSynthesizer(speechSynCallBack);
+        rd.xunFeiSpeech.setSynthesizerParameter('volume', '50');
+        rd.xunFeiSpeech.setSynthesizerParameter('voiceName', 'xiaoyan');
+        rd.xunFeiSpeech.setSynthesizerParameter('fileName', 'xiaoyan.pcm');
+    }
+    function startSpeaking(){
+        rd.xunFeiSpeech.startSpeaking('你好，谢谢！');
+    }
+    function pauseSpeaking(){
+        rd.xunFeiSpeech.pauseSpeaking();
+    }
+    function resumeSpeaking(){
+        rd.xunFeiSpeech.resumeSpeaking();
+    }
+    function stopSpeaking(){
+        rd.xunFeiSpeech.stopSpeaking();
+    }
+    
+    function createSpeechRecognizer(){
+        rd.xunFeiSpeech.createSpeechRecognizer(speechRecCallBack);
+        rd.xunFeiSpeech.setRecognizerParameter('domain', 'iat');
+        rd.xunFeiSpeech.setRecognizerParameter('result_type', 'json');
+        rd.xunFeiSpeech.setRecognizerParameter('asr_audio_path', 'sss.pcm');
+    }
+    function startListening(){
+        rd.xunFeiSpeech.startListening();
+    }
+    function stopListening(){
+        rd.xunFeiSpeech.stopListening();
+    }
+    function cancelRecognizer(){
+        rd.xunFeiSpeech.cancelRecognizer();
+    }
+    
+    </script>
+    </head>
+    <center>
+    <body style="background:#ffffff">
+        <input id="foo"  onclick ="initialize()" type="button" value="初始化"/></br></br>
+        <input id="foo"  onclick ="createSpeechSynthesizer()" type="button" value="创建语音合成"/></br></br>
+        <input id="foo"  onclick ="startSpeaking()" type="button" value="开始语音合成"/></br></br>
+        <input id="foo"  onclick ="pauseSpeaking()" type="button" value="暂停语音合成"/></br></br>
+        <input id="foo"  onclick ="resumeSpeaking()" type="button" value="恢复语音合成"/></br></br>
+        <input id="foo"  onclick ="stopSpeaking()" type="button" value="停止语音合成"/></br></br>
+        
+        <input id="foo"  onclick ="createSpeechRecognizer()" type="button" value="创建语音识别"/></br></br>
+        <input id="foo"  onclick ="startListening()" type="button" value="开始语音识别"></br></br>
+        <input id="foo"  onclick ="stopListening()" type="button" value="停止语音识别"/></br></br>
+        <input id="foo"  onclick ="cancelRecognizer()" type="button" value="取消语音识别"/>
+    </body>
+    </center>
+</html>

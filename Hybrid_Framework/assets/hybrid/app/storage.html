@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+                color: #fff;
+                background-color: #dd524d;
+                border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+                color: #fff;
+                background-color: #44243d;
+                border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+	<body>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">storage存储</h1>
+        </header>
+        <div class="ui-content component">
+            <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+              获取storage中保存的键值对的数量
+            </button>
+            <div class="ui-input-row">
+                <input type="text" id="key" class="ui-input-clear" placeholder="key">
+            </div>
+            <div class="ui-input-row">
+                <input type="text" id="value" class="ui-input-clear" placeholder="value">
+            </div>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+              存储key-value
+            </button>
+            <div class="ui-input-row">
+                <input type="text" id="key3" class="ui-input-clear" placeholder="key">
+            </div>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+                获取value
+            </button>
+            <div class="ui-input-row">
+                <input type="text" id="key1" class="ui-input-clear" placeholder="key">
+            </div>
+            <div class="ui-input-row">
+                <input type="text" id="key2" class="ui-input-clear" placeholder="key">
+            </div>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+              清除应用所有的键值对
+            </button>
+            <div class="ui-input-row">
+                <input type="text" id="index" class="ui-input-clear" placeholder="index">
+            </div>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+              获取键值对中指定索引值的key值
+            </button>
+        </div> 
+    <script src="co/co.js"></script>
+	</body>
+    <script type="text/javascript">
+    try{
+            domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '获取storage中保存的键值对的数量':
+                            getLength();
+                            break;
+                        case '存储key-value':
+                            setItem($('#key').val(),$('#value').val());
+                            break;
+                        case '获取value':
+                            getItem($('#key3').val());
+                            break;
+                        case '清除应用所有的键值对':
+                            clear1();
+                            break;
+                        case '获取键值对中指定索引值的key值':
+                            key($('#index').val());
+                            break;
+                    }
+                })
+            });
+
+
+    }catch(e){
+        alert(e.message);
+    }
+
+            var storage = null;
+            function getLength(){
+                //var storage = RD.framework.get("StorageManager");
+                var size = storage.getLength();
+                alert(size);
+            }
+            function wave(size){
+                alert(size);
+            }
+            function setItem(key,value){
+                storage.setItem(key,value);
+            }
+            function getItem(key){
+                var value = storage.getItem(key);
+                alert(value);
+            }
+            function removeItem(key){
+                storage.removeItem(key);
+            }
+            function clear1(){
+                storage.clear();
+            }
+            function key(index){
+                var key_index = storage.key(index);
+                alert(key_index);
+            }
+            function onLoad(){
+                //alert(2);
+                storage = rd.storage;
+            }
+        </script>
+</html>

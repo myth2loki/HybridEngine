@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+	<div    style="width:600px">
+	<p>This is a paragraphThis is a paragraphThis is a paragraphThis is a paragraphThis is a paragraphThis is a paragraphThis is a paragraphThis is a paragraphThis is a paragraph</p>
+    </div>
+	</br>
+	<input type="button" value="打开窗口方式0" onclick="windowOpen0()">	
+	<input type="button" value="打开窗口方式1" onclick="windowOpen1()">	
+	<input type="button" value="打开窗口方式2" onclick="windowOpen2()">	
+	<input type='button' value='返回指定窗口' onclick="windowBackTo()">
+	<input type='button' value='关闭指定窗口' onclick="windowClose()">
+	<input type='button' value='关闭当前窗口' onclick="windowSelfClose()">
+	<input type='button' value='指定窗口执行脚本' onclick="windowEvaluateScripttt()">
+	<input type='button' value='设置窗口' onclick="windowSet()">
+	<p>
+	<input type='button' value='打开3个pop窗口' onclick="windowOpenPopover()">
+	<input type='button' value='将pop1置顶显示' onclick="windowBringPopoverToFront()">
+	<input type='button' value='将pop1置后显示' onclick="windowBringPopoverToBack()">
+	<input type='button' value='将pop2置于pop3前面' onclick="windowBringPopoverBelow()"></br></br>
+	<input type='button' value='将pop3置于pop2前面' onclick="windowBringPopoverAbove()">
+	<input type='button' value='关闭pop1' onclick="windowClosePop()">
+	</p>	
+	<p>pop是否隐藏
+	<input type='text'  id='id1'>
+	<input type='button' value='pop是否隐藏' onclick="windowSetPopoverVisible()">
+	</p>
+	<input type='button' value='是否锁定' onclick="windowLockRotate()">
+	<input type='button' value='跳转其他模块' onclick="windowOpenComponent()">
+	<input type='button' value='关闭当前模块' onclick="windowCloseComponent()">
+	<p>
+	<input type='button' value='下拉刷新' onclick="windowAddHeaderRefreshing()">
+	<input type='button' value='结束下拉刷新' onclick="windowEndHeaderRefresh()">
+	<input type='button' value='上拉刷新' onclick="windowAddFooterRefreshing()"></br></br></br>
+	<input type='button' value='结束上拉刷新' onclick="windowEndFooterRefresh()">
+	<input type='button' value='移除下拉刷新' onclick="windowRemoveHeaderRefreshing()">
+	<input type='button' value='移除上拉刷新' onclick="windowRemoveFooterRefreshing()">
+	</p>
+	<p>状态栏颜色0、1ios
+	   <input type='text' id='clo1'>
+	   <input type='button' value='设置状态颜色' onclick="windowStatusBarStyle()">
+	</p> 
+	<input type='button' value='alert' onclick="windowAlert()"> 
+	<input type='button' value='confirm' onclick="windowConfirm()">
+	<input type='button' value='Prompt' onclick="windowPrompt()">
+	
+	<input type='button' value='设置抽屉' onclick="windowSetSlideLayout()"> 
+	<input type='button' value='添加忽略手势区域' onclick="windowAddIgnoreArea()">
+	<input type='button' value='打开左抽屉' onclick="windowOpenLeftSlidePane()">
+	<input type='button' value='打开右抽屉' onclick="windowOpenRightSlidePane()">
+	<input type='button' value='关闭抽屉' onclick="windowCloseSlidePane()"> 
+	<input type='button' value='获取属性' onclick="windowGet()">
+	
+	
+	
+	
+	
+	
+	</body>
+	
+<script>
+
+// var attribute =
+//{
+//  // bounces:true,
+//   bgColor:'#FF0000',
+//   vScrollBarEnabled:true,
+//   hScrollBarEnabled:true,
+//   scaleEnabled:true,
+// //  keyboard:true,
+// // dragDismiss:true
+//}
+ 
+ 
+function setpop1(){
+		alert("我是window");
+	}
+//打开窗口
+function windowOpen0()
+{
+	var windowName='window1';   //已存在的窗口和新窗口 	，已存在的窗口不会再次打开这样保证一个名称的窗口只会打开一个
+    rd.window.openWindow(windowName,0,'zip.html', {type:21,direction:rd.window.ANIMATION_SUBTYPE_FROM_RIGHT,time:2000,curve:rd.window.ANIMATION_CURVE_LINEAR});
+}
+
+function windowOpen1()
+{
+	var newwindow="<!DOCTYPE html><html><head><meta charset=\"utf-8\" /><title></title></head><body><input type='button' value='字符串' ></body></html>";	
+    rd.window.openWindow('window2',1,newwindow, {type:21,direction:rd.window.ANIMATION_SUBTYPE_FROM_RIGHT,time:    2000,curve:rd.window.ANIMATION_CURVE_LINEAR});	
+}
+function windowOpen2()
+{
+	rd.window.openWindow('window3',2,'http://www.baidu.com', {type:21,direction:rd.window.ANIMATION_SUBTYPE_FROM_RIGHT,time:    2000,curve:rd.window.ANIMATION_CURVE_LINEAR});
+}
+//返回指定窗口
+function windowBackTo()
+{
+	rd.window.backToWindow('root', {type:21,direction:rd.window.ANIMATION_SUBTYPE_FROM_RIGHT,time:    2000,curve:rd.window.ANIMATION_CURVE_LINEAR});
+
+}
+
+//关闭指定窗口
+function windowClose()
+{
+	rd.window.closeWindow('root', {type:10,direction:rd.window.ANIMATION_SUBTYPE_FROM_RIGHT,time:    2000,curve:rd.window.ANIMATION_CURVE_LINEAR});
+}
+//关闭当前窗口
+function windowSelfClose()
+	{
+		rd.window.closeSelf( {type:21,direction:rd.window.ANIMATION_SUBTYPE_FROM_RIGHT,time:    2000,curve:rd.window.ANIMATION_CURVE_LINEAR});
+
+	}
+
+//在指定窗口执行脚本
+function  windowEvaluateScripttt(){	
+//	rd.window.evaluateScript('','pop',setpop111());
+	rd.window.evaluateScript('','pop1','setpop1()');
+
+}
+
+//打开pop   待测试
+function windowOpenPopover(){
+   
+	rd.window.openPopover('pop1',0,'new_file1.html',{x:0,y:400,width:0,height:0},10);
+	rd.window.openPopover('pop2',0,'new_file2.html',{x:0,y:410,width:0,height:0},0);
+	rd.window.openPopover('pop3',0,'new_file3.html',{x:0,y:420,width:0,height:0},0);
+   
+}
+//设置是否隐藏
+
+function windowSetPopoverVisible()
+{  
+  // var visible=parseInt(document.getElementById("id1").value);
+   
+  var visible=document.getElementById("id1").value;
+	alert(visible);
+	rd.window.setPopoverVisible('false','pop1');
+
+}
+
+
+//设置窗口的属性
+function windowSet()
+{
+	rd.window.setAttr({bounces:true,bgColor:'#72C43C',vScrollBarEnabled:false,hScrollBarEnabled:true,scaleEnabled:true,keyboard:true,dragDismiss:true});
+
+}
+//将窗口 置顶
+function windowBringPopoverToFront(){
+
+
+	rd.window.bringPopoverToFront('pop1');
+}
+
+
+//将窗口置后
+
+function windowBringPopoverToBack(){
+
+
+	rd.window.sendPopoverToBack('pop1');
+}
+
+
+//将指定窗口置于指定窗口的前面
+function windowBringPopoverBelow()
+{
+	rd.window.bringPopoverBelow('pop3','pop2');
+
+}
+
+//将指定窗口置于指定窗口的后面
+function windowBringPopoverAbove()
+{
+	rd.window.bringPopoverAbove('pop3','pop2');
+
+}
+
+//关闭pop，待测可选参数
+function windowClosePop()
+{
+
+rd.window.closePopover('pop1');
+
+}
+
+//方向锁定
+function windowLockRotate()
+{
+	rd.window.lockRotate(0);
+}
+
+//跳转到main2
+function windowOpenComponent()
+{
+	rd.window.openComponent('main2','index.html',{type:rd.window.ANIMATION_TYPE_FADE,direction:rd.window.ANIMATION_SUBTYPE_FROM_RIGHT,time:2000,curve:rd.window.ANIMATION_CURVE_LINEAR});
+}
+//下拉刷新回调
+
+function headerRefreshingCallback () {
+alert("设置下拉刷新成功");
+}
+//上拉刷新回调
+function footerRefreshingCallback () {
+alert("设置下拉刷新成功");
+}
+var imagePath = "res://icon1.png";
+
+var settings= {statusLabel:{hidden:false,font:14,color:'#00FF00',pullText:"下拉有惊喜",releaseText:"放手",refreshingText:"努力加载中。。。"},timeLabel:{hidden:false,font:12,color:'#0000FF'},image:imagePath};
+
+//添加下拉刷新,后面的参数不起作用
+function windowAddHeaderRefreshing()
+{
+
+rd.window.addHeaderRefreshing(headerRefreshingCallback,settings);
+
+}
+
+//设置上拉刷新
+function windowAddFooterRefreshing ()
+{   alert("1");
+	rd.window.addFooterRefreshing(footerRefreshingCallback,{label:{hidden:true,font:14,color:'#0000FF',pullText:"上拉看看",releaseText:"松手吧",refreshingText:"努力加载中。。。"},image:imagePath});
+    alert("2");
+}
+
+//结束下拉刷新
+function windowEndHeaderRefresh()
+{
+	rd.window.endHeaderRefresh();
+
+}
+//结束上拉刷新
+function windowEndFooterRefresh()
+{
+	rd.window.endFooterRefresh();
+
+}
+
+//移除下拉刷新
+function windowRemoveHeaderRefreshing()
+{
+	rd.window.removeHeaderRefreshing();
+}
+
+//移除上拉刷新
+function windowRemoveFooterRefreshing()
+{
+	rd.window.removeFooterRefreshing();
+}
+
+//设置状态栏文字颜色
+function windowStatusBarStyle()
+{   var clo=parseInt(document.getElementById("clo1").value);
+     alert(clo);
+	rd.window.statusBarStyle(clo);
+}
+
+//回调
+function callback(tips,error){
+	alert(JSON.stringify(tips));
+	alert(error);
+	
+}
+//alert
+function windowAlert()
+{
+	
+var  parames={title : '单按钮alert',msg : '只能显示一个按钮',buttons : ['按钮']};
+
+rd.window.alert(parames, callback);
+
+}
+//confirm
+function windowConfirm()
+{
+var parames={title : '多按钮confirm',msg : '多按钮confirm',buttons : ['确认','放弃']}
+rd.window.confirm(parames, callback);
+}
+
+//prompt
+
+function windowPrompt()
+{
+var params = {title : '这是一个prompt对话框',msg : '现在弹出了一个prompt对话框',text : '这是默认文字',type : 'text',buttons : ['确认','放弃','取消']}
+rd.window.prompt(params, callback);
+
+}
+
+	
+//设置抽屉	
+function windowSetSlideLayout()
+{
+	alert('1');
+	var params = {
+
+                type: 'all',
+                leftEdge:100,
+                rightEdge:100,
+                leftPane: {
+                    name: 'Drawer1',
+                    url: 'new_file1.html',
+                  //  bgColor: '#0000FF', 
+                    bounces:true,
+                   vScrollBarEnabled:true,//只在iOS下有效
+                    hScrollBarEnabled:false,//只在iOS下有效
+                    scaleEnabled:true
+                },
+              rightPane: {
+                    name: 'Drawer2',
+                    url: 'new_file1.html',
+                   // bgColor: '#0000FF', 
+                    bounces:true,
+                   vScrollBarEnabled:true,//只在iOS下有效
+                   hScrollBarEnabled:false,//只在iOS下有效
+                    scaleEnabled:true
+                }}
+  alert('1');          
+rd.window.setSlideLayout(params);
+alert('1');
+}	
+	
+	
+//安卓设置忽略手势区域
+
+function windowAddIgnoreArea()
+{
+	var IgnoreParams = {
+            x:0,
+            y:0,
+            width:100,
+            height:100
+        };
+
+
+rd.window.addIgnoreArea(IgnoreParams);	
+}
+//打开左抽屉
+
+function windowOpenLeftSlidePane()
+{
+	 var SlideParams = {
+            type : 'left'
+        }
+
+  rd.window.openSlidePane(SlideParams);
+
+}
+
+//打开右抽屉
+
+function windowOpenRightSlidePane()
+{
+	 var SlideParams = {
+            type : 'right'
+        }
+
+  rd.window.openSlidePane(SlideParams);
+
+}
+//关闭抽屉
+
+function windowCloseSlidePane()
+{
+	rd.window.closeSlidePane();
+}
+
+//获取当前窗口的属性
+function windowGet()
+{
+	var width = rd.window.getWidth();
+	var height = rd.window.getHeight();
+   alert("当前窗口宽度是"+width);
+   alert("当前窗口高度是"+height);
+}
+
+function windowCloseComponent()
+{   alert("1");
+	rd.window.closeComponent('main');
+	alert("2");
+}
+</script>	
+		
+</html>

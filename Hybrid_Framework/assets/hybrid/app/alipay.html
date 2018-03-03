@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+     <link rel="stylesheet" href="co/css/co.css">
+     <style type="text/css">
+        html,body {
+                background-color: #efeff4;
+            }
+        .ui-bar-nav ~ .ui-content{
+              padding-top: 60px
+            }
+     </style>
+  </head>
+<body>
+  <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">阿里支付</h1>
+  </header>
+        <div class="ui-content">
+            <div class="ui-content-padded" style="margin: 5px;">
+                <form class="ui-input-group">
+                    <div class="ui-button-row">
+                        <button type="button" class="ui-btn ui-btn-primary" onclick="startpay();">支付</button>&nbsp;&nbsp;
+                    </div>
+                </form>
+                <h5 style="font-size:16px;color:red">商户PID和商户私钥仅只作为测试使用，正式的需要向官网申请</h5>
+            </div>
+        </div>
+  <script src="co/co.js"></script>
+</body>
+  <script type="text/javascript">
+        domReady(function(require){
+              $('button.ui-btn').button(function(el,evt){
+                  var text = el.innerText;
+                  switch (text) {
+                        case '支付':
+                            //startpay();
+                            break;
+                    }
+              })
+          });
+
+    var apay = null;
+    function stateUpdateCallback(state,str){
+        var stateStr = "";
+        if(apay.AliPaySucceed == state){
+            stateStr = "订单支付成功";
+        }else if(apay.AliPayProcessing == state){
+            stateStr = "正在处理中";
+        }else if(apay.AliPayFailed == state){
+            stateStr = "订单支付失败";
+        }else if(apay.AliPayCancel == state){
+            stateStr = "用户中途取消";
+        }else if(apay.AliPayNetError == state){
+            stateStr = "网络连接出错";
+        }
+        alert(stateStr);
+    }
+    
+    function startpay(){
+        var parames={
+            partner : '2088101568358171',
+            seller_id : 'xxx@alipay.com',
+            out_trade_no : '0819145412-6177',
+            subject : '测试',
+            body : '测试内容',
+            total_fee : '0.01',
+            notify_url : 'http://notify.msp.hk/notify.htm',
+            service : 'mobile.securitypay.pay',
+            payment_type : '1',
+            _input_charset : 'utf-8',
+            it_b_pay : '30m',
+            privateKey : 'MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANY6sXzRlqgmngX6m1G2BJQzsZuvAE2iXVB/e/T4CBHnvp63dQUesPZM1gyWm+wGjmYEr3QP4DiXJHSsCtUHUWbGiKeuodwUFr25LX9kDKBA/Vkol6NtTL/bkzPO48Epr5pb8jhcfFN0xUQfxcZR4p7oLcLA4sSY7H+dSAUL7NlVAgMBAAECgYEAjPpjArkKY+3F4DljLQqTSNQb9U/c6zoGHotGj5cJ+H6BOwGPyKbB3dQCqJYUVeaanxhGPiKUc6lDHGR7XGVMcxk1ckFHniGY7SGeddDs1wODyMVRXUuZleZ0I2QdhxuyK3RQzMiD9tRuSttq8wj+MKcXoYRN9bY+GOrtnQuHfAECQQD4/ytu7q9CvDCNpONUzjBXFVfAbQOAv5dWvBDyoS9aN9wicZ9EaJIcjozqUyyXqMek1/+v+ehnwr++NNo9reI1AkEA3EEwtI2d4EUkfp0gjPj29p22CgkVbHyfweVfBjuR5evaTFRJWzf9yuksogPS1JLeTqKXczW6mBdgj05iEr3+oQJBAI3Hli6rYEZKrAbrXbqbUXE0qOvb5wO3lHAB1FCjsTfY2NMQCZVFSfVSwjBnPdv5cfyONXw5e7khblba923phgUCQGO4gDy/AYPQyj0pFtu8vNPbg9f3VOPRaON43hUMU3ot1qBIaQ4Lw7Ri7fpMkN/9vvkLVFatNNY3f1hivLSPoQECQQDEaP8VLsUVd3QdoDruH4oIpqVbQ8xj3aEZKiA01w8QqLkElPG14+7EFA+gDKWjTghOduomnXDleVX34tVlAuCn'
+        }
+        apay = rd.aliPay;
+        apay.pay(parames, stateUpdateCallback);
+    }
+    </script>
+</html>

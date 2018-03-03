@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+	<link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+            	padding: 10px
+            }
+            .ui-btn-block{
+            	padding: 10px
+            }
+            .ui-btn-green{
+            	color: #fff;
+			  	background-color: #4cd964;
+			  	border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+            	color: #fff;
+  				background-color: #007aff;
+  				border: 1px solid #007aff;
+            }
+            .ui-bar-nav ~ .ui-content{
+            	padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+		<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">扫描二维码</h1>
+  		</header>
+		 <div class="ui-content component">
+	        <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+	            开始扫描
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+	            开启摄像头扫描
+	        </button>
+			 <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+				 生成二维码
+			 </button>
+			 <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+				 停止扫描
+			 </button>
+		</div>
+	<script src="co/co.js"></script>
+</body>
+	<script type="text/javascript">
+
+		domReady(function(require){
+	            $('button.ui-btn').button(function(el,evt){
+	                var text = el.innerText;
+	                switch (text) {
+                        case '开始扫描':
+                            scan();
+                            break;
+                        case '开启摄像头扫描':
+                            openScan();
+                            break;
+                        case '生成二维码':
+                            createCode();
+                            break;
+                        case '停止扫描':
+                            stopScan();
+                            break;
+                    }
+	            })
+	        });
+	
+		function BarcodeSuccessCallback(type,type2,type3){
+			alert(type+","+type2+","+type3);
+		}
+		
+		function BarcodeErrorCallback(errMsg){
+			alert(errMsg);
+		}
+		
+		
+		function scan(){
+			var barcode1 = rd.barcode;
+			//var barCodeArrarequire(r = new Array();
+			var barCodeArrar = [barcode1.QR, barcode1.EAN13];
+			barcode1.scan(BarcodeSuccessCallback,BarcodeErrorCallback, barCodeArrar);
+		}
+		
+		var BarcodeOption = {
+			conserve : true,
+			filename : "cache://xhrd/ljm.png",
+			window : false
+		}
+
+		var windowOption = {
+                x : 100,
+                y : 100,
+                width : 200,
+                height : 200
+            }
+            var option = {
+                conserve : true,
+                filename : '/storage/emulated/0/xhrd/ljm.png',
+				window: false,
+                frame: windowOption
+            }
+
+		var barcode1;
+		function openScan(){
+			barcode1 = rd.barcode;
+			//alert(barcode1);
+			barcode1.start(BarcodeSuccessCallback, BarcodeErrorCallback, option);
+		}
+
+		function createCode(){
+			var bar = rd.barcode;
+			bar.createCode(BarcodeSuccessCallback,BarcodeErrorCallback,"www.baidu.com");
+		}
+
+		function stopScan(){
+			barcode1.stopScan();
+		}
+	</script>
+</html>

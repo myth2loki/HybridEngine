@@ -1,0 +1,87 @@
+<html>
+	<meta charset = "UTF-8"/>
+    <head>
+        <title>XGPushDEMO</title>
+        <script type = "text/javascript">
+            
+        function receiveMessage(userInfo){
+//          alert(userInfo.aps.alert);
+			alert(userInfo);
+        }
+        
+        function errorInfo(err){
+            alert(err);
+        }
+        
+        function successCallBack(){
+            alert('success');
+        }
+        
+        function failCallBack(){
+            alert('fail');
+        }
+        var platform = window.navigator.platform;
+        function regist(){
+        	if(platform.toLowerCase().indexOf('iphone') > -1){
+        		var appinfo = {
+	                accessID : '2200132336',
+	                accessKey : 'IA361ZJF66JH',
+	                account : 'Jack'
+	            }
+        	}else{
+        		var appinfo = {
+	                accessID : '2100132303',
+	                accessKey : 'AG9U8B5M1N5L',
+	                account : '369引擎'
+	            }
+        	}
+	        rd.XGPush.registe(appinfo,successCallBack,failCallBack);
+        }
+
+
+        function addCallBack(){
+            rd.XGPush.addCallBack(receiveMessage,errorInfo);
+        }
+        
+        function unregister(){
+             rd.XGPush.unregister(successCallBack,failCallBack);
+        }
+        
+        function removeCallBack(){
+            rd.XGPush.removeCallBack(); 
+        }
+        
+        function setTag(){
+            rd.XGPush.setTag('certern',successCallBack,failCallBack);
+        }
+        
+        function delTag(){
+            rd.XGPush.deleteTag('aaa',successCallBack,failCallBack);
+        }
+        
+        function isUnregistered(){
+        	if(rd.XGPush.isUnregistered())
+        		alert("已注销");
+        	else
+        		alert("未注销");
+        }
+        
+        function setBadge(){
+        	rd.XGPush.setBadge(6);
+        }
+        
+            </script>
+    </head>
+    <body>
+        <br/>
+        <br/>
+        <h1 style="font-size:30px"  onclick="regist()">注册推送服务 </h1>
+        <h1 style="font-size:30px"  onclick="addCallBack()">添加消息回调</h1>
+        <h1 style="font-size:30px"  onclick="unregister()">注销推送服务</h1>
+        <h1 style="font-size:30px"  onclick="removeCallBack()">移除消息回调</h1>
+        <h1 style="font-size:30px"  onclick="setTag()">setTag</h1>
+        <h1 style="font-size:30px"  onclick="delTag()">delTag</h1>
+        <h1 style="font-size:30px"  onclick="isUnregistered()">是否是注销状态</h1>
+        <h1 style="font-size:30px"  onclick="setBadge()">设置通知角标个数</h1>
+    </body>
+</html>

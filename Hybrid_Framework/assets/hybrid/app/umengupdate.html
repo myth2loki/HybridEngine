@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+                color: #fff;
+                background-color: #dd524d;
+                border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+                color: #fff;
+                background-color: #44243d;
+                border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">友盟自动更新</h1>
+        </header>
+        <div class="ui-content component">
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置为debug模式
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置进行的更新的网络环境
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置自动弹出更新提示
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置更新下载通知栏是否启动高级样式
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置更新提示方式
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                自动更新模式
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                手动更新
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                静默下载
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置更新回调
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置对话框按键回调
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                设置下载回调
+            </button>
+        </div>
+        <script src="co/co.js"></script>
+</body>
+	<script type="text/javascript">
+		 domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '设置为debug模式':
+                            setDebug();
+                            break;
+                        case '设置进行的更新的网络环境':
+                            setUpdateOnlyWifi();
+                            break;
+                        case '设置自动弹出更新提示':
+                            setUpdateAutoPopup();
+                            break;
+                        case '设置更新下载通知栏是否启动高级样式':
+                            setRichNotification();
+                            break;
+                        case '设置更新提示方式':
+                            setUpdateUIStyle();
+                            break;
+                        case '自动更新模式':
+                            update();
+                            break;
+                        case '手动更新':
+                            forceUpdate();
+                            break;
+                        case '静默下载':
+                            silentUpdate();
+                            break;
+                        case '设置更新回调':
+                            setUpdateListener();
+                            break;
+                        case '设置对话框按键回调':
+                            setDialogListener();
+                            break;
+                        case '设置下载回调':
+                            setDownloadListener();
+                            break;
+                    }
+                })
+            });
+        function resultCallback(result) {
+            showToast(result+"");
+        }
+
+        function showToast(msg){
+            rd.ToastManager.showToast(msg+"");
+        }
+
+        function setDebug() {
+           rd.UmengUpdateManager.setDebug();
+           showToast('设置为Debug模式');
+        }
+
+        function setUpdateOnlyWifi() {
+           rd.UmengUpdateManager.setUpdateOnlyWifi('1');
+           showToast('设置只在wifi下更新');
+        }
+
+        function setUpdateAutoPopup() {
+           rd.UmengUpdateManager.setUpdateAutoPopup();
+           showToast('设置自动弹出更新提示');
+        }
+
+        function setRichNotification() {
+           rd.UmengUpdateManager.setRichNotification('1');
+           showToast('启动高级样式');
+        }
+
+        function setUpdateUIStyle() {
+           rd.UmengUpdateManager.setUpdateUIStyle('1');
+           showToast('设置更新提示方式');
+        }
+
+        function update() {
+           rd.UmengUpdateManager.update();
+           showToast('自动更新');
+        }
+
+        function forceUpdate() {
+           rd.UmengUpdateManager.forceUpdate();
+           showToast('手动更新');
+        }
+
+        function silentUpdate() {
+           rd.UmengUpdateManager.silentUpdate();
+           showToast('静默下载');
+        }
+
+        function setUpdateListener() {
+           rd.UmengUpdateManager.setUpdateListener(resultCallback);
+           showToast('注册更新监听');
+        }
+
+        function setDialogListener() {
+           rd.UmengUpdateManager.setDialogListener(resultCallback);
+           showToast('注册Dialog监听');
+        }
+
+        function setDownloadListener() {
+           rd.UmengUpdateManager.setDownloadListener(resultCallback);
+           showToast('注册下载监听');
+        }
+
+    </script>
+</html>

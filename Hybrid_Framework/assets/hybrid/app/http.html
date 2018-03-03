@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <meta name="apple-itunes-app" content="app-id=698076980" />
+    <meta name="Keywords" content="多玩游戏">
+    <meta name="description" content="">
+    <title>Hello UI Button</title>
+
+    <!-- Style -->
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+            input, button, .mui-btn {
+                margin-top: 10px;
+                margin-left: 10px;
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body  >
+
+地址：<input id="body1" type="text" value="HelloWorld"/><br/>
+请求参数1的key：<input id="body2" type="text" value="key"/><br/>
+请求参数1的value：<input id="body3" type="text" value="value"/><br/>
+连接超时时间：<input id="body4" type="text" value="3000"/><br/>
+请求方式：<input id="body5" type="text" value="POST"/><br/>
+是否离线：<input id="body6" type="text" value="true"/><br/>
+离线缓存时间：<input id="body7" type="text" value="3000"/><br/>
+
+上传文件名字：<input id="body8" type="text" value="name"/><br/>
+上传文件类型：<input id="body9" type="text" value="jepg"/><br/>
+上传文件filename：<input id="body10" type="text" value="filename"/><br/>
+上传文件路径：<input id="body11" type="text" value="本地图片lujing"/><br/>
+
+
+
+<input class="btn1" type="button" value="获取输入参数请求" onclick="download();"><br/><br/>
+
+<input class="btn1" type="button" value="普通get请求()" onclick="get();"><br/><br/>
+<input class="btn1" type="button" value="普通post请求()" onclick="post();"><br/><br/>
+<input class="btn1" type="button" value="post上传()" onclick="upload();"><br/><br/>
+
+ <span id="text1">
+
+
+ </span>
+<script type="text/javascript">
+
+
+
+
+     function get(){
+
+        var option = {method:'GET',url:'http://img.b5m.com/image/T1DCLTB5Ds1RCvBVdK',dataType:'json',timeout:30000,offline:'true',expires:60000};
+        var callbackSuccess = function(responseHeader,data){alert(data);};
+        var callbackError = function(responseCode,responseHeader,responseMessage){alert(responseMessage);};
+
+		rd.httpManager.sendRequest(JSON.stringify(option),callbackSuccess,callbackError);
+
+    }
+
+
+</script>
+</body>
+</html>

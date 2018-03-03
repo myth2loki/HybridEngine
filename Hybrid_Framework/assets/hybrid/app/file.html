@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+    <style>
+        html,body {
+        background-color: #efeff4;
+        }
+        .component{
+        padding: 10px
+        }
+        .ui-btn-block{
+        padding: 10px
+        }
+        .ui-btn-green{
+        color: #fff;
+        background-color: #4cd964;
+        border: 1px solid #4cd964;
+        }
+        .ui-btn-blue{
+        color: #fff;
+        background-color: #007aff;
+        border: 1px solid #007aff;
+        }
+        .ui-bar-nav ~ .ui-content{
+        padding-top: 60px
+        }
+    </style>
+    <!--  Style -->
+</head>
+<body  >
+<header class="ui-bar ui-bar-nav">
+    <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+    <h1 class="ui-title">发送事件</h1>
+</header>
+<div class="ui-content component">
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        创建文件夹
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        创建文件
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        删除文件
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        拷贝文件
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        移动文件
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        列出目录
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        打开文件
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        跳转到文件末尾
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        跳转到文件指定位置
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        读取文件到末尾
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        读取文件到指定位置
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        写入文件
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        关闭文件
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        判断文件是否存在
+    </button>
+    <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+        获取指定路径下文件的属性
+    </button>
+    <span id="text1"></span>
+</div>
+<script src="co/co.js"></script>
+<script type="text/javascript">
+        domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '创建文件夹':
+                             creatDir();
+                            break;
+                        case '创建文件':
+                             creatfile();
+                            break;
+                        case '删除文件':
+                            remove()
+                            break;
+                        case '拷贝文件':
+                               copy();
+                            break;
+                            case '移动文件':
+                                move();
+                            break;
+                            case '列出目录':
+                                readDirectory();
+                            break;
+                            case '打开文件':
+                                open();
+                            break;
+                            case '跳转到文件末尾':
+                                seekToEnd();
+                            break;
+                            case '跳转到文件指定位置':
+                                seekToFileOffset();
+                            break;
+                            case '读取文件到末尾':
+                                readToEnd();
+                            break;
+                            case '读取文件到指定位置':
+                                readDataOfLength();
+                            break;
+                            case '写入文件':
+                                writeData();
+                            break;
+                            case '关闭文件':
+                                close();
+                            break;
+                            case '判断文件是否存在':
+                                exist();
+                            break;
+                            case '获取指定路径下文件的属性':
+                                getFileAttribute();
+                            break;
+                    }
+                })
+            });
+
+        function creatDir(){
+         rd.fileManager.createDirectory('/sdcard/filemanager/test', success, fail);
+        }
+        function creatfile(){
+         rd.fileManager.createFile('/sdcard/filemanager/a.txt', success, fail);
+        }
+        function remove(){
+         rd.fileManager.removeFile('/sdcard/filemanager/a.txt', success, fail);
+        }
+        function copy(){
+         rd.fileManager.copy('/sdcard/filemanager/a.txt','/sdcard/copyfilemanager', success, fail);
+        }
+        function move(){
+         rd.fileManager.move('/sdcard/filemanager/a.txt','/sdcard/filemanager_move', success, fail);
+        }
+         function readDirectory(){
+         rd.fileManager.readDirectory('/sdcard/filemanager', succ, fail);
+        }
+         function open(){
+         rd.fileManager.open('/sdcard/filemanager/open.txt',rd.fileManager.READ,succ, fail);
+        }
+
+        function seekToEnd(){
+         rd.fileManager.open('/sdcard/filemanager/open.txt',rd.fileManager.READ_WRITE,seektoend,fail);
+        }
+
+        function seekToFileOffset(){
+        rd.fileManager.open('/sdcard/filemanager/open.txt',rd.fileManager.READ_WRITE,seektofileoffset,fail);
+        }
+
+        var file;
+        function readToEnd(){
+         file = rd.fileManager;
+         file.open('/sdcard/filemanager/d.txt',rd.fileManager.READ_WRITE,readtoent,fail);
+        }
+
+        function readDataOfLength(){
+         file = rd.fileManager;
+         file.open('/sdcard/filemanager/d.txt',rd.fileManager.READ_WRITE,readdataoflength,fail);
+        }
+
+        function writeData(){
+         rd.fileManager.open('/sdcard/filemanager/d.txt',rd.fileManager.READ,write,fail);
+        }
+
+        function close(){
+         rd.fileManager.open('/sdcard/filemanager/c.txt',rd.fileManager.READ_WRITE,closefile,fail);
+        }
+
+        function exist(){
+         var b=rd.fileManager.exist('/sdcard/filemanager/c.txt');
+         alert(b);
+        }
+
+        function getFileAttribute(){
+         rd.fileManager.getFileAttribute('/sdcard/filemanager/c.txt',success, fail);
+
+        }
+
+
+        function closefile(fd){
+
+            rd.fileManager.close(fd);
+        }
+
+        function write(fd){
+
+            rd.fileManager.writeData(fd,'哈哈哈哈哈');
+        }
+
+        function seektoend(fd){
+            rd.fileManager.seekToEnd(fd);
+        }
+        function seektofileoffset(fd){
+             rd.fileManager.seekToFileOffset(fd,14);
+        }
+        function readtoent(fd){
+            file.readToEnd(fd,succ,fail);
+        }
+        function readdataoflength(fd){
+             file.readDataOfLength(fd,3,succ,fail);
+        }
+
+
+        function succ(message){
+           alert(message);
+        }
+
+        function fail(message){
+           alert(message);
+
+        }
+        function success(message){
+           alert(message.modificationDate);
+
+        }
+
+
+</script>
+</body>
+</html>

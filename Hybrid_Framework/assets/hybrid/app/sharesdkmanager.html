@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+                color: #fff;
+                background-color: #dd524d;
+                border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+                color: #fff;
+                background-color: #44243d;
+                border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+   <script type="text/javascript">
+        function onSuccess(state,info){
+            var msg;
+            if (state == rd.ShareSDK.SUCCESS)
+            {
+            msg = info;
+            }
+            else if (state == rd.ShareSDK.ERROR)
+            {
+            msg = info;
+            }
+            else if (state == rd.ShareSDK.CANCEL)
+            {
+            msg = info;
+            }
+
+            alert(msg);
+        }
+
+        function initPlatform(){
+
+            rd.ShareSDK.initShareSDK({appKey:'7f9f3f803d7f'});
+            rd.ShareSDK.initSina({id:'1', sortId:'1',enable:true, appKey:'568898243',appSecret:'38a4f8204cc784f81f9f0daaf31e02e3',redirectUrl:'http://www.sharesdk.cn'});
+            rd.ShareSDK.initTencent({id:'2', sortId:'2',enable:true, appKey:'801307650',appSecret:'ae36f4ee3946e1cbb98d6965b0b2ff5c',redirectUrl:'http://www.sharesdk.cn'});
+            rd.ShareSDK.initQZone({id:'3', sortId:'3',enable:true, appKey:'100371282',appSecret:'aed9b0303e3ed1e27bae87c33761161d'});
+            //qq 此处appKey传入在QQ平台注册的appId, appSecret传入注册的appKey
+            rd.ShareSDK.initQQ({id:'4', sortId:'4',enable:true, appKey:'100371282', appSecret:'aed9b0303e3ed1e27bae87c33761161d'});
+
+
+            rd.ShareSDK.initWeChat({id:'5', sortId:'5',enable:true, appKey:'wx4868b35061f87885',appSecret:'64020361b8ec4c99936c0e3999a9f249'});
+            rd.ShareSDK.initRenRen({id:'6', sortId:'6',enable:true, appID:'226427',appKey:'fc5b8aed373c4c27a05b712acba0f8c3',appSecret:'f29df781abdd4f49beca5a2194676ca4'});
+            rd.ShareSDK.initKaiXin({id:'7', sortId:'7',enable:true, appKey:'358443394194887cee81ff5890870c7c',appSecret:'da32179d859c016169f66d90b6db2a23',redirectUrl:'http://www.sharesdk.cn/'});
+            rd.ShareSDK.initDouBan({id:'8', sortId:'8',enable:true, appKey:'02e2cbe5ca06de5908a863b15e149b0b',appSecret:'9f1e7b4f71304f2f',redirectUrl:'http://www.sharesdk.cn'});
+            rd.ShareSDK.initYouDao({id:'9', sortId:'9',enable:true, appKey:'dcde25dca105bcc36884ed4534dab940',appSecret:'d98217b4020e7f1874263795f44838fe',redirectUrl:'http://www.sharesdk.cn/'});
+        }
+
+        function setShareContent(){
+                var option = {
+                    content : 'stay with me sam smith hhhhhh',
+                    imageUrl : 'http://i.gtimg.cn/music/photo/mid_album_300/a/a/003JmNVc173vaa.jpg',
+                    title : 'sam smith',
+                    url : 'http://125.39.66.162/mp4files/11110000013BC07B/whtbj.com/wht002/data/attachment/video/201209/24/163611a3azvn0ena3vvae0.mp4',
+                    mediaType : rd.ShareSDK.MediaTypeMusic,
+                };
+
+                rd.ShareSDK.setShareContent(option);
+            }
+
+        function setCustomNavigationBar(){
+
+                var option = {
+                    barTitle:'welcome',
+                    barColor:'#00ff00',
+                };
+
+                rd.ShareSDK.setCustomNavigationBar(option);
+            }
+        function setCustomShareActionSheetItem() {
+
+            var optionVideo = {
+                content : 'stay with me sam smith hhhhhh',
+                imageUrl : 'http://i.gtimg.cn/music/photo/mid_album_300/a/a/003JmNVc173vaa.jpg',
+                title : 'sam smith',
+                url : 'http://whtbj.com/wht002/data/attachment/video/201209/24/163611a3azvn0ena3vvae0.mp4',
+                mediaType : rd.ShareSDK.MediaTypeVideo,
+            };
+
+            rd.ShareSDK.setCustomShareActionSheetItem(rd.ShareSDK.SinaWeibo,'sinahh','cpts://main/img/pic1.jpg',optionVideo,onSuccess);
+
+            var optionNews = {
+                content : 'hello world',
+                imageUrl : 'http://i.gtimg.cn/music/photo/mid_album_300/a/a/003JmNVc173vaa.jpg',
+                title : 'sam smith',
+                url : 'http://www.baidu.com',
+                mediaType : rd.ShareSDK.MediaTypeNews,
+            };
+            rd.ShareSDK.setCustomShareActionSheetItem(rd.ShareSDK.QQ,'tengxunhh','cpts://main/img/pic2.jpg',optionNews,onSuccess);
+
+        }
+        function showCustomShareActionSheet() {
+
+            rd.ShareSDK.showCustomShareActionSheet();
+        }
+
+        function showShareActionSheet(){
+
+           var platform = [rd.ShareSDK.SinaWeibo,rd.ShareSDK.TencentWeibo,rd.ShareSDK.Douban,rd.ShareSDK.Renren,rd.ShareSDK.KaiXin,rd.ShareSDK.YouDao];
+
+            if (rd.ShareSDK.isWeChatInstalled())
+            {
+                platform.unshift(rd.ShareSDK.Wechat,rd.ShareSDK.WechatMoments,rd.ShareSDK.WechatFavorite);
+            }
+            if (rd.ShareSDK.isQQInstalled())
+            {
+                platform.unshift(rd.ShareSDK.QQ,rd.ShareSDK.QZone);
+            }
+
+          rd.ShareSDK.showShareActionSheet(platform,onSuccess);
+
+        }
+
+        function showShareNoEditedInterface() {
+
+            var platform = [rd.ShareSDK.SinaWeibo,rd.ShareSDK.TencentWeibo,rd.ShareSDK.Douban,rd.ShareSDK.Renren,rd.ShareSDK.KaiXin,rd.ShareSDK.YouDao];
+
+            if (rd.ShareSDK.isWeChatInstalled())
+            {
+                platform.unshift(rd.ShareSDK.Wechat,rd.ShareSDK.WechatMoments,rd.ShareSDK.WechatFavorite);
+            }
+            if (rd.ShareSDK.isQQInstalled())
+            {
+                platform.unshift(rd.ShareSDK.QQ,rd.ShareSDK.QZone);
+            }
+
+            rd.ShareSDK.showShareNoEditedInterface(platform,onSuccess);
+
+        }
+        function showShareEditedInterface() {
+
+           rd.ShareSDK.showShareEditedInterface(rd.ShareSDK.SinaWeibo,onSuccess);
+
+        }
+
+        function shareContentNoInterface() {
+            rd.ShareSDK.shareContentNoInterface(rd.ShareSDK.TencentWeibo,onSuccess);
+        }
+
+
+        function auth(){
+            if(!rd.ShareSDK.isAuthorized(rd.ShareSDK.TencentWeibo))
+            {
+                rd.ShareSDK.auth(rd.ShareSDK.TencentWeibo,onSuccess);
+
+            }
+        }
+        function cancelAuth(){
+            rd.ShareSDK.cancelAuth(rd.ShareSDK.SinaWeibo);
+        }
+        function getUserInfo() {
+
+            rd.ShareSDK.getUserInfo(rd.ShareSDK.SinaWeibo,function(state,info,error){if (state == rd.ShareSDK.SUCCESS)
+                                 {
+                                var userInfo = JSON.stringify(info);
+                                 alert(userInfo);
+                                 } else {
+                                 alert(error);
+                                 }});
+
+        }
+        function getFriends() {
+
+            rd.ShareSDK.getFriends(rd.ShareSDK.TencentWeibo,function(state,friendsInfo,error){if (state == rd.ShareSDK.SUCCESS){ alert(friendsInfo[0]);} else{alert(error);}});
+
+        }
+</script>
+</head>
+<body>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">shareSdk</h1>
+        </header>
+        <div class="ui-content component">
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="initPlatform()">
+                初始化平台
+            </button>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="setShareContent()">
+                设置分享内容
+            </button>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="setCustomNavigationBar()">
+                设置分享导航栏
+            </button>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="setCustomShareActionSheetItem()">
+                自定义分享菜单项
+            </button>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="showCustomShareActionSheet()">
+                显示自定义分享菜单
+            </button>
+
+
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="showShareActionSheet()">
+                显示分享菜单,显示编辑界面
+            </button>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="showShareNoEditedInterface()">
+                显示分享菜单,不显示编辑界面
+            </button>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="showShareEditedInterface()">
+                只显示编辑界面，无分享菜单
+            </button>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="shareContentNoInterface()">
+                不显示分享菜单，也不显示编辑界面
+            </button>
+
+
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="auth()">
+              	授权
+            </button>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="getUserinfo()">
+              	获得用户资料
+            </button>
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block" onclick="getFriends()">
+              	获得朋友列表
+            </button>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block" onclick="cancelAuth()">
+              	取消授权
+            </button>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block" onclick="isauth()">
+              	是否授权
+            </button>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block" onclick="isQQInstalled()">
+              	是否安装qq
+            </button>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block" onclick="isWeixinInstalled()">
+              	是否安装微信
+            </button>
+            
+
+        </div> 
+<script src="co/co.js"></script>
+</body>
+
+</html>

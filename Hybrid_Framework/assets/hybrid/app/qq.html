@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <meta charset = "UTF-8"/>
+        <title>My Awesome Page</title>
+        <script type = "text/javascript">
+            
+          function authCallback(state){
+                var stateStr = "";
+                if(rd.qq.QQLoginSuccess === state){
+                    stateStr = "登录成功";
+                }else if(rd.qq.QQLoginFailed === state){
+                    stateStr = "登录失败";
+                }else if(rd.qq.QQLogout === state){
+                    stateStr = "注销登录";
+                }
+                alert('state = '+ stateStr);
+            }
+        
+        function getUserInfoCallback(state,userInfo,error){
+            if (state == 0){
+            	alert(JSON.stringify(userInfo));
+            }else{
+            	alert(error);
+            }
+        }
+        
+        function shareCallback(state,message){
+            if(state == 0)
+            alert(state + ',' + message);
+            else
+            alert(state + ', '+ message);
+        }
+        function init(){
+            rd.qq.init('1104833345');
+            alert(1)
+        }
+        function isinstalled(){
+        	alert(rd.qq.isInstalled())
+//          if (rd.qq.isInstalled())
+//          {
+//              alert('安装');
+//          }
+//          else
+//          {
+//              alert('未安装');
+//          }
+        }
+        function login(){
+            rd.qq.login(authCallback);
+        }
+        function logout(){
+            rd.qq.logout(authCallback);
+        }
+        function getUser(){
+            rd.qq.getUserInfo(getUserInfoCallback);
+        }
+        
+        function Share1(){
+            var option = {
+                content : 'share text share text share text share text',
+            };
+            rd.qq.shareMessage(option, shareCallback);
+        }
+        function Share2(){
+            var option = {
+                content : 'share text',
+                title:'image title',
+                //imageUrl : 'cpts://main/img/pic1.jpg',
+                imageUrl : '/sdcard/pic1.jpg'
+            };
+            rd.qq.shareImage(option, shareCallback);
+        }
+        function Share3(){
+
+            //type分享类型，1 分享到空间，0 分享到好友
+            var option = {
+                content : 'share text',
+                title:'music title',
+                imageUrl:'http://cc.cocimg.com/api/uploads/150701/c6fc11ad17203d01cb5a571d264f3ba6.jpg',
+                targetUrl:'http://www.baidu.com',
+                type:rd.qq.QZone
+            };
+            rd.qq.shareNews(option, shareCallback);
+        }
+        function Share4(){
+            var option = {
+                content : 'share text',
+                title:'music title',
+                imageUrl:'http://cc.cocimg.com/api/uploads/150701/c6fc11ad17203d01cb5a571d264f3ba6.jpg',
+                targetUrl:'http://www.baidu.com',
+                mediaUrl:'http://sc1.111ttt.com/2015/5/08/25/101251011120.mp3',
+            };
+            rd.qq.shareAudio(option, shareCallback);
+        }
+        </script>
+    </head>
+    <body>
+        <h2 id="foo"  onclick ="init()">初始化</h2>
+        <h2 id="foo"  onclick ="isinstalled()">是否安装qq</h2>
+        <h2 id="foo"  onclick ="login()">用户验证</h2>
+        <h2 id="foo"  onclick ="logout()">退出登录</h2>
+        <h2 id="foo"  onclick ="getUser()">获取用户信息</h2>
+        <h2 id="foo"  onclick ="Share1()">分享文本</h2>
+        <h2 id="foo"  onclick ="Share2()">分享图片</h2>
+        <h2 id="foo"  onclick ="Share3()">分享新闻</h2>
+        <h2 id="foo"  onclick ="Share4()">分享音乐</h2>
+    </body>
+</html>

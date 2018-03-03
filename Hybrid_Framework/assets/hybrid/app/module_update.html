@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+                color: #fff;
+                background-color: #dd524d;
+                border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+                color: #fff;
+                background-color: #44243d;
+                border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+		<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">模块更新</h1>
+        </header>
+        <div class="ui-content component">
+
+            <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+              检查版本
+            </button>
+        </div> 
+	<script src="co/co.js"></script>
+</body>
+<script type="text/javascript">
+		domReady(function(require) {
+                $('button.ui-btn').button(function(el,evt) {
+                    var text = el.innerText;
+                    switch (text) {
+                        case '检查版本':
+                            checkVersion();
+                            break;
+                    }
+                })
+            });
+            
+		function successCallback(type) {
+			alert(type);
+		}
+		
+		function errorCallback(errMsg) {
+			alert(errMsg);
+		}
+	    function checkVersion() {
+            rd.require('ModuleUpdate').checkVersion(success,errorCallback);
+	    }
+
+	    var mUrl;
+		function  success(args){
+            if(args.rspHeader!=null && args.rspHeader.rspCode=="00000000") {
+                mUrl = args.data.url;
+               var  parames={
+                        title : '版本更新',
+                        msg : args.data.desc,
+                        buttons : ['更新','取消']
+                    };
+                rd.window.confirm(parames,jsCallback);
+            }else {
+                var errMsg = '更新失败';
+                if(args.data!=null&&args.data.desc!=null) {
+                    errMsg = args.data.desc;
+                }
+                var  alertparames={
+                    title : '版本更新',
+                    msg : errMsg,
+                    buttons : ['确定']
+                };
+                rd.window.alert(alertparames,jsCallback);
+            }
+        }
+        function jsCallback(args)
+        {
+            <!--alert(args.buttonIndex);-->
+            if(args!=null) {
+                if(args.buttonIndex==1) {
+                    var url = 'http://bj.poms.baidupcs.com/file/9a38a10e61337da6e7fa282a605ede0d?bkt=p2-nb-215&fid=1325463342-250528-379201819732860&time=1436687798&sign=FDTAXGERLBH-DCb740ccc5511e5e8fedcff06b081203-GDsX5cbDdMNebaMriG27Gy9HpSM%3D&to=bb&fm=Nin,B,T,bs&sta_dx=0&sta_cs=0&sta_ft=zip&sta_ct=0&fm2=Ningbo,B,T,bs&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=14009a38a10e61337da6e7fa282a605ede0d2c11e2dd000000000540&sl=80019535&expires=8h&rt=sh&r=540340215&mlogid=3936283517&vuk=1325463342&vbdid=1856927164&fin=module_update.zip&fn=module_update.zip&slt=pm&uta=0&rtype=1&iv=0';
+                   url = 'http://nb.poms.baidupcs.com/file/56575eb439403c976369fc91cacf8df4?bkt=p2-nb-215&fid=1325463342-250528-760872985368334&time=1436699604&sign=FDTAXGERLBH-DCb740ccc5511e5e8fedcff06b081203-Mr10Yds3A5i1%2FeVz7bw2PVptNjo%3D&to=nbb&fm=Nin,B,T,bs&sta_dx=1&sta_cs=0&sta_ft=apk&sta_ct=0&fm2=Ningbo,B,T,bs&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=140056575eb439403c976369fc91cacf8df465746d670000000f192b&sl=80019535&expires=8h&rt=sh&r=371955054&mlogid=3686901804&vuk=1325463342&vbdid=1856927164&fin=JsDebug.apk&fn=JsDebug.apk&slt=pm&uta=0&rtype=1&iv=0';
+
+
+                    //开始下载
+                    rd.require('ModuleUpdate').download(mUrl,successCallback,errorCallback);
+                }
+            }
+        }
+
+	</script>
+</html>

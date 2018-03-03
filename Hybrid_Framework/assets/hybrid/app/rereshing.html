@@ -1,0 +1,113 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+    <style>
+        html,body {
+        background-color: #efeff4;
+        }
+        .component{
+        padding: 10px
+        }
+        .ui-btn-block{
+        padding: 10px
+        }
+        .ui-btn-green{
+        color: #fff;
+        background-color: #4cd964;
+        border: 1px solid #4cd964;
+        }
+        .ui-btn-blue{
+        color: #fff;
+        background-color: #007aff;
+        border: 1px solid #007aff;
+        }
+        .ui-bar-nav ~ .ui-content{
+        padding-top: 60px
+        }
+    </style>
+    <!--  Style -->
+</head>
+<body >
+<center>
+
+    <input class="btn1" type="button" value="添加上拉刷新" onclick="addHeader();"><br/><br/>
+    <input class="btn1" type="button" value="添加加载更多" onclick="addFooter();"><br/><br/>
+    <input class="btn1" type="button" value="移除上拉刷新" onclick="removeHeader();"><br/><br/>
+    <input class="btn1" type="button" value="移除加载更多" onclick="removeFooter();"><br/><br/>
+    <input class="btn1" type="button" value="设置背景色" onclick="setBgcolor();"><br/><br/>
+
+</center>
+
+
+    <script type="text/javascript">
+        // var rdWindow = RD.framework.get('Rdwindow');
+
+        function setBgcolor() {
+            //rd.window.setAttr({bgColor:'#FFD39B'});
+        }
+
+         rd.onLoad = onLoad;
+
+         function onLoad() {
+            //rd.window.setAttr({bgColor:'#FFD39B'});
+         }
+
+         function currentFunc(){
+
+         console.log('----------------------------下拉刷新啦')
+         ;
+
+         var rdWindow = rd.window;
+
+         //rdWindow.endHeaderRefresh('0');
+
+         }
+
+         function currentFunc1(){
+
+         console.log("----------------------------加载更多");
+
+         var rdWindow = rd.window;
+
+         //rdWindow.endFooterRefresh('0');
+
+         }
+
+           function addHeader(){
+                 var opts = {statusLabel:{hidden:false, color:"#FF3030",pullText:"xialashuaxin",
+                                        releaseText:"songkaishuaxin",refreshingText:"zhengzaishuaxin"},
+                             timeLabel:{hidden:false, color:"#EE7AE9"}, image:"res://test.png"
+                                        };
+				 var rdWindow = rd.window;
+				 rdWindow.addHeaderRefreshing(currentFunc, opts);
+            }
+
+            function addFooter(){
+                var opts = {statusLabel:{hidden:false, color:"#FF3030",pullText:"xialashuaxin",
+                                        releaseText:"songkaishuaxin",refreshingText:"zhengzaishuaxin"}, image:"res://test.png"
+                                        };
+				  var rdWindow = rd.window;
+				 rdWindow.addFooterRefreshing(currentFunc1, opts);
+             }
+             function removeHeader(){
+				  var rdWindow = rd.window;
+
+				 rdWindow.removeHeaderRefreshing();
+
+
+             }
+             function removeFooter(){
+				  var rdWindow = rd.window;
+
+				 rdWindow.removeFooterRefreshing();
+
+             }
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+                color: #fff;
+                background-color: #dd524d;
+                border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+                color: #fff;
+                background-color: #44243d;
+                border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">pop</h1>
+        </header>
+        <div class="ui-content component">
+            <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+              打开POP1
+            </button>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+                在pop1中插入数据
+            </button>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+                隐藏pop1
+            </button>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+                关闭pop1
+            </button>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+                显示pop1
+            </button>
+            <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+              	打开POP2
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+              打开POP3
+            </button>
+             <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+              浮到最上方
+            </button>
+            <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+                沉到最下方
+            </button>
+             <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+              pop1浮到pop3上方
+            </button>
+             <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+              pop3浮到pop2下方
+            </button>
+             <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+                 pop3沉到最下方
+            </button>
+             <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+              设定窗口大小
+            </button>
+             <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+              在上一级执行run_from
+            </button>
+             <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+                 在当前窗口中执行js
+            </button>
+             <button type="button" class="ui-btn ui-btn-black ui-btn-block">
+                 返回到root窗口
+            </button>
+        </div>
+<script src="co/co.js"></script>
+
+</body>
+
+<script type="text/javascript">
+        domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '打开POP1':
+                            openPop1();
+                            break;
+                        case '打开POP2':
+                            openPop2();
+                            break;
+                        case '打开POP3':
+                            openPop3();
+                            break;  
+                        case '浮到最上方':
+                            bringToFront();
+                            break;
+                        case '沉到最下方':
+                            sendPopoverToBack();
+                            break;
+                        case 'pop1浮到pop3上方':
+                            bringToAbove();
+                            break;  
+                        case 'pop3浮到pop2下方':
+                            bringToBelow();
+                            break;
+                        case 'pop3沉到最下方':
+                            sendPop3Back();
+                            break;
+                        case '设定窗口大小':
+                            setWindowFrame();
+                            break;
+                        case '在pop1中插入数据':
+                            insertDataPop1();
+                            break;
+                        case '关闭pop1':
+                            closePop1();
+                            break;
+                        case '隐藏pop1':
+                            hidePop1();
+                            break;
+                        case '显示pop1':
+                            showPop1();
+                            break;
+                        case '在上一级执行run_from':
+                            run_from();
+                            break;
+                        case '在当前窗口中执行js':
+                            run_in();
+                            break;
+                        case '返回到root窗口':
+                            backToRoot();
+                            break;
+                    }
+                })
+            });
+
+        function backToRoot() {
+            rd.window.backToWindow("root");
+        }
+
+        function run_in() {
+            rd.window.evaluateScript(rd.window.name, "", "alert('我自己啊！');");
+        }
+
+        function run_from() {
+            rd.window.evaluateScript("internal_plugin", "", "run_from('evaluate script from pop')");
+        }
+
+        function sendPop3Back() {
+            rd.window.sendPopoverToBack('pop3');
+        }
+
+        function insertDataPop1() {
+            rd.window.evaluateScript('', 'pop1', "changeTitle('hahahahaha');");
+        }
+
+        function showPop1() {
+            rd.window.setPopoverVisible(true, 'pop1');
+        }
+
+        function closePop1() {
+            rd.window.closePopover('pop1', 0);
+        }
+
+        function hidePop1() {
+            rd.window.setPopoverVisible(false, 'pop1');
+        }
+            
+        function openPop1(){
+
+            var popName = 'pop1';
+            var url = 'pop1.html';
+            var x =0;
+            var y=0;
+            var width = 600;
+            var height = 1200;
+
+            openPop(popName, url, x, y, width, height);
+        }
+
+         function openPop2(){
+            var popName = 'pop2';
+            var url = 'pop2.html';
+            var x =0;
+            var y=300;
+            var width = 600;
+            var height = 800;
+
+            openPop(popName, url, x, y, width, height);
+        }
+
+         function openPop3(){
+            var popName = 'pop3';
+            var url = 'pop3.html';
+            var x =0;
+            var y=600;
+            var width = 600;
+            var height = 800;
+
+            openPop(popName, url, x, y, width, height);
+        }
+
+        function bringToAbove(){
+            var curPop = 'pop2';
+            var destPop = 'pop3';
+            var window = rd.window;
+            window.bringPopoverAbove(curPop, destPop);
+        }
+
+        function bringToBelow(){
+            var type = 0;
+            var curPop = 'pop3';
+            var destPop = 'pop2';
+            var window = rd.window;
+            window.bringPopoverBelow(curPop, destPop);
+        }
+
+        function bringToFront(){
+            var window = rd.window;
+            window.bringPopoverToFront("pop1");
+        }
+        function sendPopoverToBack(){
+            var window = rd.window;
+            window.sendPopoverToBack("pop1");
+        }
+
+        //
+        function openPop(popName, url, x1, y1, w1, h1){
+            var type = 0;
+            var window = rd.window;
+            window.openPopover(popName, type, url, {x:x1, y:y1, width:w1, height:h1});
+            <!--window.addHeaderRefreshing(currentFunc);-->
+
+
+        }
+
+         function currentFunc(){
+
+         console.log('----------------------------下拉刷新啦')
+         ;
+
+         var rdWindow = rd.window;
+
+         rdWindow.endHeaderRefresh();
+
+         }
+
+
+
+        function setWindowFrame(){
+            var componentName = 'main';
+            var windowName = "popWindow";
+            var x  = 100;
+            var y = 0;
+            var width = 500;
+            var height = 800;
+            var window = rd.window;
+            window.setWindowFrame(componentName, windowName, x, y, width, height);
+        }
+
+
+</script>
+</html>

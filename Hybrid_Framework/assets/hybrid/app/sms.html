@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+     <link rel="stylesheet" href="co/css/co.css">
+     <style type="text/css">
+        html,body {
+                background-color: #efeff4;
+            }
+        .ui-bar-nav ~ .ui-content{
+              padding-top: 60px
+            }
+     </style>
+</head>
+<script type="text/javascript">
+    function GetVerifyCodeSuccessCallBack(state) {
+		alert(state);
+	}
+
+	function GetVerifyCodeErrorCallBack(state) {
+		alert(state);
+	}
+
+	function VerifySuccessCallBack(state) {
+		alert(state);
+	}
+
+	function VerifyErrorCallBack(state) {
+		alert(state);
+	}
+
+	var sms=null;
+	function onLoad() {
+		sms = rd.require('SMSVerify');
+	}
+
+	function doreg() {
+		var APPKEY = document.getElementById("APPKEY").value;
+		var APPSECRET = document.getElementById("APPSECRET").value;
+		sms.regist(APPKEY, APPSECRET);
+	}
+
+	function dosend() {
+		var country = document.getElementById("country").value;
+		var number = document.getElementById("send").value;
+		sms.getVerifyCode(country,number, GetVerifyCodeSuccessCallBack, GetVerifyCodeErrorCallBack);
+	}
+
+	function doYanzheng() {
+		var number = document.getElementById("send").value;
+		var sum = document.getElementById("summit").value;
+		sms.submitVerifyCode(number, sum, VerifySuccessCallBack, VerifyErrorCallBack);
+	}
+</script>
+
+<body>
+		<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">掌淘科技--短信验证</h1>
+  </header>
+  <div class="ui-content">
+        <div class="ui-content-padded" style="margin: 5px;">
+			<div class="ui-input-row">
+                <p>在移动者服务平台为应用申请的APPKEY</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="APPKEY" id="APPKEY"
+			value="4d90f19ede24" class="ui-input-clear" />
+            </div>
+            <div class="ui-input-row">
+                <p>在移动者服务平台为应用申请的APPSECRET</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="APPSECRET" id="APPSECRET"
+			value="a239033c4182defcd93eaabd054c25d6" class="ui-input-clear" />
+            </div>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="doreg();">初始化</button>
+			<div>
+                <p>请输入手机号码的国家区号</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="country" id="country"
+			value="86" class="ui-input-clear" />
+            </div>
+            <div>
+                <p>请输入您的手机号码</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="send" id="send"
+			value="15109227145" class="ui-input-clear" />
+            </div>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="dosend();">发送短信验证码</button>
+			<div>
+                <p>请输入您的收到短信验证码</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="summit" id="summit"
+			class="ui-input-clear" />
+            </div>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="doYanzheng();">验证短信验证码</button>
+        </div> 
+     </div>   
+</body>
+</html>
+

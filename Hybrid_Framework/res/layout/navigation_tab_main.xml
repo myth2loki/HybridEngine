@@ -1,0 +1,92 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <RelativeLayout
+        android:id="@+id/rl_tab"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:id="@+id/ll_tab"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <com.xhrd.mobile.hybridframework.framework.Manager.tabmark.SyncHorizontalScrollView
+            android:id="@+id/mHsv"
+            android:layout_width="0dip"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fadingEdge="none"
+            android:scrollbars="none" >
+
+
+            <RelativeLayout
+                android:id="@+id/rl_nav"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="top" >
+
+                <RadioGroup
+                    android:id="@+id/rg_nav_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="38dip"
+                    android:layout_alignParentTop="true"
+                    android:orientation="horizontal" >
+                </RadioGroup>
+
+                <ImageView
+                    android:id="@+id/iv_nav_indicator"
+                    android:layout_width="1dip"
+                    android:layout_height="2dip"
+                    android:layout_alignParentBottom="true"
+                    android:background="#5AB0EB"
+                    android:scaleType="matrix" />
+            </RelativeLayout>
+        </com.xhrd.mobile.hybridframework.framework.Manager.tabmark.SyncHorizontalScrollView>
+
+            <ImageView
+                android:id="@+id/ivMany"
+                android:layout_width="45dp"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_vertical|right"
+                android:src="@drawable/ic_rd_icon"
+                android:scaleType="fitXY" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_nav_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="1dip"
+            android:src="@drawable/iv_navagation_scroll_left"
+            android:visibility="gone" >
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/iv_nav_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="1dip"
+            android:src="@drawable/iv_navagation_scroll_right"
+            android:visibility="gone" >
+        </ImageView>
+    </RelativeLayout>
+
+    <com.xhrd.mobile.hybridframework.framework.Manager.tabmark.TabViewPager
+        android:id="@+id/mViewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/rl_tab"
+        android:layout_gravity="center"
+        android:background="#ffffff"
+        android:flipInterval="30"
+        android:persistentDrawingCache="animation" />
+
+</RelativeLayout>

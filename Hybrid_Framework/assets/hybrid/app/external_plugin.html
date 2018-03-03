@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+    <style>
+        html,body {
+        background-color: #efeff4;
+        }
+        .component{
+        padding: 10px
+        }
+        .ui-btn-block{
+        padding: 10px
+        }
+        .ui-btn-green{
+        color: #fff;
+        background-color: #4cd964;
+        border: 1px solid #4cd964;
+        }
+        .ui-btn-blue{
+        color: #fff;
+        background-color: #007aff;
+        border: 1px solid #007aff;
+        }
+        .ui-bar-nav ~ .ui-content{
+        padding-top: 60px
+        }
+    </style>
+    <!--  Style -->
+</head>
+<body>
+<header class="ui-bar ui-bar-nav">
+    <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+
+    <h1 class="ui-title">发送事件</h1>
+</header>
+<div class="ui-content component" id='treeview'>
+    <ul class="ui-table-view">
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                网络监听
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                图片浏览imageShower
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                appwidget
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                tab导航
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                播放本地视频
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                新浪微博分享
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                本地分享
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                百度统计
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                百度定位
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                百度推送
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                蓝牙传输
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                打开UI窗口
+            </a>
+        </li>
+        
+        <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                          shareSDK功能组合
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                          城市选择
+                        </a>
+                    </li>
+                    
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                          小米登录
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                          人人登录
+                        </a>
+                    </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                银联支付
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                阿里移动支付
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                讯飞语音识别
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                云之声语音识别
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                云之声语音识别1
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                QQ登陆分享
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                微信分享
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                掌淘科技短信验证
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                腾讯信鸽
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                极光推送
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                云测崩溃分析
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                日历选择器
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                京东登陆授权
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                友盟自动更新
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                友盟统计
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                环信即时通信
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                环信即时通信2
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                图片裁剪
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                二维码BarCode
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                TestImageView
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                图片压缩
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                城市列表
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                文件管理器
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                popoverView
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                App
+            </a>
+        </li>
+        <li class="ui-table-view-cell">
+            <a class="ui-navigate-right">
+                画廊
+            </a>
+        </li>
+    </ul>
+</div>
+<script src="co/co.js"></script>
+</body>
+<script>
+    domReady(function(require){   
+        require('treeview') 
+        $('#treeview').treeview({
+                    callback:function(el,evt){
+                        var url = evt.target.innerText;
+                        switch (url) {
+                          case '图片浏览imageShower':
+                            openImageShower();
+                            break;
+                            case '网络监听':
+                            openNetLinster();
+                            break;
+                          case 'appwidget':
+                            openAppWidget();
+                            break;
+                          case 'tab导航':
+                            openTab();
+                            break;
+                          case '播放本地视频':
+                            openVideo();
+                            break;
+                          case '新浪微博分享':
+                            openSinaShare();
+                                break;
+                          case '友盟统计':
+                            openUMengAnalytics();
+                                break;
+                          case '本地分享':
+                            openLocalShare();
+                                break;
+                          case '百度统计':
+                            openBaiduMobStat();
+                                break;
+                          case '百度推送':
+                            openBaiduPush();
+                                break;
+                          case '百度定位':
+                                openBaiduLocation();
+                                break;
+                          case '蓝牙传输':
+                            openBluetoothWindow();
+                                break;
+                          case 'shareSDK功能组合':
+                                openShareSdk();
+                                break; 
+                                case '城市选择':
+                                opencityselector();
+                                break;
+                                case '小米登录':
+                                openXiaomiLogin();
+                                break;
+                                case '人人登录':
+                                openRenrenLogin();
+                                break;
+                            case '打开UI窗口':
+                            openUIWindow();
+                                break;
+                            case '银联支付':
+                                openUnionPay();
+                                break; 
+                            case '阿里移动支付':
+                                openAliPay();
+                                break; 
+                            case '讯飞语音识别':
+                                openIflyVoice();
+                                break; 
+                            case '云之声语音识别':
+                                openYunVoice();
+                                break;
+                            case '云之声语音识别1':
+                                openYunVoice1();
+                                break;
+                            case 'QQ登陆分享':
+                                openQQ();
+                                break;
+                            case '微信分享':
+                                openWX_Share();
+                                break;  
+                            case '掌淘科技短信验证':
+                                openSMS_Verify();
+                                break;
+                            case '腾讯信鸽':
+                                 openTencent_Pigeon();
+                                 break;
+                            case '极光推送':
+                                openAurora_Push(); 
+                                break;
+                            case '云测崩溃分析':
+                                 openTestin_Crash();
+                                 break;
+                            case '日历选择器':
+                                 openCalendar();
+                                 break;
+                            case '京东登陆授权':
+                                 openJdauth();
+                                 break;
+                            case '友盟自动更新':
+                                openUmengUpdate();
+                                break;
+                            case '环信即时通信':
+                                openEaseMob();
+                                break;
+                            case '环信即时通信2':
+                                openEaseMob2();
+                                break;
+                            case '图片裁剪':
+                                openImageTailor();
+                                break;
+                            case '二维码BarCode':
+                                openBarCode();
+                                break;
+                            case 'TestImageView':
+                                openTestImageView();
+                                break;
+                            case '图片压缩':
+                                openImageCompressor();
+                                break;
+                            case '城市列表':
+                                openCityList();
+                                break;
+                            case '文件管理器':
+                                openFile();
+                                break;
+                            case 'popoverView':
+                                openPopoverView();
+                                break;
+                            case 'App':
+                                openApp();
+                                break;
+                            case '画廊':
+                                openPhotoBrowser();
+                                break;
+
+                    }
+                    }
+                });
+   })
+
+        function openImageShower() {
+            var name = 'imageshower';
+			var url = 'imageshower.html';
+			openWindow(name,url);
+        }
+        function openAppWidget() {
+            var name = 'appwidget';
+			var url = 'appwidget.html';
+			openWindow(name,url);
+        }
+        function openTab()
+        {
+            var name = 'navigationtab';
+			var url = 'navigationtab.html';
+			openWindow(name,url);
+        }
+
+        function openNetLinster(){
+            var name = 'networkstate';
+			var url = 'networkstate.html';
+			openWindow(name,url);
+        }
+
+        function openUMengAnalytics()
+        {
+            var name = 'umentAnalytice';
+			var url = 'umentAnalytice.html';
+			openWindow(name,url);
+        }
+        function openSinaShare()
+        {
+            var name = 'sinaWeibo';
+			var url = 'sinaWeibo.html';
+			openWindow(name,url);
+        }
+        function openBluetoothWindow()
+        {
+            var name = 'bluetooth';
+			var url = 'bluetooth.html';
+			openWindow(name,url);
+        }
+        function openLocalShare() {
+            var name = 'localShare';
+			var url = 'localShare.html';
+			openWindow(name,url);
+        }
+        function openBaiduMobStat() {
+            var name = 'baiduMobStat';
+			var url = 'baiduMobStat.html';
+			openWindow(name,url);
+        }
+        function openBaiduPush() {
+            var name = 'baiduPush';
+			var url = 'baiduPush.html';
+			openWindow(name,url);
+        }
+        function openBaiduLocation() {
+            var name = 'baiduLocation';
+			var url = 'baiduLocation.html';
+			openWindow(name,url);
+        }
+function openShareSdk(){
+			var name = 'sharesdk';
+			var url = 'sharesdkmanager.html';
+			openWindow(name,url);
+		}
+		
+		function opencityselector(){
+			var name = 'cityselector';
+			var url ='cityselector.html';
+			openWindow(name,url);
+		}
+		
+		function openXiaomiLogin(){
+		 	var name='xiaomilogin';
+		 	var url='xiaomilogin.html';
+		 	openWindow(name,url);
+		}
+		function openRenrenLogin(){
+			var name='renrenlogin';
+		 	var url='renrenlogin.html';
+		 	openWindow(name,url);
+		}
+
+        function openUIWindow() {
+            var name = 'listview';
+            var url = 'listview.html';
+            openWindow(name, url);
+        }
+
+        function openUnionPay(){
+            var name = 'unionpay';
+            var url = 'unionpay.html';
+            openWindow(name,url);
+		}
+        
+        function openAliPay(){
+            var name = 'AliPayManager';
+            var url = 'alipay.html';
+            openWindow(name,url);
+        }
+        
+        function openIflyVoice(){
+           var name = 'IflyManager';
+           var url = 'xunFeiSpeech.html';
+           openWindow(name,url);
+        }
+        
+        function openYunVoice1(){
+           var name = 'YunVoiceManager';
+           var url = 'yunZhiShengSpeech1.html';
+           openWindow(name,url);
+        }
+
+
+        function openYunVoice(){
+           var name = 'YunVoiceManager';
+           var url = 'yunZhiShengSpeech.html';
+           openWindow(name,url);
+        }
+        
+       function openQQ(){
+           var name = 'QQManager';
+           var url = 'qq.html';
+           openWindow(name,url);
+       }
+       function openWX_Share() {
+		 <!--var name = 'WxShareManager';-->
+		 <!--var url = 'wx_share.html';-->
+		 var name = 'WxShareManager';
+		 var url = 'wechat.html';
+		 openWindow(name, url);
+	    }
+        
+        function openSMS_Verify(){
+          var name = 'SmsManager';
+          var url = 'sms.html';
+          openWindow(name, url);
+        }
+    
+        
+        function openTencent_Pigeon(){
+           var name = 'TxxgPushManager';
+           <!--var url = 'txxg_push.html';-->
+           var url = 'xgPush.html';
+           openWindow(name, url);
+         }
+         
+        function openAurora_Push(){
+          var name = 'jpush';
+          var url = 'jpush.html';
+          openWindow(name, url);
+        }
+        
+        function openTestin_Crash(){
+          var name = 'testincrash';
+          var url = 'testincrash.html';
+          openWindow(name, url);
+        }
+
+        function openCalendar(){
+          var name = 'calendar';
+          var url = 'calendar.html';
+          openWindow(name, url);
+        }
+
+        function openJdauth(){
+          var name = 'jdauth';
+          var url = 'jdauth.html';
+          openWindow(name, url);
+        }
+
+        function openUmengUpdate(){
+          var name = 'umengupdate.html';
+          var url = 'umengupdate.html';
+          openWindow(name, url);
+        }
+
+        function openEaseMob(){
+          var name = 'easemob3';
+          var url = 'easemob3.html';
+          openWindow(name, url);
+        }
+
+        function openEaseMob2(){
+          var name = 'easemob2';
+          var url = 'easemob2.html';
+          openWindow(name, url);
+        }
+        function openImageTailor(){
+            var name = 'imageTailor';
+            var url = 'imageTailor.html';
+            openWindow(name,url);
+        }
+
+        function openBarCode(){
+			var name = 'BarCode';
+            var url = 'barcode.html';
+            openWindow(name,url);
+		}
+        function openTestImageView(){
+			var name = 'imgTest';
+            var url = 'imgTest.html';
+            openWindow(name,url);
+		}
+        function openImageCompressor(){
+			var name = 'imageCompressor';
+            var url = 'imageCompressor.html';
+            openWindow(name,url);
+		}
+        function openCityList(){
+			var name = 'cityList';
+            var url = 'cityList.html';
+            openWindow(name,url);
+		}
+        function openPhotoBrowser(){
+			var name = 'photoBrowser';
+            var url = 'photobrowser.html';
+            openWindow(name,url);
+		}
+        function openPopoverView(){
+			var name = 'popoverView';
+            var url = 'popoverView.html';
+            openWindow(name,url);
+		}
+        function openApp(){
+			var name = 'app';
+            var url = 'app.html';
+            openWindow(name,url);
+		}
+
+		function openVideo(){
+		    var name = 'VideoPlayer';
+            var url = 'video.html';
+            openWindow(name,url);
+		}
+
+		function openFile(){
+            var name = 'FileManager';
+            var url = 'file.html';
+            openWindow(name, url);
+        }
+
+
+        //var windowName = RD.window.name;
+        //RD.window.onLoad = function() {
+         //   console.log(windowName + ' onload.................');
+        //};
+        //console.log("RD.window.name: " + RD.window.name);
+        windowName = "testtest11111";
+        onLoad = function() {
+            console.log(windowName + ' onload.................');
+        };
+
+        //RD.window.onForeground = function() {
+        //    console.log(windowName + ' onforeground.............');
+        //}
+        onForeground = function() {
+            console.log(windowName + ' onforeground.............');
+        }
+
+       // RD.window.onBackground = function() {
+        //    console.log(windowName + ' onBackground............');
+        //}
+        onBackground = function() {
+            console.log(windowName + ' onBackground............');
+        }
+
+       // RD.window.onDestroy = function() {
+        //    console.log(windowName + ' onDestroy...............');
+       // }
+
+       onSizeChanged = function() {
+             console.log(windowName + " onSizeChanged...........");
+       }
+
+       function openWindow(name,url){
+            var componentName = 'main';
+            var windowName = name;
+            var type = 0;
+            openWindow1(windowName, type, url);
+           //openWindowByComponent(componentName, windowName, type, url);
+        }        
+        
+        function openWindow1(windowName, type, data){
+            //var rdWindow = RD.framework.get('Rdwindow');
+            rd.window.openWindow(windowName, type, data);
+        }
+        
+        onDestroy = function() {
+            console.log(windowName + ' onDestroy...............');
+        }
+
+
+</script>
+</html>

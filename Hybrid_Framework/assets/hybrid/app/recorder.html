@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+        <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+            .component{
+            	padding: 10px
+            }
+            .ui-btn-block{
+            	padding: 10px
+            }
+            .ui-btn-green{
+            	color: #fff;
+			  	background-color: #4cd964;
+			  	border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+            	color: #fff;
+  				background-color: #007aff;
+  				border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+            	color: #fff;
+  				background-color: #dd524d;
+  				border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+            	color: #fff;
+			  	background-color: #44243d;
+			  	border: 1px solid #44243d;
+            }
+
+        </style>
+		
+	</head>
+	<body>
+		<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">录音</h1>
+  		</header>
+		<div class="ui-content component">
+			<center><pre>播放本地音乐</pre></center>
+	        <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+	            开始录音
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+	            停止录音
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+	            播放录音
+	        </button>
+	        <button type="button" class="ui-btn ui-btn-green ui-btn-block">
+	            停止播放录音
+	        </button>
+		</div>
+        <script src="co/co.js"></script>
+	</body>
+	<script type="text/javascript">
+
+			domReady(function(require){
+              $('button.ui-btn').button(function(el,evt){
+                  var text = el.innerText;
+                  switch (text) {
+                        case '开始录音':
+                            record();
+                            break;
+                        case '停止录音':
+                            stop();
+                            break;
+                        case '播放录音':
+                            play();
+                            break;
+                        case '停止播放录音':
+                            stopPlay();
+                            break;
+                    }
+              })
+          });
+
+		    var am = null;
+            var player = null;
+            var audioFile = null;
+			function record() {
+			    if (!player) {
+			        console.log("record----------------------------");
+			        player = am.getRecorder();
+			        var recordOption = {
+						filename:'cache://recorder/record.aac',
+						samplerate:'44100',
+						format:'aac'
+					};
+                    player.record(recordOption, function(){audioFile = arguments[0]; alert(audioFile);}, function(){alert(arguments[0]);});
+                }
+			}
+
+			function stop() {
+			    if (player != null) {
+			        player.stop();
+			        player = null;
+			    }
+			}
+
+			var player1 = null;
+			function play() {
+			    if(audioFile && !player1) {
+			        player1 = am.createPlayer(audioFile);
+                    player1.play(function(){alert(arguments[0]);}, function(){alert(arguments[0]);});
+			    }
+			}
+
+			function stopPlay() {
+                if(player1){
+                    player1.stop();
+                    player1 = null;
+                }
+			}
+
+            var windowName = RD.window.name;
+            function onLoad() {
+                console.log(windowName + ' onload.................');
+                am = rd.audio;
+            };
+
+            function onForeground() {
+                console.log(windowName + ' onforeground.............');
+            }
+
+            function onBackground() {
+                console.log(windowName + ' onBackground............');
+            }
+
+            function onDestroy() {
+                console.log(windowName + ' onDestroy...............');
+            }
+		</script>
+</html>

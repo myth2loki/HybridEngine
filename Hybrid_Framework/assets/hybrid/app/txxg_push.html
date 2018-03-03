@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+     <link rel="stylesheet" href="co/css/co.css">
+     <style type="text/css">
+        html,body {
+                background-color: #efeff4;
+            }
+        .ui-bar-nav ~ .ui-content{
+              padding-top: 60px
+            }
+     </style>
+</head>
+<script type="text/javascript">
+function receiveMessage(state) {
+		alert(JSON.stringify(state));
+	}
+	function errorInfo(state) {
+		alert(JSON.stringify(state));
+	}
+	function successCallBack(state) {
+		alert(state);//JSON.stringify(
+	}
+	function failCallBack(state) {
+		alert(state);
+	}
+	var txxg=null;
+	function doinit() {
+		//alert(accessid);
+		<!--if (rd.XGPush.isUnregistered()) {-->
+			txxg = rd.XGPush;
+			txxg.registe({accessID: '2100132303' , accessKey: 'AG9U8B5M1N5L'}, function() {alert('初始化成功');}, function() {alert('初始化失败');});
+		<!--}-->
+	}
+
+
+	function doreg() {
+		txxg = rd.XGPush;
+		txxg.addCallBack(receiveMessage, errorInfo);
+	}
+
+	function dounReg() {
+		txxg = rd.XGPush;
+		txxg.removeCallBack();
+	}
+
+	function dosetTag() {
+		var tag = document.getElementById("settag").value;
+		//alert(tag);
+		txxg = rd.XGPush;
+		txxg.setTag(tag,successCallBack, failCallBack);
+	}
+
+	function dodeleteTag() {
+		var tag = document.getElementById("deletetag").value;
+		//alert(tag);
+		txxg = rd.XGPush;
+		txxg.deleteTag(tag,successCallBack, failCallBack);
+	}
+
+	function doclearCache() {
+		txxg = rd.XGPush;
+		txxg.setBadge(successCallBack);
+	}
+
+	function doisUnRegisterStatus() {
+		txxg = rd.XGPush;
+		if(isUnRegistered()){
+		    alert("这是个空方法!");
+		}else{
+		    alert("这是个空方法！");
+		}
+	}
+
+</script>
+<body>
+		<header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">腾讯信鸽推送</h1>
+  </header>
+  <div class="ui-content">
+        <div class="ui-content-padded" style="margin: 5px;">
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="doinit();">注册推送服务</button>
+			<button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="doreg();">注册消息回调</button>
+			<button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="dounReg();">反注册</button>
+			<div>
+                <p>请输入标签名</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="settag" id="settag"
+			class="ui-input-clear" />
+            </div>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="dosetTag();">设置标签</button>
+            <div>
+                <p>请输入要删除的标签名称</p>
+            </div>
+            <div class="ui-input-row">
+                <input type="text"
+			style="font-size: 15px;" name="deletetag" id="deletetag"
+			class="ui-input-clear" />
+            </div>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="dodeleteTag();">删除标签</button>
+			<button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="doclearCache();">设置通知角标个数</button>
+			<button type="button" class="ui-btn ui-btn-blue ui-btn-block "
+			onclick="doisUnRegisterStatus();">判断当前是否是已注销状态</button>
+        </div> 
+     </div>   
+</body>
+</html>
+

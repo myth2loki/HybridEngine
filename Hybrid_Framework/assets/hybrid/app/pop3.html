@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-btn-red{
+                color: #fff;
+                background-color: #dd524d;
+                border: 1px solid #dd524d;
+            }
+            .ui-btn-black{
+                color: #fff;
+                background-color: #44243d;
+                border: 1px solid #44243d;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+        <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">pop3</h1>
+        </header>
+        <div class="ui-content component">
+            <center><pre>This is pop3</pre></center>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                放到pop2下面
+            </button>
+            <button type="button" class="ui-btn ui-btn-blue ui-btn-block">
+                返回到root
+            </button>
+        </div>
+        <script src="co/co.js"></script>
+<script type="text/javascript">
+        domReady(function(require){
+                $('button.ui-btn').button(function(el,evt){
+                    var text = el.innerText;
+                    switch (text) {
+                        case '放到pop2下面':
+                            belowToPop2();
+                            break;
+                        case '返回到root':
+                            backToRoot();
+                            break;
+                    }
+                })
+            });
+        function backToRoot() {
+            rd.window.backToWindow("root");
+        }
+        function belowToPop2() {
+            rd.window.bringPopoverBelow("pop3", "pop2");
+        }
+
+        function setPopFrame(){
+            var x1 = 100;
+            var y1 = 300;
+            var w = 500;
+            var h = 800;
+            rd.window.setPopoverRect({x:x1, y:y1, width:w, height:h});
+        }
+</script>
+</body>
+</html>

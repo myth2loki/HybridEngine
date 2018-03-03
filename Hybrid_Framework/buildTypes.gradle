@@ -1,0 +1,124 @@
+import java.text.SimpleDateFormat
+
+android {
+    signingConfigs {
+        release {
+            keyAlias SIGN_KEY_ALIAS
+            keyPassword SIGN_ALIAS_PWD
+            storeFile file(project.SIGN_STORE_PATH)
+            storePassword project.SIGN_STORE_PWD
+        }
+//        appLoader {
+//            keyAlias 'app_loader'
+//            keyPassword '123456'
+//            storeFile file("sign/369cloud.jks")
+//            storePassword '123456'
+//        }
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "boolean", "APP_LOADER", "false"
+            buildConfigField "boolean", "COPY_RESOURCE", "false"
+            minifyEnabled false
+            //打包自动删除那些不使用的资源
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                for (flavor in variant.productFlavors) {
+                    genAPKName1(variant, flavor)
+                }
+            }
+            manifestPlaceholders = [APP_NAME : project.APP_NAME, rd_statistics_url : "http://test-dev.369cloud.com/interface"]//release
+        }
+        /** 打第三方插件开发依赖库所用 **/
+//        hde_obfuscated {
+//            buildConfigField "boolean", "APP_LOADER", "false"
+//            buildConfigField "boolean", "COPY_RESOURCE", "true"
+//            minifyEnabled false
+//            //打包自动删除那些不使用的资源
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            debuggable true
+//            signingConfig signingConfigs.release
+//            manifestPlaceholders = [APP_NAME : project.APP_NAME, rd_statistics_url : "http://test-dev.369cloud.com/interface"]
+//        }
+        debug {
+            buildConfigField "boolean", "APP_LOADER", "false"
+            buildConfigField "boolean", "COPY_RESOURCE", "true"
+            minifyEnabled false
+            //打包自动删除那些不使用的资源
+            shrinkResources true
+            zipAlignEnabled true
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [rd_statistics_url : "http://test-dev.369cloud.com/interface"]//test
+        }
+//        appLoader {
+//            buildConfigField "boolean", "APP_LOADER", "true"
+//            buildConfigField "boolean", "COPY_RESOURCE", "false"
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            debuggable true
+//            signingConfig signingConfigs.appLoader
+//            manifestPlaceholders = [APP_NAME : project.APP_NAME, rd_statistics_url : "http://192.168.248.111/interface"]//dev
+//
+//        }
+    }
+}
+
+def genAPKName1(variant, config) {
+//    println "aa--> " + config.name
+    if (variant.buildType.isDebuggable() || variant.buildType.name == android.buildTypes.appLoader.name) {
+        return
+    }
+    def sdf = new SimpleDateFormat("yyyyMMddHHmmss")
+    def curTime = "_" + sdf.format(new Date());
+    variant.outputs.each { output ->
+        def pName = config.name
+        if (output.zipAlign) {
+            def file = output.outputFile
+            def fileName = project.APP_NAME + "_" + project.VERSION_NAME + curTime + "_" + pName + ".apk"
+            output.outputFile = new File(file.parent, fileName)
+        } else {
+            def file = output.packageApplication.outputFile
+            def fileName = project.APP_NAME + "_" + project.VERSION_NAME + curTime + "_" + pName + ".apk"
+            output.packageApplication.outputFile = new File(file.parent, fileName)
+        }
+    }
+}
+
+///**
+// * 改名操作
+// * @param variant
+// * @param defaultConfig
+// * @return
+// */
+//def genAPKName(variant, config) {
+//    def sdf = new SimpleDateFormat("yyyyMMddHHmmss")
+//    def curTime = "_" + sdf.format(new Date());
+//    //def curTime = System.currentTimeMillis()
+//
+//    variant.outputs.each { output ->
+//        if (variant.buildType.isDebuggable() || variant.buildType.name == android.buildTypes.appLoader.name) {
+//            return
+//        }
+//
+////        def sdf = new SimpleDateFormat("yyyyMMddHHmmss")
+////        def curTime = "_" + sdf.format(new Date());
+//        //def curTime = System.currentTimeMillis()
+//
+//        if (output.zipAlign) {
+//            def file = output.outputFile
+//            def fileName = project.APP_NAME + '_' + project.APP_ID + "_" + config.getName() + "_" + project.VERSION_NAME + curTime + ".apk"
+//            output.outputFile = new File(file.parent, fileName)
+//        } else {
+//            def file = output.packageApplication.outputFile
+//            def fileName = project.APP_NAME + '_' + project.APP_ID + "_" + config.getName() + "_" + project.VERSION_NAME + curTime + ".apk"
+//            output.packageApplication.outputFile = new File(file.parent, fileName)
+//        }
+//
+//    }
+//}

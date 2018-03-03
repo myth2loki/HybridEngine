@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <!--<link rel="stylesheet" href="co/css/co.css">-->
+    <style>
+        html,body {
+        background-color: #efeff4;
+        }
+        .component{
+        padding: 10px
+        }
+        .ui-btn-block{
+        padding: 10px
+        }
+        .ui-btn-green{
+        color: #fff;
+        background-color: #4cd964;
+        border: 1px solid #4cd964;
+        }
+        .ui-btn-blue{
+        color: #fff;
+        background-color: #007aff;
+        border: 1px solid #007aff;
+        }
+        .ui-btn-red{
+        color: #fff;
+        background-color: #dd524d;
+        border: 1px solid #dd524d;
+        }
+        .ui-btn-black{
+        color: #fff;
+        background-color: #44243d;
+        border: 1px solid #44243d;
+        }
+        .ui-bar-nav ~ .ui-content{
+        padding-top: 60px
+        }
+    </style>
+    <!--  Style -->
+</head>
+<body>
+<header class="ui-bar ui-bar-nav">
+    <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+    <h1 class="ui-title">插件-imageshower</h1>
+</header>
+<div class="ui-content component">
+<input type="text" id="tvTitle" value="我是标题"/>
+    <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+        显示
+    </button>
+    <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+        设置标题
+    </button>
+    <button type="button" class="ui-btn ui-btn-red ui-btn-block">
+        移除
+    </button>
+</div>
+<script src="co/co.js"></script>
+</body>
+<script type="text/javascript">
+	        var demo ;
+		domReady(function(require) {
+                $('button.ui-btn').button(function(el,evt) {
+                    var text = el.innerText;
+                    switch (text) {
+                        case '显示':
+                            show();
+                            break;
+                        case '设置标题':
+                            setTitle();
+                            break;
+                        case '移除':
+                            removeImageShower();
+                            break;
+                    }
+                });
+
+            });
+        function onLoad() {
+            <!--demo = rd.require("imageShower");-->
+        }
+		function successCallback(msg) {
+			<!--alert(msg);-->
+		}
+
+		function setTitle() {
+			demo.setTitle(document.getElementById("tvTitle").value);
+		}
+		function removeImageShower() {
+			demo.remove();
+		}
+	     function show() {
+            demo = rd.require("imageShower");
+            demo.setFrame({x:0,y:400,width:0,height:700});
+             var images = ["http://f.hiphotos.baidu.com/image/pic/item/ac4bd11373f08202f7fce43e49fbfbedab641b40.jpg",
+                            "http://h.hiphotos.baidu.com/image/pic/item/71cf3bc79f3df8dc46729390cf11728b47102867.jpg",
+                            "http://a.hiphotos.baidu.com/image/pic/item/ac6eddc451da81cbb93fe1c45066d016082431d9.jpg",
+                               "http://g.hiphotos.baidu.com/image/pic/item/7aec54e736d12f2ebf82e1674dc2d56285356835.jpg"];
+
+            demo.setImages(images,successCallback);
+            demo.show();
+	    }
+	</script>
+</html>

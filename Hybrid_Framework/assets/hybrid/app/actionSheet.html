@@ -1,0 +1,23 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title></title>
+    <script type="text/javascript">
+		function actionSheetSeclectedButtonIndexCallback(success){
+           alert(success);
+        }
+        var params = {title:'底部弹出框测试',
+                 cancelTitle:'这里是取消按钮',
+                 destructiveTitle:'红色警告按钮',
+                 buttons:['相册','视频','手机','哈哈哈'],
+                      };
+		function showActionSheet(){
+		    //alert(2);
+            rd.actionSheet.show(params, actionSheetSeclectedButtonIndexCallback);
+        }
+	</script>
+</head>
+<body>
+<input type="button" value="显示actionSheet" onclick="showActionSheet()"/>
+</body>
+</html>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+    <link rel="stylesheet" href="co/css/co.css">
+        <style>
+            html,body {
+                background-color: #efeff4;
+            }
+             .component{
+                padding: 10px
+            }
+            .ui-btn-block{
+                padding: 10px
+            }
+            .ui-btn-green{
+                color: #fff;
+                background-color: #4cd964;
+                border: 1px solid #4cd964;
+            }
+            .ui-btn-blue{
+                color: #fff;
+                background-color: #007aff;
+                border: 1px solid #007aff;
+            }
+            .ui-bar-nav ~ .ui-content{
+                padding-top: 60px
+            }
+        </style>
+   <!--  Style -->
+</head>
+<body>
+    <header class="ui-bar ui-bar-nav">
+            <a class="ui-action-back ui-icon ui-icon-left-nav ui-pull-left"></a>
+            <h1 class="ui-title">功能</h1>
+    </header>
+    <div  class="ui-content component" id='treeview'>
+        <ul class="ui-table-view">
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            actionSheet
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开Progress
+                        </a>
+                    </li>
+
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开加速计
+                        </a>
+                    </li>
+
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开音频播放
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开音频插件播放
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开照相功能
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开设备功能
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                           短信功能
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开定位功能
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开下载功能
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开storage功能
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开zip功能
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开gallery功能
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开popup功能
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开cpt1模块
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            调定窗口大小
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开输入法
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            打开窗口测试
+                        </a>
+                    </li>
+
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            testOpenWindow1
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            事件总线
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            log打印
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            联系人Contacts
+                        </a>
+                    </li><li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            模块更新
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            创建SlideMenu抽屉
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            左抽屉
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            右抽屉
+                        </a>
+                    </li>
+                    <li class="ui-table-view-cell">
+                        <a class="ui-navigate-right">
+                            关闭抽屉
+                        </a>
+                    </li>
+
+            <li class="ui-table-view-cell">
+                <input type="text" id="tvSlide" value="all"/>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    锁住抽屉
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    解锁抽屉
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    properties
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    Http
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    refresh
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    数据库管理
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    弹框提醒
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    锁定屏幕
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    解除锁定
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    测试SocketManager
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    converflow
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    openUrl
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    通过html代码打开
+                </a>
+            </li>
+            <li class="ui-table-view-cell">
+                <a class="ui-navigate-right">
+                    APP
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+<script src="co/co.js"></script>
+</body>
+<script>
+    domReady(function(require){
+        require('treeview')
+        $('#treeview').treeview({
+                    callback:function(el,evt){
+                        var url = evt.target.innerText;
+                        switch (url) {
+                            case 'actionSheet':
+                                openActionSheet();
+                                break;
+                            case '打开Progress':
+                                openProgress();
+                                break;
+                            case '打开加速计':
+                                openAccelerometer();
+                                break;
+                            case '打开音频播放':
+                                openAudio();
+                                break;
+                            case '打开音频插件播放':
+                                openPluginAudio();
+                                break;
+                            case '打开照相功能':
+                                openCameraManager();
+                                break;
+                            case '打开设备功能':
+                                openDevice();
+                                break;
+                            case '短信功能':
+                                openMessage();
+                                break;
+                            case '打开定位功能':
+                                openGeolocation();
+                                break;
+                            case '打开下载功能':
+                                openDownloader();
+                                break;
+                            case '打开storage功能':
+                                openStorage();
+                                break;
+                            case '打开zip功能':
+                                openZip();
+                                break;
+                            case '打开gallery功能':
+                                openGallery();
+                                break;
+                            case '打开popup功能':
+                                openPopPage();
+                                break;
+                            case '打开cpt1模块':
+                                openCpt1();
+                                break;
+                            case '调定窗口大小':
+                                setComponentFrame();
+                                break;  
+                            case '打开输入法':
+                                showSoftKeyboard();
+                                break;  
+                            case '打开窗口测试':
+                                openTestWindow();
+                                break;  
+                            //case '打开UI窗口':
+                            //  openUIWindow();
+                            //    break;
+                            case 'testOpenWindow1':
+                                testOpenWindow1();
+                                break;  
+                            case '事件总线':
+                                openEvent();
+                                break;  
+                            case 'log打印':
+                                openLog();
+                                break;  
+                            case '联系人Contacts':
+                                openContacts();
+                                break;
+                            case '模块更新':
+                                openModuleUpdate();
+                            	break;
+                            case '创建SlideMenu抽屉':
+								openSlideLayout();
+								break;
+                            case '左抽屉':
+								openSlidePane('left');
+								break;
+                            case '右抽屉':
+								openSlidePane('right');
+								break;
+                            case '关闭抽屉':
+								closeSlidePane();
+								break;
+                            case '锁住抽屉':
+								lockSlidePane();
+								break;
+                            case '解锁抽屉':
+								unlockSlidePane();
+								break;
+								case 'properties':
+								openProperties();
+								break;
+								case 'Http':
+								openHttp();
+								break;
+								case '数据库管理':
+								openDataBase();
+								break;
+								case 'refresh':
+                                  refresh();
+								break;
+                            case '弹框提醒':
+                                openPrompt();
+                            break;
+                            case '锁定屏幕':
+                                rd.window.lockRotate(true);
+                                break;
+                            case '解除锁定':
+                                rd.window.lockRotate(false);
+                                break;
+
+                            case '测试SocketManager':
+                                testSocketManager();
+                                break;
+
+                            case 'converflow':
+                                converflow();
+                                break;
+
+                            case 'openUrl':
+                                openUrl();
+                                break;
+                            case '通过html代码打开':
+                                openWindowByHtml();
+                                break;
+                            case 'APP':
+                                openAppHtml();
+                                break;
+                    }
+                    }
+                });
+   })
+
+        function testSocketManager() {
+            var name = 'testSocketManager';
+            var url = 'testSocketManager.html';
+            openWindow(name,url);
+        }
+
+        function converflow() {
+            var name = 'ConverFlow';
+            var url = 'converFlow1.html';
+            openWindow(name,url);
+        }
+
+
+        function openCpt1() {
+            rd.window.openComponent("cpt1", "");
+        }
+
+        function openProgress(){
+            var name = 'progress';
+            var url = 'progress.html';
+            openWindow(name, url);
+        }
+
+        //function openUIWindow() {
+        //    var name = 'listview';
+        //    var url = 'listview.html';
+        //    openWindow(name, url);
+        //}
+
+        function openAccelerometer(){
+            var name = 'Accelerometer';
+            var url = 'Accelerometer.html';
+            openWindow(name, url);
+        }
+
+        function openAudio(){
+            var name = 'Audio';
+            var url = 'audio3.html';
+            openWindow(name, url);
+        }
+
+        function openPluginAudio(){
+            var name = 'Audio_Plugin';
+            var url = 'audio_plugin.html';
+            openWindow(name, url);
+        }
+
+        function openCameraManager(){
+            var name = 'CameraManager';
+            var url = 'CameraManager.html';
+            openWindow(name, url);
+        }
+        function openHttp(){
+            var name = 'http';
+            var url = 'http.html';
+            openWindow(name, url);
+        }
+
+        function openDevice(){
+            var name = 'device';
+            var url = 'device.html';
+            openWindow(name, url);
+        }
+
+        function openMessage(){
+            var name = 'Message';
+            var url = 'Message.html';
+            openWindow(name, url);
+        }
+
+        function openWindow(name,url){
+            var componentName = 'main';
+            var windowName = name;
+            var type = 0;
+            openWindow1(windowName, type, url);
+           //openWindowByComponent(componentName, windowName, type, url);
+        }
+
+        function openGeolocation(){
+            var name = 'Geolocation';
+            var url = 'geolocation.html';
+            openWindow(name, url);
+        }
+        
+        function openDownloader(){
+            var name = 'Downloader';
+            var url = 'downloader.html';
+            openWindow(name, url);
+        }
+        
+        function openStorage(){
+            var name = 'StorageManager';
+            var url = 'storage.html';
+            openWindow(name, url);
+        }
+        
+        function openZip(){
+            var name = 'ZipManager';
+            var url = 'zip.html';
+            openWindow(name, url);
+        }
+        
+        function openGallery(){
+            var name = 'Gallery';
+            var url = 'gallery.html';
+            openWindow(name, url);
+        }
+        function openProperties(){
+            var name = 'properties';
+            var url = 'properties.html';
+            openWindow(name, url);
+        }
+
+        function openPopPage(){
+            var name = 'popWindow';
+            var url = 'pop.html';
+            openWindow(name,url);
+        }
+
+        function openTestWindow(){
+            var name = 'window1';
+            var url = 'window1.html';
+            openWindow(name,url);
+        }
+	
+
+		function refresh(){
+			var name = 'rereshing';
+            var url = 'rereshing.html';
+            rd.window.openWindow(name, '0', url);
+		}
+
+
+		
+
+		function openContacts(){
+			var name = 'ContactsManager';
+			var url = 'contacts.html';
+			openWindow(name,url);
+		}
+
+        function openActionSheet(){
+            var name = 'actionSheet';
+            var url = 'actionSheet.html';
+            openWindow(name, url);
+        }
+
+
+        onLoad = function() {
+            console.log(rd.window.name + ' onload.................');
+        };
+
+        onForeground = function() {
+            console.log(rd.window.name + ' onforeground.............');
+        }
+
+        onBackground = function() {
+            console.log(rd.window.name + ' onBackground............');
+        }
+
+       onSizeChanged = function() {
+             console.log(rd.window.name + " onSizeChanged...........");
+       }
+
+        function setComponentFrame(){
+            var componentName = 'main';
+            var x = 200;
+            var y = 0;
+            var width = 1000;
+            var height = 1920;
+            var window = rd.window;
+            window.setComponentFrame(componentName, x, y, width, height);
+        }
+        onDestroy = function() {
+            console.log(rd.window.name + ' onDestroy...............');
+        }
+
+        function showSoftKeyboard(){
+            var window = rd.window;
+            window.showSoftKeyboard(' ');
+        }
+
+        function testOpenWindow1(){
+            var name = 'test';
+            var url = 'test.html';
+            testOpenWindow(name, url);
+        }
+
+
+        function testOpenWindow(windowName,url){
+            openWindow1(windowName,0,url);
+        }
+
+        function openWindowByComponent(componentName, windowName, type, data){
+            var window = RD.framework.get('window');
+            window.openWindowByComponent(componentName, windowName, type, data);
+        }
+
+        function openWindow1(windowName, type, data){
+            //var window = RD.framework.get('window');
+            rd.window.openWindow(windowName, type, data);
+        }
+         function openEvent(){
+            var window = rd.window;
+            window.openWindow('eventpop3', 0, 'eventpop3.html');
+        }
+
+        function openLog(){
+            var name = 'Log';
+            var url = 'Log.html';
+            openWindow(name, url);
+        }
+        
+        function openModuleUpdate() {
+			var name = 'ModuleUpdate';
+            var url = 'module_update.html';
+            openWindow(name, url);
+		}
+		
+		function onSuccess(p) {
+                alert(p);
+        }
+        
+		function openSlideLayout() {
+	var params = {
+
+                type: 'all',
+                leftEdge:100,
+                rightEdge:100,
+                leftPane: {
+                    name: 'Drawer1',
+                    url: 'index.html',
+                  //  bgColor: '#0000FF',
+                    bounces:true,
+                    vScrollBarEnabled:true,//只在iOS下有效
+                    hScrollBarEnabled:false,//只在iOS下有效
+                    scaleEnabled:true
+                },
+              rightPane: {
+                    name: 'Drawer2',
+                    url: 'index.html',
+                   // bgColor: '#0000FF',
+                    bounces:true,
+                   vScrollBarEnabled:true,//只在iOS下有效
+                   hScrollBarEnabled:false,//只在iOS下有效
+                    scaleEnabled:true
+                }};
+rd.window.setSlideLayout(params);
+
+
+			 <!--var params = {-->
+                <!--type: 'all',-->
+                <!--leftEdge:200,-->
+                <!--rightEdge:150,-->
+                <!--leftPane: {-->
+                    <!--name: 'leftPage',-->
+                    <!--url: 'index.html',-->
+                    <!--bgColor: '#FFB6C1',-->
+                    <!--bounces:true,-->
+                    <!--vScrollBarEnabled:true,-->
+                    <!--hScrollBarEnabled:false-->
+                <!--},-->
+                <!--rightPane: {-->
+                    <!--name: 'rightPage',-->
+                    <!--url: 'index.html',-->
+                    <!--bgColor: '#DA70D6',-->
+                    <!--bounces:true,-->
+                    <!--vScrollBarEnabled:true,-->
+                    <!--hScrollBarEnabled:false-->
+                <!--}-->
+            <!--}-->
+            <!--rd.window.setSlideLayout(params);-->
+            //忽略手势
+			<!--var params2 = {-->
+ 				<!--x:0,-->
+ 				<!--y:0,-->
+ 				<!--width:0,-->
+ 				<!--height:0-->
+ 			<!--};-->
+ 			<!--rd.window.addIgnoreArea(params2);-->
+		}
+		
+		function openSlidePane(args) {
+			<!--rd.window.openSlidePane("{type:'"+args+"'}");-->
+			 var SlideParams = {
+                    type : args
+                };
+			rd.window.openSlidePane(SlideParams);
+		}
+		
+		function closeSlidePane() {
+			rd.window.closeSlidePane();
+		}
+		function lockSlidePane() {
+			rd.window.lockSlidePane(document.getElementById("tvSlide").value);
+		}
+		function unlockSlidePane() {
+			rd.window.unlockSlidePane(document.getElementById("tvSlide").value);
+		}
+
+
+		function openDataBase(){
+		    var name = 'database';
+            var url = 'database.html';
+            openWindow(name, url);
+		}
+        function openPrompt()
+		{
+		    var name = 'prompt';
+            var url = 'prompt.html';
+            openWindow(name, url);
+		}
+
+		function run_from(content) {
+		    alert("content: " + content);
+		}
+
+		function openUrl() {
+		    rd.window.openWindow('baidu_webpage', 2, 'http://www.baidu.com');
+		}
+
+		function openImageCompressor() {
+		    openWindow('imageCompressor', 'imageCompressor.html');
+		}
+
+		function openWindowByHtml() {
+            //var html = "<!DOCTYPE html><html><head><meta charset=\"utf-8\"/><title>通过html代码打开</title></head><body><br/><br/><h1>通过html代码打开</h1><br/><input type='button' value='字符串' ></body></html>";
+            //rd.window.openWindow("html_window", rd.window.WEBVIEW_LOCAL_STRING, html);
+            rd.window.openWindow("window_test", 0, "window_test.html");
+       }
+       function openAppHtml(){
+            var name = 'app';
+            var url = 'app.html';
+            openWindow(name,url);
+       }
+   </script>
+</html>

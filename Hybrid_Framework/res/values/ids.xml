@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="framework_plugin_list"></item>
+    <item type="id" name="plugin_list"></item>
+    <item type="id" name="window_plugin_list"></item>
+    <item type="id" name="js_map"></item>
+    <item type="id" name="id_component_root"></item>
+
+    <item type="id" name="internal_js_map"></item>
+    <item type="id" name="third_plugin_list"></item>
+    <item type="id" name="id_root"></item>
+    <item type="id" name="third_js_map"></item>
+
+    <item type="id" name="type_url_title_bar"></item>
+    <item type="id" name="type_url_bottom_bar"></item>
+
+
+</resources>

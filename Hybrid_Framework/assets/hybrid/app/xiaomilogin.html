@@ -1,0 +1,44 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>ff</title>
+
+<script type="text/javascript">
+
+function Callback(state){
+		var xiaomi = rd.require("XiaomiLoginManager");
+    	if('0' === state){
+     	 alert('state:'+"成功");
+     	}else if('1' === state){
+     	 alert('state:'+"失败");
+     	}else if('3' === state){
+     	 alert('state:'+"没有登录");
+     	}else if('2' === state){
+     	alert('state:'+"取消");
+     	}else{
+     	}
+    }
+    
+    function jsonCallback(info){
+    	alert('info='+info+';info.description:'+info.description)
+     	 console.log(info);
+    }
+
+    function login(){
+     rd.require("XiaomiLoginManager").login(Callback);
+    }
+    function getprofile(){
+        rd.require("XiaomiLoginManager").getprofile(jsonCallback);
+    }
+    function getfriend(){
+        rd.require("XiaomiLoginManager").getfriend(jsonCallback);
+    }
+	</script>
+</head>
+<body>
+	<input type="submit" value="登录" onclick="login();"/>
+	<input type="submit" value="获取个人信息 " onclick="getprofile();"/>
+	<input type="submit" value="获取好友列表" onclick="getfriend();"/>
+	<div style="font-size:22px" class="tcxx" id="adre"></div>
+</body>
+</html>
