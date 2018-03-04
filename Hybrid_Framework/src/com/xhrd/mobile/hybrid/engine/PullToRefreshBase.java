@@ -17,7 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 
-import com.xhrd.mobile.hybrid.framework.Manager.ResManagerFactory;
+import com.xhrd.mobile.hybrid.framework.manager.ResManagerFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;

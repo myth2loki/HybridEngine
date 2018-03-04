@@ -3,7 +3,7 @@ package com.xhrd.mobile.hybrid.util;
 import android.util.Log;
 
 import com.xhrd.mobile.hybrid.engine.RDEncryptHelper;
-import com.xhrd.mobile.hybrid.framework.Manager.ResManagerFactory;
+import com.xhrd.mobile.hybrid.framework.manager.ResManagerFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

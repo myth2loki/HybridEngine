@@ -280,7 +280,7 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
             @Override
             public void run() {
                 if (info.type == RDCloudOriginalView.DATA_TYPE_ASSET) {
-                    String path = "file:///android_asset/hybrid/App" + File.separator + info.data ;
+                    String path = "file:///android_asset/hybrid/app" + File.separator + info.data ;
                     loadUrl(path);
                 } else if (info.type == RDCloudOriginalView.DATA_TYPE_TEXT) {
                     loadData(info.data, "text/html; charset=utf-8", null);

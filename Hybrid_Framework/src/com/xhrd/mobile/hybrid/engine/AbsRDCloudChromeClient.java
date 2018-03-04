@@ -84,10 +84,7 @@ public abstract class AbsRDCloudChromeClient extends WebChromeClient {
                 }
             }
 
-            Object tempRet = null;
-            if (PluginManager.isFrameworkCall(message)) {
-                tempRet = HybridEnv.getPluginManager().exec((RDCloudView) view, message, params, result);
-            }
+            Object tempRet = HybridEnv.getPluginManager().exec((RDCloudView) view, message, params, result);
             exec(view, tempRet, result);
             return true;
         } else {

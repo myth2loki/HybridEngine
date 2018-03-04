@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 apply from: 'dependencies.gradle'
 apply from: 'buildTypes.gradle'
@@ -9,12 +9,12 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        applicationId project.APPLICATION_ID
+//        applicationId project.APPLICATION_ID
         minSdkVersion Integer.parseInt(project.MINI_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
-        manifestPlaceholders = [APP_NAME : project.name, APP_STYLE : getStyle(), HARDWAREACCELERATED : HARDWAREACCELERATED, SCREENROTATION : SCREENROTATION, JPUSH_ID : applicationId, ENGINE_VERSION : ENGINE_VERSION]
+        manifestPlaceholders = [APP_NAME : project.name, APP_STYLE : getStyle(), HARDWAREACCELERATED : HARDWAREACCELERATED, SCREENROTATION : SCREENROTATION, ENGINE_VERSION : ENGINE_VERSION]
 //        genPackageNameNdk(project.APPLICATION_ID)
 
         ndk {

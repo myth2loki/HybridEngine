@@ -7,22 +7,23 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 
 import com.xhrd.mobile.hybrid.engine.RDCloudScript;
-import com.xhrd.mobile.hybrid.framework.Manager.actionsheet.actionSheet;
-import com.xhrd.mobile.hybrid.framework.Manager.appcontrol.AppWidget;
-import com.xhrd.mobile.hybrid.framework.Manager.appcontrol.Window;
-import com.xhrd.mobile.hybrid.framework.Manager.audio.audio;
-import com.xhrd.mobile.hybrid.framework.Manager.camera.camera;
-import com.xhrd.mobile.hybrid.framework.Manager.device.device;
-import com.xhrd.mobile.hybrid.framework.Manager.device.display;
-import com.xhrd.mobile.hybrid.framework.Manager.device.networkInfo;
-import com.xhrd.mobile.hybrid.framework.Manager.device.os;
-import com.xhrd.mobile.hybrid.framework.Manager.device.screen;
-import com.xhrd.mobile.hybrid.framework.Manager.eventbus.EventListener;
-import com.xhrd.mobile.hybrid.framework.Manager.gallery.gallery;
-import com.xhrd.mobile.hybrid.framework.Manager.geolocation.geolocation;
-import com.xhrd.mobile.hybrid.framework.Manager.progress.progress;
-import com.xhrd.mobile.hybrid.framework.Manager.storage.storage;
-import com.xhrd.mobile.hybrid.framework.Manager.toast.ToastManager;
+import com.xhrd.mobile.hybrid.framework.manager.actionsheet.ActionSheet;
+import com.xhrd.mobile.hybrid.framework.manager.appcontrol.AppWidget;
+import com.xhrd.mobile.hybrid.framework.manager.appcontrol.Window;
+import com.xhrd.mobile.hybrid.framework.manager.audio.Audio;
+import com.xhrd.mobile.hybrid.framework.manager.camera.camera;
+import com.xhrd.mobile.hybrid.framework.manager.device.device;
+import com.xhrd.mobile.hybrid.framework.manager.device.display;
+import com.xhrd.mobile.hybrid.framework.manager.device.networkInfo;
+import com.xhrd.mobile.hybrid.framework.manager.device.os;
+import com.xhrd.mobile.hybrid.framework.manager.device.screen;
+import com.xhrd.mobile.hybrid.framework.manager.eventbus.EventListener;
+import com.xhrd.mobile.hybrid.framework.manager.gallery.gallery;
+import com.xhrd.mobile.hybrid.framework.manager.geolocation.geolocation;
+import com.xhrd.mobile.hybrid.framework.manager.progress.progress;
+import com.xhrd.mobile.hybrid.framework.manager.storage.storage;
+import com.xhrd.mobile.hybrid.framework.manager.toast.ToastManager;
+import com.xhrd.mobile.hybrid.util.ResourceUtil;
 
 /**
  * Created by Administrator on 2018/3/2.
@@ -38,6 +39,7 @@ public class HybridEnv {
         CookieManager.getInstance().removeSessionCookie();
         CookieManager.getInstance().removeExpiredCookie();
         sApplicationContext = context.getApplicationContext();
+        ResourceUtil.init(context);
 
         new Thread(new Runnable() {
 
@@ -71,7 +73,7 @@ public class HybridEnv {
         sPluginManager.addPlugin(networkInfo.class);
         sPluginManager.addPlugin(os.class);
         sPluginManager.addPlugin(screen.class);
-        sPluginManager.addPlugin(audio.class);
+        sPluginManager.addPlugin(Audio.class);
         sPluginManager.addPlugin(camera.class);
         sPluginManager.addPlugin(Window.class);
         sPluginManager.addPlugin(geolocation.class);
@@ -80,7 +82,7 @@ public class HybridEnv {
         sPluginManager.addPlugin(EventListener.class);
         sPluginManager.addPlugin(ToastManager.class);
         sPluginManager.addPlugin(gallery.class);
-        sPluginManager.addPlugin(actionSheet.class);
+        sPluginManager.addPlugin(ActionSheet.class);
         return sPluginManager.genJavascript();
     }
 

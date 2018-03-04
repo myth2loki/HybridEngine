@@ -17,9 +17,9 @@ import java.util.Map;
  */
 public interface RDCloudView extends PullToRefreshBase.OnRefreshListener {
     String JAVASCRIPT_HEAD = "javascript:";
-    int DATA_TYPE_ASSET = 1;
-    int DATA_TYPE_TEXT = 2;
-    int DATA_TYPE_URL = 3;
+    int DATA_TYPE_ASSET = 0;
+    int DATA_TYPE_TEXT = 1;
+    int DATA_TYPE_URL = 2;
 
     String FROYO_USERAGENT = "Mozilla/5.0 (Linux; U; "
             + "Android " + Build.VERSION.RELEASE + "; en-us; " + Build.MODEL

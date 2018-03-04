@@ -69,13 +69,6 @@
 	        <button type="button" class="ui-btn ui-btn-green ui-btn-block">
 	            切换声音通道
 	        </button>
-	        <center><pre>播放在线音乐</pre></center>
-	        <button type="button" class="ui-btn ui-btn-red ui-btn-block">
-	            播放+
-	        </button>
-	         <button type="button" class="ui-btn ui-btn-black ui-btn-block">
-	            停止+
-	        </button>
 		</div>
         <script src="co/co.js"></script>
 	</body>
@@ -108,13 +101,7 @@
                             break; 
                         case '切换声音通道':
                             change();
-                            break;  
-                        case '播放+':
-                            playOnline();
-                            break;    
-                        case '停止+':
-                            stopOnline();
-                            break;                             
+                            break;
                     }
               })
           });
@@ -124,12 +111,8 @@
             var player = null;
 			function play() {
 			    if (!player) {
-			        console.log("paly----------------------------");
-			        //var am = RD.framework.get("AudioManager");
-			        //var am = rd.AudioManager;
-			        //var am = rd.require('AudioManager');
-			        player = am.createPlayer('/sdcard/Download/lpxkl.mp3');
-			        //alert(player.toString());
+			        <!--player = am.createPlayer('res://music/ppkdc.mp3');-->
+			        player = am.createPlayer('/sdcard/Download/ppkdc.mp3');
                     player.play(sucFunc, function(){console.log(arguments[0]);});
                 }
 			}
@@ -173,26 +156,6 @@
 				}
 			}
 
-			var playerOnline = null;
-			function playOnline() {
-			    if (!playerOnline) {
-			        console.log("paly online----------------------------");
-			        //var am = RD.framework.get("AudioManager");
-			        //var am = rd.require('AudioManager');
-			        //var am = rd.AudioManager;
-			        //playerOnline = am.createPlayer('http://mp3.itingwa.com/2014-04/10/20140410050150-MTYyMDAw.mp3');
-			        playerOnline = am.createPlayer('http://mp3.itingwa.com/2014-04/10/20140410050150-MTYyMDAw.mp3');
-                    playerOnline.play(sucFunc, function(){console.log(arguments[0]);});
-                }
-			}
-
-			function stopOnline() {
-			    if (playerOnline != null) {
-			        playerOnline.stop();
-			        playerOnline = null;
-			    }
-			}
-
 			function errFunc(e) {
                 console.log(e);
             }
@@ -211,9 +174,12 @@
                 }
             }
 
-            var windowName = rd.window.name;
+            var windowName;
             function onLoad() {
                 console.log(windowName + ' onload.................');
+                if (!windowName) {
+                	windowName = rd.window.audio;
+                }
                 am = rd.audio;
             };
 

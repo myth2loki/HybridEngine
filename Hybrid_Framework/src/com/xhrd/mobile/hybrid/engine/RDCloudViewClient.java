@@ -7,18 +7,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.xhrd.mobile.hybrid.framework.Manager.ResManagerFactory;
-
 /**
  * WebViewClient
- * Created by wangqianyu on 15/4/14.
  */
 public class RDCloudViewClient extends WebViewClient {
     public static final String RDCLOUD_LOAD_FINISHED = RDCloudViewClient.class.getName() + "_rdcloud_load_finished";
@@ -42,11 +38,9 @@ public class RDCloudViewClient extends WebViewClient {
         }
         view.loadUrl(RDCloudScript.RDScript);
         super.onPageFinished(view, url);
-        view.loadUrl("javascript: rd.Window._aaa = function(){this.name = arguments[0]}; rd.Window._aaa('" + mRDView.getWindowName() + "');  delete rd.Window._aaa;");
+        view.loadUrl("javascript: (function(){rd.window.name = arguments[0]})('" + mRDView.getWindowName() + "');");
         RDCloudScript.jsFix(view);
-//        System.out.println("RDScript==>"+RDCloudScript.RDScript);
         CookieSyncManager.getInstance().sync();
-        //mRDView.disableLoadingBar();
         //或者移除自己。
         ((RDCloudView) view).onLoad();
         ((RDCloudView) view).onForeground();
@@ -144,16 +138,6 @@ public class RDCloudViewClient extends WebViewClient {
         if (!isUrl) {
             return true;
         }
-//        RDCloudView target = (RDCloudView) view;
-//        if (target.isObfuscation()) {
-//            target.updateObfuscationHistroy(url, EBrowserHistory.UPDATE_STEP_ADD, false);
-//        }
-//        if (target.shouldOpenInSystem() && url.startsWith("http")) {
-//            Intent intent = new Intent(Intent.ACTION_VIEW);
-//            intent.setData(Uri.parse(url));
-//            activity.startActivity(intent);
-//            return true;
-//        }
         view.loadUrl(url);
         return true;
     }
@@ -161,33 +145,23 @@ public class RDCloudViewClient extends WebViewClient {
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
         //错误时加载默认错误页面。
-        view.loadUrl("file:///android_assets/hybrid/App/error/404.html");
+        view.loadUrl("file:///android_assets/hybrid/app/error/404.html");
         super.onReceivedError(view, errorCode, description, failingUrl);
     }
 
     @Override
     public void onScaleChanged(WebView view, float oldScale, float newScale) {
-        Log.e("-------->", "old scale: " + oldScale + ", newScale: " + newScale);
         super.onScaleChanged(view, oldScale, newScale);
     }
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-        Uri url = request.getUrl();
-        WebResourceResponse resp = RDEncryptHelper.decode(url.toString());
-        if (resp == null) {
-            resp = super.shouldInterceptRequest(view, request);
-        }
-        return resp;
+        return super.shouldInterceptRequest(view, request);
     }
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-        WebResourceResponse resp = RDEncryptHelper.decode(url);
-        if (resp == null) {
-            resp = super.shouldInterceptRequest(view, url);
-        }
-        return resp;
+        return super.shouldInterceptRequest(view, url);
     }
 }
 

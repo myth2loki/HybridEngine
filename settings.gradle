@@ -1,4 +1,4 @@
-include ':Hybrid_Framework'
+include ':Hybrid_Framework', ':demo'
 //include ':StatisticsLibrary'
 //include ':Plugin_Libs:plugin_imagecompressor'
 //include ':Plugin_Libs:plugin_file'

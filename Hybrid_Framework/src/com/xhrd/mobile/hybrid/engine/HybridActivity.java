@@ -25,9 +25,8 @@ import java.util.LinkedList;
 
 /**
  * 入口类, 负责创建最初的可视窗口骨架。
- * Created by wangqianyu on 15/4/10.
  */
-public class HybridActivity extends Activity {//FragmentActivity
+public class HybridActivity extends Activity {
     private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = HybridActivity.class.getSimpleName();
 
@@ -49,6 +48,9 @@ public class HybridActivity extends Activity {//FragmentActivity
 
         mActivity = this;
         initView();
+
+        openWindow("internal_window", RDCloudView.DATA_TYPE_ASSET, "internal_plugin.html");
+//        openWindow("index", RDCloudView.DATA_TYPE_ASSET, "index.html");
     }
 
     @Override
@@ -65,7 +67,6 @@ public class HybridActivity extends Activity {//FragmentActivity
     protected void onDestroy() {
         super.onDestroy();
     }
-
 
     /**
      * 初始化主界面。
@@ -144,7 +145,7 @@ public class HybridActivity extends Activity {//FragmentActivity
     }
 
     private boolean canBack() {
-        return !mWindowList.isEmpty();
+        return mWindowList.size() > 0;
     }
 
     /**
@@ -153,17 +154,17 @@ public class HybridActivity extends Activity {//FragmentActivity
      * @return
      */
     private boolean needExit() {
-        return mWindowList.isEmpty();
+        return mWindowList.size() == 1;
     }
 
     @Override
     public void finish() {
-        if (mExitHandler.hasMessages(EXIT_MESSAGE)) {
+//        if (mExitHandler.hasMessages(EXIT_MESSAGE)) {
             super.finish();
-        } else {
-            Toast.makeText(this, getString(RDResourceManager.getInstance().getStringId("press_again_exit")), Toast.LENGTH_LONG).show();
-            mExitHandler.sendEmptyMessageDelayed(EXIT_MESSAGE, 3000);
-        }
+//        } else {
+//            Toast.makeText(this, getString(RDResourceManager.getInstance().getStringId("press_again_exit")), Toast.LENGTH_LONG).show();
+//            mExitHandler.sendEmptyMessageDelayed(EXIT_MESSAGE, 3000);
+//        }
     }
 
     /**
@@ -178,6 +179,12 @@ public class HybridActivity extends Activity {//FragmentActivity
     }
 
     public void backToWindow(String windowName) {
+        if (mWindowList.isEmpty()) {
+            if (DEBUG) {
+                Log.d(TAG, "backToWindow: windowList is empty");
+            }
+            return;
+        }
         RDCloudWindow window = findWindowByName(windowName);
         if (DEBUG) {
             Log.d(TAG, "backToWindow: Window = " + window);
@@ -185,15 +192,28 @@ public class HybridActivity extends Activity {//FragmentActivity
         if (window == null) {
             return;
         }
+        RDCloudWindow curWindow = mWindowList.peekLast();
+        if (window == curWindow) {
+            if (DEBUG) {
+                Log.d(TAG, "backToWindow: ignore the same window");
+            }
+        }
+
+        window.startAnimation(AnimationUtils.loadAnimation(this, RDResourceManager.getInstance().getAnimId("exit_in")));
+        curWindow.startAnimation(AnimationUtils.loadAnimation(this, RDResourceManager.getInstance().getAnimId("exit_out")));
 
         while (!mWindowList.isEmpty()) {
-            RDCloudWindow tempWindow = mWindowList.pollLast();
+            RDCloudWindow tempWindow = mWindowList.peekLast();
             if (tempWindow == window) {
                 break;
             }
-
+//            if (DEBUG) {
+                Log.d(TAG, "backToWindow: windowName = " + tempWindow.getName());
+//            }
+            mWindowList.remove(tempWindow);
             mRootLayout.removeView(tempWindow);
         }
+
     }
 
     int findWindowIndexByName(String windowName) {
@@ -215,6 +235,14 @@ public class HybridActivity extends Activity {//FragmentActivity
             }
             return;
         }
+
+        int curIndex = mWindowList.indexOf(window);
+        if (curIndex > 0) {
+            int prevIndex = curIndex - 1;
+            RDCloudWindow prevWindow = mWindowList.get(prevIndex);
+            prevWindow.startAnimation(AnimationUtils.loadAnimation(this, RDResourceManager.getInstance().getAnimId("exit_in")));
+        }
+        window.startAnimation(AnimationUtils.loadAnimation(this, RDResourceManager.getInstance().getAnimId("exit_out")));
 
         mRootLayout.removeView(window);
         mWindowList.remove(window);
