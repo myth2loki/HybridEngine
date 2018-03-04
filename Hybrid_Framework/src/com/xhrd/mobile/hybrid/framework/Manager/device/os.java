@@ -22,6 +22,6 @@ public class os extends PluginBase {
 
     @Override
     public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 }

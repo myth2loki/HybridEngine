@@ -10,7 +10,7 @@ import java.io.File;
 public class Constants {
 
     public static final String DIR_HYBRID="hybrid";
-    public static final String DIR_APP=DIR_HYBRID+File.separator+"app";
+    public static final String DIR_APP=DIR_HYBRID+File.separator+"App";
     public static final String DIR_COMPONENT=DIR_HYBRID+File.separator+"component";
 
 

@@ -17,9 +17,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.xhrd.mobile.hybrid.BuildConfig;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.RDApplicationInfo;
+import com.xhrd.mobile.hybridframework.BuildConfig;
 
 import java.util.LinkedList;
 
@@ -87,7 +87,7 @@ public class HybridActivity extends Activity {//FragmentActivity
      */
     public void openWindow(final String windowName, final int type, final String data) {
         if (DEBUG) {
-            Log.e(TAG, "run: window name = " + windowName);
+            Log.e(TAG, "run: Window name = " + windowName);
         }
 
         if (TextUtils.isEmpty(windowName)) {
@@ -180,7 +180,7 @@ public class HybridActivity extends Activity {//FragmentActivity
     public void backToWindow(String windowName) {
         RDCloudWindow window = findWindowByName(windowName);
         if (DEBUG) {
-            Log.d(TAG, "backToWindow: window = " + window);
+            Log.d(TAG, "backToWindow: Window = " + window);
         }
         if (window == null) {
             return;
@@ -254,8 +254,8 @@ public class HybridActivity extends Activity {//FragmentActivity
 //    @Override
 //    public void onConfigurationChanged(final Configuration newConfig) {
 //        super.onConfigurationChanged(newConfig);
-//        for (RDCloudWindow window : mWindowList) {
-//            window.onWindowSizeChanged(newConfig);
+//        for (RDCloudWindow Window : mWindowList) {
+//            Window.onWindowSizeChanged(newConfig);
 //        }
 //    }
 //
@@ -300,7 +300,7 @@ public class HybridActivity extends Activity {//FragmentActivity
         window.onActivityResult(pluginIndex, realRequestCode, resultCode, data);
     }
 
-    //pathCode window|id|requestCode
+    //pathCode Window|id|requestCode
     public void requestPermissions(String[] permissions, int requestCode, RDCloudWindow window, int pluginId) {
         int windowIndex = findWindowIndexByName(window.getName());
         windowIndex = windowIndex << 24;

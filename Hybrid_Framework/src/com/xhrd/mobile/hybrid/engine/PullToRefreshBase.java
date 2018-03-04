@@ -3,6 +3,7 @@ package com.xhrd.mobile.hybrid.engine;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -987,7 +988,6 @@ public abstract class PullToRefreshBase<T extends RDCloudView> extends LinearLay
             removeCallbacks(this);
         }
     }
-  //---------------------------------------------------对刷新头和尾的样式设置---------------------------------------
 
     @Override
     public void setLastUpdatedLabel(){
@@ -1174,7 +1174,7 @@ public abstract class PullToRefreshBase<T extends RDCloudView> extends LinearLay
             }
             String image = jsonObject1.optString("image", null);
             if (image != null) {
-                image = ResManagerFactory.getResManager().getPath(image);
+                image = ResManagerFactory.getResManager().getPath(Uri.parse(image));
                 setPullDrawable(image);
             }
             setLastUpdatedLabel();
@@ -1219,7 +1219,7 @@ public abstract class PullToRefreshBase<T extends RDCloudView> extends LinearLay
                 //图片地址
                 String image = jsonObject.optString("image");
                 if (image != null) {
-                    image = ResManagerFactory.getResManager().getPath(image);
+                    image = ResManagerFactory.getResManager().getPath(Uri.parse(image));
                     //设置footer的加载图标。这是什么鬼命名？shit
                     setLoadingDrawable(image);
                 }

@@ -17,17 +17,12 @@ public class FrameworkManager6 extends PluginManagerBase {
     }
 
     @Override
-    protected Map<Class<?>, PluginBase> getLocalViewInjectedJSObj(RDCloudView view) {
-        return view.getInjectedLocalFMJSObj();
-    }
-
-    @Override
     protected Map<Class<?>, PluginBase> getWindowInjectedJSObj(RDCloudView view) {
-        return view.getRDCloudWindow().getInjectedFMJSObj();
+        return view.getRDCloudWindow().getInjectedPluginJSObj();
     }
 
     @Override
     protected Map<Integer, PluginBase> getViewInjectedJSObj(RDCloudView view) {
-        return view.getInjectedFMJSObj();
+        return view.getInjectedPluginJSObj();
     }
 }

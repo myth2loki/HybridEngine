@@ -20,9 +20,9 @@ import android.util.Log;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.engine.RDCloudView;
 import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
-import com.xhrd.mobile.hybrid.framework.RDCloudApplication;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -33,7 +33,7 @@ import java.util.UUID;
  */
 public class device extends PluginBase {
 
-	private RDCloudApplication mApp;
+	private Context mContext;
 	private WakeLock mWakeLock = null;
 	private boolean isWakeLock;
 	private MediaPlayer mMediaPlayer;
@@ -41,7 +41,7 @@ public class device extends PluginBase {
 	private SharedPreferences msp;
 
 	public device() {
-		mApp = RDCloudApplication.getApp();
+		mContext = HybridEnv.getApplicationContext();
 	}
 
 
@@ -102,9 +102,9 @@ public class device extends PluginBase {
 		{
 			mMediaPlayer.start();
 		}else {
-//			mApp.setVolumeControlStream(AudioManager.STREAM_MUSIC);//设置音量使用
+//			mContext.setVolumeControlStream(AudioManager.STREAM_MUSIC);//设置音量使用
 			boolean shouldPlayBeep = true;
-			AudioManager audioService = (AudioManager) mApp
+			AudioManager audioService = (AudioManager) mContext
 					.getSystemService(Context.AUDIO_SERVICE);
 			if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
 				shouldPlayBeep = false;
@@ -148,7 +148,7 @@ public class device extends PluginBase {
 					}
 				});
 		try {
-			mediaPlayer.setDataSource(mApp, getDefaultRingtoneUri(RingtoneManager.TYPE_RINGTONE));
+			mediaPlayer.setDataSource(mContext, getDefaultRingtoneUri(RingtoneManager.TYPE_RINGTONE));
 			// mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
 			mediaPlayer.prepare();
 		} catch (IOException ioe) {
@@ -159,7 +159,7 @@ public class device extends PluginBase {
 	}
 	private Uri getDefaultRingtoneUri(int type){
 
-		return RingtoneManager.getActualDefaultRingtoneUri(mApp, type);
+		return RingtoneManager.getActualDefaultRingtoneUri(mContext, type);
 
 	}
 	/**
@@ -175,7 +175,7 @@ public class device extends PluginBase {
 		{
 			milliseconds = 500;
 		}
-		Vibrator vibrator = (Vibrator) mApp
+		Vibrator vibrator = (Vibrator) mContext
 				.getSystemService(Context.VIBRATOR_SERVICE);
 		// long [] pattern = {100,milliseconds,100,milliseconds}; // 停止 开启 停止 开启
 		// vibrator.vibrate(pattern,-1);
@@ -193,7 +193,7 @@ public class device extends PluginBase {
 		}catch(Exception e) {
 			isWakeLock = false;
 		}
-		PowerManager pm = (PowerManager) mApp
+		PowerManager pm = (PowerManager) mContext
 				.getSystemService(Context.POWER_SERVICE);
 		if (mWakeLock != null) {
 			mWakeLock.release();
@@ -206,7 +206,7 @@ public class device extends PluginBase {
 			mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "xhrd");
 		}
 		mWakeLock.acquire();
-//		Toast.makeText(mApp, "test", 1000).show();
+//		Toast.makeText(mContext, "test", 1000).show();
 //		jsCallback(params[1], I18n.getInstance().getString("demo_successfully"));
 //    	jsCallback(params[1],mI18n.getString(new String[]{"设置成功"}));
 		return true;
@@ -236,7 +236,7 @@ public class device extends PluginBase {
 		}catch (Exception e){
 			current = 0;
 		}
-		AudioManager mAudioManager = (AudioManager) mApp .getSystemService(Context.AUDIO_SERVICE);
+		AudioManager mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 		int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		if (current >= 1) {
 			mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, max, 0);
@@ -255,7 +255,7 @@ public class device extends PluginBase {
 	 */
 	@JavascriptFunction
 	public String getVolume(RDCloudView view,String[] params) {
-		AudioManager mAudioManager = (AudioManager) mApp
+		AudioManager mAudioManager = (AudioManager) mContext
 				.getSystemService(Context.AUDIO_SERVICE);
 		int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 		int current = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -277,7 +277,7 @@ public class device extends PluginBase {
 	@JavascriptFunction
 	public void getOSInfo(RDCloudView view,String[] params)
 	{
-		TelephonyManager mTelephonyMgr = (TelephonyManager) mApp.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager mTelephonyMgr = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
 		String imsi = mTelephonyMgr.getSubscriberId();
 		String imei = mTelephonyMgr.getDeviceId();
 		String json = "{os:{imei:'"+imei+"',imsi:'"+imsi+"',model:'"+Build.MODEL+"',vendor:'"+Build.MANUFACTURER+"',uuid:'"+UUID.randomUUID()+"'}}";
@@ -316,8 +316,7 @@ public class device extends PluginBase {
 
 
 	private TelephonyManager getTelephonyManager() {
-		return (TelephonyManager) RDCloudApplication.getApp().
-				getSystemService(Context.TELEPHONY_SERVICE);
+		return (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
 	}
 
 	private String getImei() {
@@ -329,7 +328,6 @@ public class device extends PluginBase {
 	}
 
 	public String getImsi() {
-		Context context = RDCloudApplication.getApp();
 		String imsi = null;
 		try {   //普通方法获取imsi
 			TelephonyManager tm = getTelephonyManager();
@@ -359,7 +357,7 @@ public class device extends PluginBase {
 							.forName("com.android.internal.telephony.PhoneFactory");
 					Method m = c.getMethod("getServiceName", String.class, int.class);
 					String spreadTmService = (String) m.invoke(c, Context.TELEPHONY_SERVICE, 1);
-					TelephonyManager tm1 = (TelephonyManager) context.getSystemService(spreadTmService);
+					TelephonyManager tm1 = (TelephonyManager) mContext.getSystemService(spreadTmService);
 					if(!TextUtils.isEmpty(imsi)) {
 						String id = tm1.getSubscriberId();
 						if(id != null) {
@@ -402,6 +400,6 @@ public class device extends PluginBase {
 
 	@Override
 	public PluginData.Scope getScope() {
-		return PluginData.Scope.app;
+		return PluginData.Scope.App;
 	}
 }

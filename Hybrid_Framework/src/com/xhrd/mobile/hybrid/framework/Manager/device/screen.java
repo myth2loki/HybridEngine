@@ -11,10 +11,10 @@ import android.view.WindowManager;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
-import com.xhrd.mobile.hybrid.framework.RDCloudApplication;
 
 /**
  * Screen模块管理设备屏幕信息.
@@ -29,7 +29,7 @@ public class screen extends PluginBase {
 	private SharedPreferences msp;
 
     public screen() {
-        Context context = RDCloudApplication.getApp();
+        Context context = HybridEnv.getApplicationContext();
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         mResolutionHeight = dm.heightPixels;
         mResolutionWidth = dm.widthPixels;
@@ -186,6 +186,6 @@ public class screen extends PluginBase {
 
     @Override
     public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 }

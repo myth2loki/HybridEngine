@@ -9,16 +9,16 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
+import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
-import com.xhrd.mobile.hybrid.framework.RDCloudApplication;
 
 public class storage extends PluginBase {
 	
 	private Context mContext;
 	private SharedPreferences msp;
 	public storage(){
-		mContext = RDCloudApplication.getApp();
+		mContext = HybridEnv.getApplicationContext();
 
 		msp = mContext.getSharedPreferences("storage", Context.MODE_PRIVATE);
 	}
@@ -119,7 +119,7 @@ public class storage extends PluginBase {
     }
 	
 	public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 
 }

@@ -2,9 +2,7 @@ package com.xhrd.mobile.hybrid.engine;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.RectF;
@@ -28,20 +26,14 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.xhrd.mobile.hybrid.BuildConfig;
 import com.xhrd.mobile.hybrid.Config;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
-import com.xhrd.mobile.hybrid.framework.Manager.ResManager;
-import com.xhrd.mobile.hybrid.framework.Manager.ResManagerFactory;
-import com.xhrd.mobile.hybrid.framework.UIPluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
-import com.xhrd.mobile.hybrid.framework.RDComponentInfo;
-import com.xhrd.mobile.hybrid.framework.RDComponentInfoManager;
+import com.xhrd.mobile.hybrid.framework.UIPluginBase;
 import com.xhrd.mobile.hybrid.util.SystemUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,9 +45,7 @@ import java.util.Map;
  * Created by wangqianyu on 15/4/10.
  */
 class RDCloudOriginalView extends WebView implements RDCloudView {
-    private Map<Integer, PluginBase> mInjectedFMJSObj = new HashMap<Integer, PluginBase>();
     private Map<Integer, PluginBase> mInjectedPluginJSObj = new HashMap<Integer, PluginBase>();
-    private Map<Class<?>, PluginBase> mInjectedLocalFMJSObj = new HashMap<Class<?>, PluginBase>();
     private Map<Class<?>, PluginBase> mInjectedLocalPluginJSObj = new HashMap<Class<?>, PluginBase>();
 
     private AbsRDCloudChromeClient mChromeClient;
@@ -74,7 +64,6 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
     private ProgressBar mLoadingPb;
     public RDCloudOriginalView(RDCloudWindow window) {
         super(window.getContext());
-        //setLayerType(LAYER_TYPE_SOFTWARE, null);
         mWindow = window;
         registerPlugins();
         init();
@@ -117,23 +106,14 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void init() {
-        //RDCloudApplication.getApp().getFrameworkManager().registerPlugin(this);
-    	//this.setBackgroundColor(0);
-//    	if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.HONEYCOMB) {
-//    		this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-//    	}
-
         if (SystemUtil.isKitKat() && (Config.DEBUG || Config.APP_LOADER)) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
-//         this.setBackgroundColor(Color.TRANSPARENT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//            this.setBackground(null);
             this.setBackgroundColor(Color.TRANSPARENT);
         } else {
             this.setBackgroundResource(android.R.color.transparent);
         }
-//        this.getBackground().setAlpha(0); // 设置填充透明度 范围：0-255
         //添加加载蒙板
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         mLoadingBar = new LinearLayout(getContext());
@@ -161,26 +141,14 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
                 Uri uri = Uri.parse(url);
                 Intent itt = new Intent(Intent.ACTION_VIEW, uri);
                 getContext().startActivity(itt);
-                //getRDCloudWindow().closeWindow(getWindowName());
+                getRDCloudWindow().closeWindow(getRDCloudWindow().getName());
             }
         });
-//        float density = getContext().getResources().getDisplayMetrics().density;
-//        if (density <= 2.0f) {
-//            setInitialScale(100);
-//        } else if (density <= 2.0f) {
-//            setInitialScale(100);
-//        } else if (density <= 3.0f) {
-//            setInitialScale(90);
-//        } else if (density > 3.0f) {
-//            setInitialScale(50);
-//        }
-        //setInitialScale(100);
         setVerticalScrollbarOverlay(true);
         setHorizontalScrollbarOverlay(true);
         setLayoutAnimation(null);
         setAnimation(null);
         setNetworkAvailable(true);
-        setFontSize();
         mCurrentOrientation = getResources().getConfiguration().orientation;
     }
 
@@ -233,7 +201,6 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
 
             }
         });
-//        startAnimation(inAnim);
         mLoadingBar.startAnimation(outAnim);
     }
 
@@ -241,22 +208,7 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
         mLoadingBar.setVisibility(View.VISIBLE);
     }
 
-    @SuppressWarnings("deprecation")
-    private void setFontSize() {
-        //TODO 这段代码有什么用？
-//        if (mWebSetting.getTextSize() == WebSettings.TextSize.SMALLEST) {
-//            mWebSetting.setTextSize(WebSettings.TextSize.SMALLEST);
-//        } else if (mWebSetting.getTextSize() == WebSettings.TextSize.SMALLER) {
-//            mWebSetting.setTextSize(WebSettings.TextSize.SMALLER);
-//        } else if (mWebSetting.getTextSize() == WebSettings.TextSize.NORMAL) {
-//            mWebSetting.setTextSize(WebSettings.TextSize.NORMAL);
-//        } else if (mWebSetting.getTextSize() == WebSettings.TextSize.LARGER) {
-//            mWebSetting.setTextSize(WebSettings.TextSize.LARGER);
-//        } else if (mWebSetting.getTextSize() == WebSettings.TextSize.LARGEST) {
-//            mWebSetting.setTextSize(WebSettings.TextSize.LARGEST);
-//        }
-    }
-
+    @TargetApi(Build.VERSION_CODES.ECLAIR_MR1)
     public void initBaseSetting(/*boolean webApp*/) {
         //mWebApp = webApp;
         mWebSetting.setSaveFormData(false);
@@ -278,16 +230,13 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
         if (Build.VERSION.SDK_INT <= 7) {
             invokeHtml5(mWebSetting);
         }
-//        if (webApp) {
-//            mWebSetting.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-//            return;
-//        }
-//        mWebSetting.setDomStorageEnabled(true);
-//        mWebSetting.setDatabaseEnabled(true);
-//        mWebSetting.setDatabasePath(getContext().getCacheDir().getAbsolutePath());
-//        mWebSetting.setAppCacheEnabled(true);
-//        mWebSetting.setAppCachePath(getContext().getCacheDir().getAbsolutePath());
-//        mWebSetting.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        mWebSetting.setDomStorageEnabled(true);
+        mWebSetting.setDatabaseEnabled(true);
+        mWebSetting.setDatabasePath(getContext().getCacheDir().getAbsolutePath());
+        mWebSetting.setAppCacheEnabled(true);
+        mWebSetting.setAppCachePath(getContext().getCacheDir().getAbsolutePath());
+        mWebSetting.setCacheMode(WebSettings.LOAD_DEFAULT);
         mWebSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
         // disables the actual onscreen controls from showing up
         mWebSetting.setBuiltInZoomControls(false);
@@ -297,10 +246,7 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
     }
 
     private void initHttpSettings() {
-
-//        mWebSetting.setSaveFormData(true);
         mWebSetting.setSupportZoom(true);
-//        mWebSetting.setCacheMode(WebSettings.LOAD_DEFAULT);
         mWebSetting.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
     }
 
@@ -322,35 +268,6 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
     }
 
     /**
-     * 获取Page的绝对路径。
-     *
-     * @param compName 模块名
-     * @param pageUrl  页面Url
-     * @return 页面的绝对路径
-     */
-    private String getAbsolutePath(String compName, String pageUrl) {
-        if (!TextUtils.isEmpty(compName) && !TextUtils.isEmpty(pageUrl)) {
-            String path = ResManagerFactory.getResManager().getPath(ResManager.COMPONENTS_URI);
-            //TODO
-//            String exPath = AppLoader.getInstance(getContext()).getComponentPath();
-//            System.out.println("exPath---->" + exPath);
-//            if (!TextUtils.isEmpty(exPath)) {
-//                path = exPath;
-//            }
-            //TODO END
-
-
-            String relativePath = path + File.separator + compName + File.separator + pageUrl;
-//            return "file:///android_asset/" + relativePath;
-            relativePath = "file://" + relativePath;
-            Log.e("load url-------->", relativePath);
-            return relativePath;
-        }
-        return null;
-
-    }
-
-    /**
      * 载入数据。
      *
      * @param info
@@ -362,19 +279,9 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
         postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (info.type == RDCloudOriginalView.DATA_TYPE_LOCAL) {
-                    //String path = getAbsolutePath(info.componentName, info.data);
-                    String compName = getRDCloudWindow().getRDCloudComponent().getName();
-                    RDComponentInfo compInfo = null;
-                    try {
-                        compInfo = RDComponentInfoManager.getInstance().getComponentInfo(compName);
-                        String path = "file://" + compInfo.path + File.separator + info.data;
-                        loadUrl(path);
-                    } catch (FileNotFoundException e) {
-                        if (BuildConfig.DEBUG) {
-                            Log.e(getClass().getSimpleName(), "can not find component " + compName , e);
-                        }
-                    }
+                if (info.type == RDCloudOriginalView.DATA_TYPE_ASSET) {
+                    String path = "file:///android_asset/hybrid/App" + File.separator + info.data ;
+                    loadUrl(path);
                 } else if (info.type == RDCloudOriginalView.DATA_TYPE_TEXT) {
                     loadData(info.data, "text/html; charset=utf-8", null);
                 } else if (info.type == RDCloudOriginalView.DATA_TYPE_URL) {
@@ -402,20 +309,13 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
             //已经关闭
             return;
         }
-        if (plugin instanceof UIPluginBase) {
-            if (mInjectedPluginJSObj.containsKey(((UIPluginBase) plugin).getId())) {
-                return;
-            }
-            UIPluginBase base = (UIPluginBase) plugin;
-            base.onRegistered(this);
-            mInjectedPluginJSObj.put(base.getId(), base);
-        } else if (plugin instanceof PluginBase) {
-            if (mInjectedFMJSObj.containsKey(((PluginBase) plugin).getId())) {
+        if (plugin instanceof PluginBase) {
+            if (mInjectedPluginJSObj.containsKey(((PluginBase) plugin).getId())) {
                 return;
             }
             PluginBase base = (PluginBase) plugin;
             base.onRegistered(this);
-            mInjectedFMJSObj.put(base.getId(), base);
+            mInjectedPluginJSObj.put(base.getId(), base);
         }
     }
 
@@ -430,18 +330,14 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
         mWindow = null;
 
         List<PluginBase> pluginList = new ArrayList<PluginBase>();
-        pluginList.addAll(mInjectedFMJSObj.values());
         pluginList.addAll(mInjectedPluginJSObj.values());
-        pluginList.addAll(mInjectedLocalFMJSObj.values());
         pluginList.addAll(mInjectedLocalPluginJSObj.values());
-        mInjectedFMJSObj.clear();
         mInjectedPluginJSObj.clear();
-        mInjectedLocalFMJSObj.clear();
         mInjectedLocalPluginJSObj.clear();
 
         for (PluginBase base : pluginList) {
             base.onDeregistered(this);
-            if (base.getPluginData().mScope == PluginData.Scope.createNew) {
+            if (base.getPluginData().mScope == PluginData.Scope.New) {
                 try {
                     base.onDestroy();
                 } catch (Exception e) {
@@ -519,19 +415,6 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
     public void onLoad() {
         loadUrl("javascript:if(typeof(onLoad) != 'undefined'){onLoad();}");
         loadUrl("javascript:if(rd.onLoad){rd.onLoad();}");
-
-        // to do 推送回调处理
-        SharedPreferences mSp = getContext().getSharedPreferences("push", Context.MODE_PRIVATE);
-        if (mSp != null && mSp.contains("push")) {
-            String msg = mSp.getString("push", "");
-            String type = mSp.getString("push_type", "");
-            if (!TextUtils.isEmpty(msg) && getWindowName().equals("root")) {
-                String func = "javascript:if(plugin_push){plugin_push('" + type + "'," + msg + ");}";
-                Log.e("push "+getWindowName(), func + ".............");
-                loadUrl(func);
-                mSp.edit().clear().apply();
-            }
-        }
     }
 
     public void onForeground() {
@@ -560,38 +443,13 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
         mCurrentOrientation = newConfig.orientation;
     }
 
-//    public void setPopoverRect(int x, int y, int width, int height) {
-//        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) getLayoutParams();
-//        if (lp == null) {
-//            lp = new FrameLayout.LayoutParams(width, height);
-//        } else {
-//            lp.width = width;
-//            lp.height = height;
-//        }
-//        lp.leftMargin = x;
-//        lp.topMargin = y;
-//
-//        setLayoutParams(lp);
-//    }
-
-    public Map<Integer, PluginBase> getInjectedFMJSObj() {
-        return mInjectedFMJSObj;
-    }
-
     public Map<Integer, PluginBase> getInjectedPluginJSObj() {
         return mInjectedPluginJSObj;
     }
 
-    public Map<Class<?>, PluginBase> getInjectedLocalFMJSObj() {
-        return mInjectedLocalFMJSObj;
-    }
 
     public Map<Class<?>, PluginBase> getInjectedLocalPluginJSObj() {
         return mInjectedLocalPluginJSObj;
-    }
-
-    public void setPopoverVisible(boolean visible) {
-        setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
     }
 
     public boolean isChildrenRefreshable(MotionEvent event) {

@@ -82,6 +82,6 @@ public class networkInfo extends PluginBase {
 
 	@Override
     public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 }

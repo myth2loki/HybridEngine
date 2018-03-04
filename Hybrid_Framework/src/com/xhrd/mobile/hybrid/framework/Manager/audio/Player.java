@@ -3,11 +3,12 @@ package com.xhrd.mobile.hybrid.framework.Manager.audio;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 
 import com.xhrd.mobile.hybrid.engine.RDCloudView;
 import com.xhrd.mobile.hybrid.engine.RDResourceManager;
-import com.xhrd.mobile.hybrid.framework.Manager.ResManager;
-import com.xhrd.mobile.hybrid.framework.RDCloudApplication;
+import com.xhrd.mobile.hybrid.framework.HybridEnv;
+import com.xhrd.mobile.hybrid.framework.Manager.res.ResManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,15 +26,15 @@ public class Player implements MediaPlayer.OnCompletionListener, MediaPlayer.OnE
     private AudioManager mAM;
     private audio mAM1;
 
-    public Player(RDCloudView rdCloudView,String path, audio am) {
+    public Player(RDCloudView rdCloudView, String path, audio am) {
+        HybridEnv.getPluginManager().getPlugin(ResManager.DOMAIN);
         ResManager rm = ResManager.getInstance();
-        if (rm.isLegalSchema(path)) {
-            this.mPath = rm.getPath(rdCloudView,path);
-        } else {
+        this.mPath = rm.getPath(Uri.parse(path));
+        if (mPath == null) {
             this.mPath = path;
         }
         this.mAM1 = am;
-        mAM = (AudioManager) RDCloudApplication.getApp().getSystemService(Context.AUDIO_SERVICE);
+        mAM = (AudioManager) HybridEnv.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mPlayer = new MediaPlayer();
         mPlayer.setOnCompletionListener(this);
         mPlayer.setOnErrorListener(this);

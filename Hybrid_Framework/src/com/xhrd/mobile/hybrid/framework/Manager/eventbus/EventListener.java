@@ -6,9 +6,9 @@ import android.net.ConnectivityManager;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
-import com.xhrd.mobile.hybrid.framework.RDCloudApplication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +59,7 @@ public class EventListener extends PluginBase {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        RDCloudApplication.getApp().unregisterReceiver(mReceiver);
+        HybridEnv.getApplicationContext().unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -102,7 +102,7 @@ public class EventListener extends PluginBase {
                 IntentFilter filter = new IntentFilter();
                 filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
                 mReceiver = new SysEventReceiver(this,rdView);
-                RDCloudApplication.getApp().registerReceiver(mReceiver, filter);
+                HybridEnv.getApplicationContext().registerReceiver(mReceiver, filter);
             }
         }
 
@@ -115,7 +115,7 @@ public class EventListener extends PluginBase {
                 filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
                 filter.addAction(Intent.ACTION_BATTERY_CHANGED);
                 batteryReceiver = new BatteryReceiver(this,rdView);
-                RDCloudApplication.getApp().registerReceiver(batteryReceiver, filter);
+                HybridEnv.getApplicationContext().registerReceiver(batteryReceiver, filter);
             }
         }
 
@@ -181,6 +181,6 @@ public class EventListener extends PluginBase {
 
     @Override
     public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 }

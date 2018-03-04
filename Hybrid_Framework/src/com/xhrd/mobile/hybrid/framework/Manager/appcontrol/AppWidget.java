@@ -18,6 +18,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.engine.RDCloudView;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
+import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.JSFunction;
 import com.xhrd.mobile.hybrid.framework.Manager.ResManagerFactory;
@@ -25,7 +26,6 @@ import com.xhrd.mobile.hybrid.framework.Manager.appcontrol.info.AppAuthorInfo;
 import com.xhrd.mobile.hybrid.framework.Manager.appcontrol.info.AppInfo;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.framework.RDApplicationInfo;
-import com.xhrd.mobile.hybrid.framework.RDCloudApplication;
 import com.xhrd.mobile.hybrid.util.JSObjConvertor;
 
 import org.json.JSONArray;
@@ -39,11 +39,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * rd.app
+ * rd.App
  */
 public class AppWidget extends PluginBase {
 
-    private static final int REQUEST_CODE_FOR_OPEN_APP = RDCloudApplication.getAtomicId();
+    private static final int REQUEST_CODE_FOR_OPEN_APP = 1;
 
     private Map<RDCloudView, String> mCallbackMap = new HashMap<RDCloudView, String>();
     private String appPath = "";
@@ -80,12 +80,12 @@ public class AppWidget extends PluginBase {
 
     @Override
     public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 
     @Override
     public String getDefaultDomain() {
-        return "app";
+        return "App";
     }
 
     @JavascriptFunction
@@ -136,19 +136,7 @@ public class AppWidget extends PluginBase {
                     uri = jo.getString("uri");
                 }
 
-//                int lastDot = action.lastIndexOf('.');
-//                String cls = "";
-//                if (lastDot > -1) {
-//                    cls = action.substring(lastDot + 1, action.length() - 1);
-//                    action = action.substring(0, lastDot);
-//                }??
-
-//                Caused by: android.content.ActivityNotFoundException: Unable to find explicit
-//                activity class {android.media.action/IMAGE_CAPTUR}; have you declared this activity in your AndroidManifest.xml?
-
-//                        ComponentName cn = new ComponentName(action, cls);
                 Intent itt = new Intent();
-//                itt.setComponent(cn);
 
                 if (action != null){
                     itt.setAction(action);
@@ -269,7 +257,7 @@ public class AppWidget extends PluginBase {
             final String cb = params[1];
             new Thread("isAppInstalled_thread") {
                 public void run() {
-                    List<PackageInfo> infoList = RDCloudApplication.getApp().getPackageManager().getInstalledPackages(0);
+                    List<PackageInfo> infoList = HybridEnv.getApplicationContext().getPackageManager().getInstalledPackages(0);
                     for (PackageInfo info : infoList) {
                         if (info.packageName.equals(pkg)) {
                             jsCallback(rdCloudView, true, cb, true);
@@ -334,7 +322,7 @@ public class AppWidget extends PluginBase {
             Uri uri = Uri.parse(params[0]);
             Intent itt = new Intent(Intent.ACTION_VIEW, uri);
             itt.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            RDCloudApplication.getApp().startActivity(itt);
+            HybridEnv.getApplicationContext().startActivity(itt);
         }
     }
 

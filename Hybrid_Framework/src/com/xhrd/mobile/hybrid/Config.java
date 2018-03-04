@@ -1,5 +1,7 @@
 package com.xhrd.mobile.hybrid;
 
+import com.xhrd.mobile.hybridframework.BuildConfig;
+
 /**
  * Created by maxinliang on 15/9/8.
  */

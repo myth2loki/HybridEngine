@@ -2,6 +2,7 @@ package com.xhrd.mobile.hybrid.framework.Manager.audio;
 
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,7 +10,7 @@ import android.widget.Toast;
 
 import com.xhrd.mobile.hybrid.engine.RDCloudView;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
-import com.xhrd.mobile.hybrid.framework.Manager.ResManager;
+import com.xhrd.mobile.hybrid.framework.Manager.res.ResManager;
 
 import org.json.JSONObject;
 
@@ -106,19 +107,14 @@ public class Recorder {
             }
             ResManager rm = ResManager.getInstance();
             if (TextUtils.isEmpty(mFilename)) {
-                mFilename = rm.getPath(ResManager.CACHE_URI) + "/record/" + new SimpleDateFormat("yyyyMMdd HHmmss").format(new Date()) + "." + mFormat;
+                mFilename = Environment.getExternalStorageDirectory() + "/record/" + new SimpleDateFormat("yyyyMMdd HHmmss").format(new Date()) + "." + mFormat;
             } else {
-                if (rm.isLegalSchema(mFilename)) {
-                    mFilename = rm.getPath(rdCloudView, mFilename);
-                    if (mFilename.endsWith("/")) {
-                        mFilename = mFilename + new SimpleDateFormat("yyyyMMdd HHmmss").format(new Date()) + "." + mFormat;
-                    }
-                } else if (mFilename.endsWith("/")) {
+                if (mFilename.endsWith("/")) {
                     mFilename = mFilename + new SimpleDateFormat("yyyyMMdd HHmmss").format(new Date()) + "." + mFormat;
                 } else if (mFilename.startsWith("/")) {
                     mFilename = mFilename + "." + mFormat;
                 } else {
-                    mFilename = rm.getPath(ResManager.CACHE_URI) + "/record/" + mFilename + "." + mFormat;
+                    mFilename = HybridEnv.getApplicationContext().getCacheDir() + "/record/" + mFilename + "." + mFormat;
                 }
             }
 //            mFilename = "/sdcard/ljm/ljm.aac";

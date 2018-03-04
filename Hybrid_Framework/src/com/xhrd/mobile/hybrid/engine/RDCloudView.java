@@ -17,9 +17,9 @@ import java.util.Map;
  */
 public interface RDCloudView extends PullToRefreshBase.OnRefreshListener {
     String JAVASCRIPT_HEAD = "javascript:";
-    int DATA_TYPE_URL = 2;
-    int DATA_TYPE_TEXT = 1;
-    int DATA_TYPE_LOCAL = 0;
+    int DATA_TYPE_ASSET = 1;
+    int DATA_TYPE_TEXT = 2;
+    int DATA_TYPE_URL = 3;
 
     String FROYO_USERAGENT = "Mozilla/5.0 (Linux; U; "
             + "Android " + Build.VERSION.RELEASE + "; en-us; " + Build.MODEL
@@ -136,13 +136,11 @@ public interface RDCloudView extends PullToRefreshBase.OnRefreshListener {
 
     void disableLoadingBar();
 
-    Map<Integer, PluginBase> getInjectedFMJSObj();
-
+    /**
+     * 记录scope为new的插件实例
+     * @return
+     */
     Map<Integer, PluginBase> getInjectedPluginJSObj();
-
-    Map<Class<?>, PluginBase> getInjectedLocalFMJSObj();
-
-    Map<Class<?>, PluginBase> getInjectedLocalPluginJSObj();
 
     /**
      * 获取下拉刷新、上拉加载控件

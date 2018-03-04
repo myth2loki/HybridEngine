@@ -9,8 +9,8 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.webkit.WebResourceResponse;
 
-import com.xhrd.mobile.hybrid.BuildConfig;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
+import com.xhrd.mobile.hybridframework.BuildConfig;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

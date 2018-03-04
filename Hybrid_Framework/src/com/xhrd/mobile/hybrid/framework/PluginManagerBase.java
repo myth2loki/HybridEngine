@@ -12,7 +12,6 @@ import android.util.Pair;
 import android.webkit.JsPromptResult;
 import android.widget.Toast;
 
-import com.xhrd.mobile.hybrid.BuildConfig;
 import com.xhrd.mobile.hybrid.Config;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.engine.AbsRDCloudChromeClient;
@@ -23,6 +22,7 @@ import com.xhrd.mobile.hybrid.engine.RDResourceManager;
 import com.xhrd.mobile.hybrid.util.ClassUtil;
 import com.xhrd.mobile.hybrid.util.SystemUtil;
 import com.xhrd.mobile.hybrid.util.log.LogUtils;
+import com.xhrd.mobile.hybridframework.BuildConfig;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -134,20 +134,20 @@ public abstract class PluginManagerBase {
             throw new IllegalStateException("javascript has been generated.");
         }
 
-        //符合注解模式所使用资源——scope=app
+        //符合注解模式所使用资源——scope=App
         List<PluginData> globalDataList = new ArrayList<PluginData>();
-        //符合注解模式所使用资源--scope=window、createNew
+        //符合注解模式所使用资源--scope=Window、New
         List<PluginData> pluginDataList = new ArrayList<PluginData>();
 
 
-        //不符合注解模式所使用资源——scope=app
+        //不符合注解模式所使用资源——scope=App
         List<PluginBase> globalList = new ArrayList<PluginBase>();
-        //不符合注解模式所使用资源——scope=window、createNew
+        //不符合注解模式所使用资源——scope=Window、New
         List<PluginBase> pluginList = new ArrayList<PluginBase>();
 
         for (PluginData data : mPluginDataList) {
             if (data.isAnnotatable) {// 符合注解模式
-                if (data.mScope != PluginData.Scope.createNew) {// app
+                if (data.mScope != PluginData.Scope.New) {// App
                     // 添加js属性
                     data.addPropertyByAnnotation();
 
@@ -175,7 +175,7 @@ public abstract class PluginManagerBase {
                     // plugin的property和jsMethod都已添加到了plugin的data中，后续不许再添加了
                     data.mGenerated = true;
                     globalDataList.add(data);
-                } else {// window, createNew
+                } else {// Window, New
                     pluginDataList.add(data);
                 }
 
@@ -188,13 +188,13 @@ public abstract class PluginManagerBase {
                         base.setPluginData(data);
 
                         if (this instanceof FrameworkManager) {
-                            if (base.getScope() != PluginData.Scope.createNew) {
+                            if (base.getScope() != PluginData.Scope.New) {
                                 globalList.add(base);
                             } else {
                                 pluginList.add(base);
                             }
                         } else {
-                            if (data.mScope != PluginData.Scope.createNew) {
+                            if (data.mScope != PluginData.Scope.New) {
                                 globalList.add(base);
                             } else {
                                 pluginList.add(base);
@@ -364,8 +364,8 @@ public abstract class PluginManagerBase {
             InvocationTargetException, IllegalAccessException, ClassNotFoundException, InstantiationException {
         if (view.getRDCloudWindow() == null) {
 //            LogManager log = (LogManager) getPlugin("log");
-//            log.e("window or popover", new String[]{"js calls happened after a window or popover has been removed."});
-            Log.i(getClass().getSimpleName(), "js calls happened after a window or popover has been removed.");
+//            log.e("Window or popover", new String[]{"js calls happened after a Window or popover has been removed."});
+            Log.i(getClass().getSimpleName(), "js calls happened after a Window or popover has been removed.");
             return null;
         }
         Class<?> clazz = ClassUtil.loadClass(view.getContext(), className);
@@ -386,7 +386,7 @@ public abstract class PluginManagerBase {
         if ("newInstance".equals(methodName)) {
             Class<?>[] p = new Class<?>[]{Class.class};
             try {
-                if (pluginData.mScope == PluginData.Scope.app) {
+                if (pluginData.mScope == PluginData.Scope.App) {
                     PluginBase base = mGlobalPluginMap.get(pluginData.mClass);
                     if (base == null) {
                         Method method = clazz.getMethod(methodName, p);
@@ -399,7 +399,7 @@ public abstract class PluginManagerBase {
                     //PluginData在读取plugins.xml时创建
                     //ret = base.getPluginData().genJavascript();
                     ret = getJsByPlugin(base);
-                } else if (pluginData.mScope == PluginData.Scope.window) {
+                } else if (pluginData.mScope == PluginData.Scope.Window) {
                     Map<Class<?>, PluginBase> map = getWindowInjectedJSObj(view);
                     PluginBase base = map.get(pluginData.mClass);
                     if (base == null) {
@@ -410,19 +410,6 @@ public abstract class PluginManagerBase {
                         base = retPair.second;
                         base.setPluginData(pluginData);
                         map.put(pluginData.mClass, base);
-                    }
-                    ret = getJsByPlugin(base);
-                } else if (pluginData.mScope == PluginData.Scope.local) {
-                    Map<Integer, PluginBase> map = getViewInjectedJSObj(view);
-                    PluginBase base = map.get(pluginData.mClass);
-                    if (base == null) {
-                        Method method = clazz.getMethod(methodName, p);
-                        Pair<String, PluginBase> retPair = (Pair<String, PluginBase>) method.invoke(null, clazz);
-                        retPair.second.onCreate(view);
-                        retPair.second.onRegistered(view);
-                        base = retPair.second;
-                        base.setPluginData(pluginData);
-                        map.put(base.getId(), base);
                     }
                     ret = getJsByPlugin(base);
                 } else {
@@ -440,7 +427,7 @@ public abstract class PluginManagerBase {
             //调用插件方法
             PluginBase base = null;
             switch (pluginData.mScope) {
-                case app:
+                case App:
                     base = mGlobalPluginMap.get(pluginData.mClass);
                     if (base == null) {
                         base = (PluginBase) pluginData.mConsturctor.newInstance();
@@ -450,7 +437,7 @@ public abstract class PluginManagerBase {
                     }
                     view.registerPlugin(base);
                     break;
-                case window:
+                case Window:
                     Map<Class<?>, PluginBase> map = getWindowInjectedJSObj(view);
                     base = map.get(pluginData.mClass);
                     if (base == null) {
@@ -461,19 +448,7 @@ public abstract class PluginManagerBase {
                     }
                     view.registerPlugin(base);
                     break;
-                case local:
-                    map = getLocalViewInjectedJSObj(view);
-                    base = map.get(pluginData.mClass);
-                    if (base == null) {
-                        base = (PluginBase) pluginData.mConsturctor.newInstance();
-                        base.setPluginData(pluginData);
-                        base.onCreate(view);
-                        map.put(pluginData.mClass, base);
-                    }
-                    view.registerPlugin(base);
-                    //base = map.get(id);
-                    break;
-                case createNew:
+                case New:
                     Map<Integer, PluginBase> map1 = getViewInjectedJSObj(view);
                     base = map1.get(id);
                     break;
@@ -912,7 +887,7 @@ public abstract class PluginManagerBase {
         }
         if (base == null) {
             for (PluginData data : mPluginDataList) {
-                if (data.mScope == PluginData.Scope.app && data.mDomain.equals(domain)) {
+                if (data.mScope == PluginData.Scope.App && data.mDomain.equals(domain)) {
                     try {
                         base = (PluginBase) data.mConsturctor.newInstance();
                         base.setPluginData(data);
@@ -947,7 +922,6 @@ public abstract class PluginManagerBase {
         return message.startsWith(RDCloudScript.JS_SCHEMA_0);
     }
 
-    protected abstract Map<Class<?>, PluginBase> getLocalViewInjectedJSObj(RDCloudView view);
     protected abstract Map<Class<?>, PluginBase> getWindowInjectedJSObj(RDCloudView view);
     protected abstract Map<Integer, PluginBase> getViewInjectedJSObj(RDCloudView view);
 

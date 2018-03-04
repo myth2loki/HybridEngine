@@ -8,7 +8,6 @@ import android.net.NetworkInfo;
 import android.os.BatteryManager;
 
 import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.framework.RDCloudApplication;
 
 /**
  * Created by wangqianyu on 15/11/23.

@@ -7,8 +7,7 @@ import com.xhrd.mobile.hybrid.engine.RDCloudView;
 import java.util.Map;
 
 /**
- * 管理framework内部插件。
- * Created by wangqianyu on 15/4/16.
+ * 管理插件。
  */
 public class FrameworkManager extends PluginManagerBase {
 
@@ -18,17 +17,12 @@ public class FrameworkManager extends PluginManagerBase {
     }
 
     @Override
-    protected Map<Class<?>, PluginBase> getLocalViewInjectedJSObj(RDCloudView view) {
-        return view.getInjectedLocalFMJSObj();
-    }
-
-    @Override
     protected Map<Class<?>, PluginBase> getWindowInjectedJSObj(RDCloudView view) {
-        return view.getRDCloudWindow().getInjectedFMJSObj();
+        return view.getRDCloudWindow().getInjectedPluginJSObj();
     }
 
     @Override
     protected Map<Integer, PluginBase> getViewInjectedJSObj(RDCloudView view) {
-        return view.getInjectedFMJSObj();
+        return view.getInjectedPluginJSObj();
     }
 }

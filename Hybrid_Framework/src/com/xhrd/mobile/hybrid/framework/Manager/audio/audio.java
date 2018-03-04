@@ -16,7 +16,6 @@ import com.xhrd.mobile.hybrid.framework.PluginData;
 
 /**
  * 音频管理器
- * Created by wangqianyu on 15/4/21.
  */
 public class audio extends PluginBase {
     /**
@@ -29,11 +28,9 @@ public class audio extends PluginBase {
                 "if (arguments == null || arguments.length == 0)" +
                     "return; " +
                 "exec('RDCloud://" + audio.class.getName() + "/recorderCall/'+this.hostId, ['record',this.id,recordOpts, sucFunc, errFunc], false, false);" +
-                //"rd.AudioManager.recorderCall('record', %d, ja2sa(arguments));" +
             "}, " +
             "playJustRecord:function(){" +
                 "exec('RDCloud://" + audio.class.getName() + "/recorderCall/'+this.hostId, ['playJustRecord',this.id], false, false);" +
-                //"rd.AudioManager.recorderCall('record', %d, ja2sa(arguments));" +
             "}, " +
             "getCurrentTime:function(){" +
                 "var size = exec('RDCloud://" + audio.class.getName() + "/recorderCall/'+this.hostId, ['getCurrentTime',this.id], true, true);" +
@@ -60,7 +57,6 @@ public class audio extends PluginBase {
             "}, " +
             "stop:function(){" +
                 "exec('RDCloud://" + audio.class.getName() + "/recorderCall/'+this.hostId, ['stop',this.id], false, false);" +
-                //"rd.AudioManager.recorderCall('stop', %d, ja2sa(arguments));" +
             "}}";
 
     /**
@@ -209,13 +205,6 @@ public class audio extends PluginBase {
 
     @JavascriptFunction
     public String createPlayer(RDCloudView rdCloudView, String[] params) {
-//        RDCloudView rdView = getTargetView(name);
-//        View view = App.getInstance().getLayoutInflater().inflate(RDResourceManager.getInstance().getLayoutId("player_progress"), null);
-//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-//        layoutParams.topMargin =  53;
-//        view.setLayoutParams(layoutParams);
-//        rdView.addView(view);
-
         Player player = new Player(rdCloudView,params[0], this);
         int id = mInteger.getAndIncrement();
         mPlayerList.put(id, player);
@@ -281,6 +270,6 @@ public class audio extends PluginBase {
 
     @Override
     public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 }

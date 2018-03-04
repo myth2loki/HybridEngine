@@ -363,7 +363,7 @@ public abstract class PluginBase {
      * @return
      */
     public PluginData.Scope getScope() {
-        return PluginData.Scope.createNew;
+        return PluginData.Scope.New;
     }
 
     protected void startActivityForResult(Intent itt, int requestCode) {
@@ -373,7 +373,7 @@ public abstract class PluginBase {
     protected void startActivityForResult(RDCloudView view, Intent itt, int requestCode) {
         int pathCode = mId;
         RDCloudWindow window = view.getRDCloudWindow();
-        if (getScope() == PluginData.Scope.app) {
+        if (getScope() == PluginData.Scope.App) {
             //全局插件无需走路径选择。
             HybridActivity.getInstance().startActivityForResult(itt, requestCode);
         } else {
@@ -487,7 +487,7 @@ public abstract class PluginBase {
             PluginData data = getPluginData();
             if (data == null) {
                 Constructor<?> con = getClass().getConstructor();
-                data = new PluginData(con, getClass(), PluginData.Scope.createNew, false);
+                data = new PluginData(con, getClass(), PluginData.Scope.New, false);
             }
             addMethodProp(data);
             //父类增加公共方法需要都配置，参考getVersion
@@ -517,6 +517,8 @@ public abstract class PluginBase {
      * 添加js函数和属性
      * @param data
      */
-    protected abstract void addMethodProp(PluginData data);
+    protected void addMethodProp(PluginData data) {
+
+    }
 
 }

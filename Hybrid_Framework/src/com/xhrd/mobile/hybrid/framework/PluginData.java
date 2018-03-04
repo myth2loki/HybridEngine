@@ -3,11 +3,11 @@ package com.xhrd.mobile.hybrid.framework;
 import android.text.TextUtils;
 import android.util.Pair;
 
-import com.xhrd.mobile.hybrid.BuildConfig;
 import com.xhrd.mobile.hybrid.annotation.JavascriptConfig;
 import com.xhrd.mobile.hybrid.annotation.JavascriptProperty;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 import com.xhrd.mobile.hybrid.engine.RDCloudScript;
+import com.xhrd.mobile.hybridframework.BuildConfig;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -48,8 +48,6 @@ public class PluginData {
     public boolean isUiPlugin;// 是否为UI插件
     public String version;
 
-    public boolean mLifeCycleCallback;
-
     protected boolean mGenerated;
     /**
      * 判断是否是内部功能
@@ -86,7 +84,6 @@ public class PluginData {
                     PluginBase base = (PluginBase) mBase;
                     mScope = base.getScope();
                     mDomain = base.getDefaultDomain();
-                    mLifeCycleCallback = base.getLifeCycleCallback();
 
                 } catch (Exception e) {
                     throw new IllegalStateException(e);
@@ -95,7 +92,6 @@ public class PluginData {
                 isAnnotatable = true;
                 mScope = javascriptConfig.scope();
                 mDomain = javascriptConfig.domain();
-                mLifeCycleCallback =  javascriptConfig.lifeCycleCallback();
             }
         }
 
@@ -646,6 +642,7 @@ public class PluginData {
         if (BuildConfig.DEBUG) {
             sb.append("     console.log('1------->'+name);");
         }
+        //使用newInstance表明new
         sb.append("     return ").append(String.format(exec_template, RDCloudScript.JS_SCHEMA, mClass.getName(), "newInstance", -1));
         sb.append("}");
         return sb.toString();
@@ -719,6 +716,6 @@ public class PluginData {
     }
 
     public enum Scope {
-        app, window, local, createNew;
+        App, Window, New
     }
 }

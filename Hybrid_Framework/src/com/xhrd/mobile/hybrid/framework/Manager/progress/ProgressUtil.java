@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xhrd.mobile.hybrid.engine.RDResourceManager;
-import com.xhrd.mobile.hybrid.framework.Manager.ResManager;
+import com.xhrd.mobile.hybrid.framework.Manager.res.ResManager;
 import com.xhrd.mobile.hybrid.util.LruCacheUtil;
 
 /**
@@ -48,7 +49,7 @@ public class ProgressUtil {
      * @param context
      * @return
      */
-    public static RDDialog createProgressDialog2(Context context, String bgFillColor, int alpha, String[] imgs, String title, String titleSize, String titleColor, String detailTitle, String detailTitleSize, String detailTitleColor) {
+    public static RDDialog createProgressDialog2(Context context, String bgFillColor, int alpha, String[] imgPaths, String title, String titleSize, String titleColor, String detailTitle, String detailTitleSize, String detailTitleColor) {
         RDDialog progressDialog = new RDDialog(context);// 创建自定义样式dialog
         progressDialog.setCancelable(true);// 可用“返回键”取消
         progressDialog.setCanceledOnTouchOutside(false);// 不可点击dialog外部取消
@@ -59,10 +60,10 @@ public class ProgressUtil {
 
         final ImageView spaceshipImage = (ImageView) v.findViewById(RDResourceManager.getInstance().getId("progress_rd_iv"));
 
-        if (imgs == null || imgs.length == 0) {
+        if (imgPaths == null || imgPaths.length == 0) {
             spaceshipImage.setVisibility(View.GONE);
-        } else if (imgs.length == 1) {
-            String path = ResManager.getInstance().getPath(imgs[0]);
+        } else if (imgPaths.length == 1) {
+            String path = ResManager.getInstance().getPath(Uri.parse(imgPaths[0]));
             Drawable d = LruCacheUtil.getInstance().getDrawable(path);
             if (d != null) {
                 if (Build.VERSION.SDK_INT >= 16) {
@@ -75,8 +76,8 @@ public class ProgressUtil {
             }
         } else {
             final AnimationDrawable frameAnim = new AnimationDrawable();
-            for (String img : imgs) {
-                String path = ResManager.getInstance().getPath(img);
+            for (String img : imgPaths) {
+                String path = ResManager.getInstance().getPath(Uri.parse(img));
                 Drawable d = LruCacheUtil.getInstance().getDrawable(path);
                 if (d != null) {
                     frameAnim.addFrame(d, 150);

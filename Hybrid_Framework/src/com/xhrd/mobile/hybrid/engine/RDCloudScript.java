@@ -56,7 +56,7 @@ public class RDCloudScript {
             "RD.framework.internal = {};" +
             //加载时替换这个占位符
             "rd = {onLoad:function(){}, onForeground:function(){}, onBackground:function(){}, onDestroy:function(){}};" +
-            //"rd.window = {name : '%s'};" +
+            //"rd.Window = {name : '%s'};" +
             "";
 
     private final static String MAPScript = "" +
@@ -251,7 +251,7 @@ public class RDCloudScript {
 //        Log.e("-->", Build.MODEL);
         //NOTE2 outerWidth outerHeight不对
         if (Build.MODEL.equalsIgnoreCase("GT-N7102") && Build.VERSION.SDK_INT == Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            view.loadUrl("javascript: window.outerWidth /= 2; window.outerHeight /= 2;");
+            view.loadUrl("javascript: Window.outerWidth /= 2; Window.outerHeight /= 2;");
         }
     }
 }

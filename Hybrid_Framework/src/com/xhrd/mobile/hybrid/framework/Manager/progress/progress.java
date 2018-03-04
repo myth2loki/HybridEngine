@@ -15,7 +15,7 @@ import org.json.JSONObject;
 /**
  * Created by maxinliang on 15/6/27.
  */
-@JavascriptConfig(scope = PluginData.Scope.app, properties = {
+@JavascriptConfig(scope = PluginData.Scope.App, properties = {
         @JavascriptProperty(name = "ANIMATIONTYPE_FADE", value = "0"),
         @JavascriptProperty(name = "ANIMATIONTYPE_ZOOM", value = "1")
 })

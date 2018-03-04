@@ -460,12 +460,12 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
 
     @Override
     public String getDefaultDomain() {
-        return "window";
+        return "Window";
     }
 
     @Override
     public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 
     /**

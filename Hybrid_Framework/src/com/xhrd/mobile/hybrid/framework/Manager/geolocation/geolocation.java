@@ -25,7 +25,8 @@ import com.xhrd.mobile.hybrid.engine.RDResourceManager;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
-import com.xhrd.mobile.hybrid.framework.Manager.I18n;
+
+import static com.xhrd.mobile.hybrid.Config.DEBUG;
 
 public class geolocation extends PluginBase implements LocationListener{
 	private LocationManager mLocationManager;
@@ -112,7 +113,7 @@ public class geolocation extends PluginBase implements LocationListener{
 			long maximumAge = optObject.optLong("maximumAge",500);
 			//TODO
 			if (!"system".equals(provider)) {
-				jsCallback(errFunc, I18n.getInstance().getString("demo_geolocation_type_invalid")+ provider );
+				jsCallback(errFunc, "demo_geolocation_type_invalid" + provider);
 			}
 			//mCoordsType = optObject.optString("coordsType");
 			boolean enableHighAccuracy = optObject.optBoolean("enableHighAccuracy");
@@ -132,9 +133,11 @@ public class geolocation extends PluginBase implements LocationListener{
 			criteria.setCostAllowed(true);//是否允许付费
 			criteria.setSpeedRequired(false);
 			String bestProvider = mLocationManager.getBestProvider(criteria, true);
-			Log.i("Test", "bestProvider: " + bestProvider);
+			if (DEBUG) {
+				Log.i("Test", "bestProvider: " + bestProvider);
+			}
 			if (TextUtils.isEmpty(bestProvider) || "passive".equals(bestProvider)) {
-				jsCallback(errFunc, I18n.getInstance().getString("demo_geolocation_service_unusable"));
+				jsCallback(errFunc, "geolocation_service_unusable");
 			} else {
 				mProvider = bestProvider;
 			}
@@ -151,7 +154,7 @@ public class geolocation extends PluginBase implements LocationListener{
 				public void run() {
 					if (mIsTimeout) {
 						mLocationManager.removeUpdates(geolocation.this);
-						jsCallback(errFunc, I18n.getInstance().getString("demo_geolocation_timeout") );
+						jsCallback(errFunc, "geolocation_timeout");
 					}
 				}
 			}, timeout);
@@ -259,7 +262,7 @@ public class geolocation extends PluginBase implements LocationListener{
 	}
 	
 	public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 
 	@Override

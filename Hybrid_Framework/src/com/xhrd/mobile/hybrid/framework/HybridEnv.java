@@ -7,7 +7,6 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 
 import com.xhrd.mobile.hybrid.engine.RDCloudScript;
-import com.xhrd.mobile.hybrid.framework.Manager.I18n;
 import com.xhrd.mobile.hybrid.framework.Manager.actionsheet.actionSheet;
 import com.xhrd.mobile.hybrid.framework.Manager.appcontrol.AppWidget;
 import com.xhrd.mobile.hybrid.framework.Manager.appcontrol.Window;
@@ -21,9 +20,7 @@ import com.xhrd.mobile.hybrid.framework.Manager.device.screen;
 import com.xhrd.mobile.hybrid.framework.Manager.eventbus.EventListener;
 import com.xhrd.mobile.hybrid.framework.Manager.gallery.gallery;
 import com.xhrd.mobile.hybrid.framework.Manager.geolocation.geolocation;
-import com.xhrd.mobile.hybrid.framework.Manager.http.HttpManager;
 import com.xhrd.mobile.hybrid.framework.Manager.progress.progress;
-import com.xhrd.mobile.hybrid.framework.Manager.properties.PropertiesManager;
 import com.xhrd.mobile.hybrid.framework.Manager.storage.storage;
 import com.xhrd.mobile.hybrid.framework.Manager.toast.ToastManager;
 
@@ -74,7 +71,6 @@ public class HybridEnv {
         sPluginManager.addPlugin(networkInfo.class);
         sPluginManager.addPlugin(os.class);
         sPluginManager.addPlugin(screen.class);
-        sPluginManager.addPlugin(I18n.class);
         sPluginManager.addPlugin(audio.class);
         sPluginManager.addPlugin(camera.class);
         sPluginManager.addPlugin(Window.class);
@@ -84,8 +80,6 @@ public class HybridEnv {
         sPluginManager.addPlugin(EventListener.class);
         sPluginManager.addPlugin(ToastManager.class);
         sPluginManager.addPlugin(gallery.class);
-        sPluginManager.addPlugin(PropertiesManager.class);
-        sPluginManager.addPlugin(HttpManager.class);
         sPluginManager.addPlugin(actionSheet.class);
         return sPluginManager.genJavascript();
     }

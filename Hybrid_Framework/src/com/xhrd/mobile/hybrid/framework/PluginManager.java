@@ -81,12 +81,11 @@ public class PluginManager extends PluginManagerBase {
                         boolean startup = "true".equals(pluginParser.getAttributeValue(null, STARTUP_ATTR));
                         version = pluginParser.getAttributeValue(null, VERSION_ATTR);
                         String scopeStr = pluginParser.getAttributeValue(null, SCOPE_ATTR);
-                        PluginData.Scope scope = PluginData.Scope.createNew;
+                        PluginData.Scope scope = PluginData.Scope.New;
                         if (!TextUtils.isEmpty(scopeStr)) {
                             scope = PluginData.Scope.valueOf(scopeStr);
                         }
                         boolean isUi = "true".equals(pluginParser.getAttributeValue(null, IS_UI_PLUGIN));
-                        boolean lifeCycleCallback = "true".equals(pluginParser.getAttributeValue(null, LIFE_CYCLE_CALLBACK_ATTR));
 
                         if (!TextUtils.isEmpty(javaName)) {
                             Constructor<?> constructor = null;
@@ -101,7 +100,6 @@ public class PluginManager extends PluginManagerBase {
                                     scriptObj.mClass = clazz;
                                     scriptObj.version = version;
                                     scriptObj.mScope = scope;
-                                    scriptObj.mLifeCycleCallback = lifeCycleCallback;
                                 }
                             }
                         }
@@ -235,11 +233,6 @@ public class PluginManager extends PluginManagerBase {
     @Override
     protected Object invokePluginMethodByName(RDCloudView view, PluginBase base, PluginData pluginData, String methodName, Object[] params, JsPromptResult jsPromptResult) {
         return invokePluginMethodByNameInner(view, base, methodName, params);
-    }
-
-    @Override
-    protected Map<Class<?>, PluginBase> getLocalViewInjectedJSObj(RDCloudView view) {
-        return view.getInjectedLocalPluginJSObj();
     }
 
     @Override

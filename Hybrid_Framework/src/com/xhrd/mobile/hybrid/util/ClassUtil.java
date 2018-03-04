@@ -3,7 +3,7 @@ package com.xhrd.mobile.hybrid.util;
 import android.content.Context;
 import android.util.Log;
 
-import com.xhrd.mobile.hybrid.BuildConfig;
+import com.xhrd.mobile.hybridframework.BuildConfig;
 
 /**
  * Created by wangqianyu on 15/5/22.

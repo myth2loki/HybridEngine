@@ -2,10 +2,10 @@ package com.xhrd.mobile.hybrid.framework.Manager.device;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
-import com.xhrd.mobile.hybrid.framework.RDCloudApplication;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -33,7 +33,7 @@ public class display extends PluginBase {
     
     public display()
     {
-        Context context = RDCloudApplication.getApp();
+        Context context = HybridEnv.getApplicationContext();
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         mScreenHeight = dm.heightPixels;
         mScreenWidth = dm.widthPixels;
@@ -88,6 +88,6 @@ public class display extends PluginBase {
 
     @Override
     public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 }

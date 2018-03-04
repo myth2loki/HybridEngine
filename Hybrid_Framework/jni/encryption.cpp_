@@ -77,15 +77,15 @@ static bool isVerified = false;
 //	if (!appId) {
 //		return NULL;
 //	}
-//	jobject app = env->CallStaticObjectMethod(cls, appId);
-//	if (!app) {
+//	jobject App = env->CallStaticObjectMethod(cls, appId);
+//	if (!App) {
 //		return NULL;
 //	}
 //	jmethodID pkgId = env->GetMethodID(cls, "getPackageName", "()Ljava/lang/String;");
 //	if (!pkgId) {
 //		return NULL;
 //	}
-//	return (jstring)env->CallObjectMethod(app, pkgId);
+//	return (jstring)env->CallObjectMethod(App, pkgId);
 //}
 
 static jmethodID getBytesMid;
@@ -483,15 +483,15 @@ static JNINativeMethod s_methods[] = {
 //	if (!appId) {
 //		return false;
 //	}
-//	jobject app = env->CallStaticObjectMethod(appClass, appId);
-//	if (!app) {
+//	jobject App = env->CallStaticObjectMethod(appClass, appId);
+//	if (!App) {
 //		return false;
 //	}
 //	jmethodID pkgManagerId = env->GetMethodID(appClass, "getPackageManager", "()Landroid/content/pm/PackageManager;");
 //	if (!pkgManagerId) {
 //		return false;
 //	}
-//	jobject pkgManager = env->CallObjectMethod(app, pkgManagerId);
+//	jobject pkgManager = env->CallObjectMethod(App, pkgManagerId);
 //	if (!pkgManager) {
 //		return false;
 //	}

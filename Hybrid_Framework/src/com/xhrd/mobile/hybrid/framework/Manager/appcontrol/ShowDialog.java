@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.xhrd.mobile.hybrid.engine.RDCloudView;
 import com.xhrd.mobile.hybrid.engine.RDResourceManager;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
-import com.xhrd.mobile.hybrid.framework.Manager.I18n;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -173,7 +172,7 @@ public class ShowDialog {
 				if(buttons != null) {
 					btnLen = buttons.length();
 				}
-				String[] defaultStr = new String[] {I18n.getInstance().getString("confirm"),I18n.getInstance().getString("cancel")};
+				String[] defaultStr = new String[] {"confirm", "cancel"};
 				int bl = 0;
 				if(pDialogType == F_ALERT) {
 					if(btnLen>1) {

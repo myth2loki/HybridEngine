@@ -38,7 +38,6 @@ public class RDCloudWindow extends RelativeLayout {
     /**
      * 构建一个带名字的窗口。
      *
-     * @param component 父模块
      * @param name      window名字
      */
     public RDCloudWindow(HybridActivity activity, String name, int type, String data) {
@@ -223,19 +222,11 @@ public class RDCloudWindow extends RelativeLayout {
         for (PluginBase base : mInjectedFMJSObj.values()) {
             pluginData = base.getPluginData();
 
-            if (pluginData.mScope == PluginData.Scope.window) {
+            if (pluginData.mScope == PluginData.Scope.Window) {
                 base.onDestroy();
             }
         }
         mInjectedFMJSObj.clear();
-
-        for (PluginBase base : mInjectedPluginJSObj.values()) {
-            pluginData = base.getPluginData();
-            if (pluginData.mScope == PluginData.Scope.window) {
-                base.onDestroy();
-            }
-        }
-        mInjectedPluginJSObj.clear();
 
         super.onDetachedFromWindow();
     }
@@ -303,13 +294,7 @@ public class RDCloudWindow extends RelativeLayout {
 
     public void onActivityResult(int pluginId, int requestCode, int resultCode, Intent data) {
         PullToRefreshWebView rdView = mMainView;
-        PluginBase base = null;
-        Map<Integer, PluginBase> map = rdView.getRefreshableView().getInjectedFMJSObj();
-        base = map.get(pluginId);
-        if (base != null) {
-            base.onActivityResult(requestCode, resultCode, data);
-        }
-
+        PluginBase base;
         Map<Integer, PluginBase> map1 = rdView.getRefreshableView().getInjectedPluginJSObj();
         base = map1.get(pluginId);
         if (base != null) {
@@ -323,31 +308,21 @@ public class RDCloudWindow extends RelativeLayout {
 
     public void onRequestPermissionsResult(String[] permissions, int[] grantResults, int requestCode, int pluginId) {
         PullToRefreshWebView rdView = mMainView;
-        PluginBase base = null;
+        PluginBase plugin;
 
         if (HybridEnv.getPluginManager().onRequestPermissionsResult(pluginId, requestCode, permissions, grantResults)) {
             return;
         }
 
-        Map<Integer, PluginBase> map = rdView.getRefreshableView().getInjectedFMJSObj();
-        base = map.get(pluginId);
-        if (base != null) {
-            base.onRequestPermissionsResultInner(requestCode, permissions, grantResults);
-            return;
+        Map<Integer, PluginBase> pluginMap = rdView.getRefreshableView().getInjectedPluginJSObj();
+        plugin = pluginMap.get(pluginId);
+        if (plugin != null) {
+            plugin.onRequestPermissionsResultInner(requestCode, permissions, grantResults);
         }
-
-        Map<Integer, PluginBase> map1 = rdView.getRefreshableView().getInjectedPluginJSObj();
-        base = map1.get(pluginId);
-        if (base != null) {
-            base.onRequestPermissionsResultInner(requestCode, permissions, grantResults);
-        }
-    }
-
-    public Map<Class<?>, PluginBase> getInjectedFMJSObj() {
-        return mInjectedFMJSObj;
     }
 
     public Map<Class<?>, PluginBase> getInjectedPluginJSObj() {
-        return mInjectedPluginJSObj;
+        return mInjectedFMJSObj;
     }
+
 }

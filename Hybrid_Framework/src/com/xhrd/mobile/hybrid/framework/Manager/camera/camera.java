@@ -8,11 +8,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
+import com.xhrd.mobile.hybrid.engine.RDCloudView;
 import com.xhrd.mobile.hybrid.engine.RDResourceManager;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.Manager.ResManagerFactory;
 import com.xhrd.mobile.hybrid.framework.PluginData;
-import com.xhrd.mobile.hybrid.framework.RDCloudApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,24 +26,16 @@ import java.util.Date;
  * Created by wangqianyu on 15/4/22.
  */
 public class camera extends PluginBase {
-    public static final int CAPTURE_IMAGE = RDCloudApplication.getAtomicId();
-    public static final int CAPTURE_VIDEO = RDCloudApplication.getAtomicId();
+    private static final int CAPTURE_IMAGE = 1;
+    private static final int CAPTURE_VIDEO = 2;
 
-    private static final String CAMERA_JSON = "{" +
-                "captureImage:function(){" +
-                    "window.CameraManager_.call('captureImage', %d, ja2sa(params))" +
-                "}," +
-                "captureVideo:function(){" +
-                    "window.CameraManager_.call('startVideoCapture', %d, ja2sa(params))" +
-                "}" +
-            "}";
 
     private String mImageSucFunc, mImageErrFunc;
     private String mVideoSucFunc, mVideoErrFunc;
     private File mCapFile;
 
     @JavascriptFunction
-    public void captureImage(String windowName, String[] params) {
+    public void captureImage(RDCloudView window, String[] params) {
         mImageSucFunc = params[0];
         mImageErrFunc = params[1];
         try {
@@ -51,7 +43,7 @@ public class camera extends PluginBase {
                 String camOptsStr = params[2];
                 JSONObject optsJO = new JSONObject(camOptsStr);
                 String filename = optsJO.optString("filename", "");
-                filename = ResManagerFactory.getResManager().getPath(getTargetView(windowName),filename);
+                filename = ResManagerFactory.getResManager().getPath(filename);
                 File file = new File(filename);
                 mCapFile = file;
                 if (file.isDirectory()) {
@@ -89,14 +81,14 @@ public class camera extends PluginBase {
     }
 
     @JavascriptFunction
-    public void captureVideo(String windowName, String[] params) {
+    public void captureVideo(RDCloudView view, String[] params) {
         mVideoSucFunc = params[0];
         mVideoErrFunc = params[1];
         try {
             String camOptsStr = params[2];
             JSONObject optsJO = new JSONObject(camOptsStr);
             String filename = optsJO.optString("filename", "");
-            filename = ResManagerFactory.getResManager().getPath(this.getTargetView(windowName),filename);
+            filename = ResManagerFactory.getResManager().getPath(filename);
             File file = new File(filename);
             mCapFile = file;
             if (file.isDirectory()) {
@@ -119,7 +111,7 @@ public class camera extends PluginBase {
     
     @Override
     public PluginData.Scope getScope() {
-    	return PluginData.Scope.app;
+    	return PluginData.Scope.App;
     }
 
 }

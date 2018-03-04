@@ -10,10 +10,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
+import com.xhrd.mobile.hybrid.engine.RDCloudView;
 import com.xhrd.mobile.hybrid.engine.RDResourceManager;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
-import com.xhrd.mobile.hybrid.framework.Manager.ResManager;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 
 import org.json.JSONException;
@@ -187,9 +187,8 @@ public class gallery extends PluginBase {
 
 
 	@JavascriptFunction
-	public void save(String windowName,String[] params){
+	public void save(RDCloudView view, String[] params){
 		String inPath = params[0];
-		inPath = ResManager.getInstance().getPath(getTargetView(windowName),inPath);
 		final String sunc = params[1];
 		final String err = params[2];
 
@@ -477,7 +476,7 @@ public class gallery extends PluginBase {
 	}
 	
 	public PluginData.Scope getScope() {
-        return PluginData.Scope.app;
+        return PluginData.Scope.App;
     }
 	
 }

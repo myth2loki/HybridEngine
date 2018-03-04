@@ -14,7 +14,6 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.xhrd.mobile.hybrid.framework.Manager.ResManager;
 import com.xhrd.mobile.hybrid.framework.Manager.ResManagerFactory;
 
 /**
@@ -43,7 +42,7 @@ public class RDCloudViewClient extends WebViewClient {
         }
         view.loadUrl(RDCloudScript.RDScript);
         super.onPageFinished(view, url);
-        view.loadUrl("javascript: rd.window._aaa = function(){this.name = arguments[0]}; rd.window._aaa('" + mRDView.getWindowName() + "');  delete rd.window._aaa;");
+        view.loadUrl("javascript: rd.Window._aaa = function(){this.name = arguments[0]}; rd.Window._aaa('" + mRDView.getWindowName() + "');  delete rd.Window._aaa;");
         RDCloudScript.jsFix(view);
 //        System.out.println("RDScript==>"+RDCloudScript.RDScript);
         CookieSyncManager.getInstance().sync();
@@ -82,7 +81,7 @@ public class RDCloudViewClient extends WebViewClient {
             view.getSettings().setLoadsImagesAutomatically(false);
         }
         //if (Config.DEBUG) {
-            //view.loadUrl("javascript: window.onerror = function(info, url, line) { alert(info + ' at ' + url + ' line: ' + line); return false; }");
+            //view.loadUrl("javascript: Window.onerror = function(info, url, line) { alert(info + ' at ' + url + ' line: ' + line); return false; }");
         //}
         super.onPageStarted(view, url, favicon);
     }
@@ -162,7 +161,7 @@ public class RDCloudViewClient extends WebViewClient {
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
         //错误时加载默认错误页面。
-        view.loadUrl(ResManagerFactory.getResManager().getPath(ResManager.APP_URI) + "/error/404.html");
+        view.loadUrl("file:///android_assets/hybrid/App/error/404.html");
         super.onReceivedError(view, errorCode, description, failingUrl);
     }
 
