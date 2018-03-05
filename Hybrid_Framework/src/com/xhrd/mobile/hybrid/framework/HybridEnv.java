@@ -11,6 +11,7 @@ import com.xhrd.mobile.hybrid.Config;
 import com.xhrd.mobile.hybrid.engine.HybridScript;
 import com.xhrd.mobile.hybrid.framework.manager.appcontrol.AppWidget;
 import com.xhrd.mobile.hybrid.framework.manager.appcontrol.Window;
+import com.xhrd.mobile.hybrid.framework.manager.camera.Camera;
 import com.xhrd.mobile.hybrid.framework.manager.eventbus.EventListener;
 import com.xhrd.mobile.hybrid.framework.manager.toast.ToastManager;
 import com.xhrd.mobile.hybrid.util.ResourceUtil;
@@ -59,6 +60,7 @@ public class HybridEnv {
         sPluginManager.addPlugin(Window.class);
         sPluginManager.addPlugin(EventListener.class);
         sPluginManager.addPlugin(ToastManager.class);
+        sPluginManager.addPlugin(Camera.class);
         return sPluginManager.genJavascript();
     }
 

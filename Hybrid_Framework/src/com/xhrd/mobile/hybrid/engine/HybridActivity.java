@@ -313,16 +313,19 @@ public class HybridActivity extends Activity {
         int windowIndex = findWindowIndexByName(window.getName());
         windowIndex = windowIndex << 24;
         pluginId = pluginId << 16;
-        int realRequestCode = windowIndex & pluginId & requestCode;
+        int realRequestCode = windowIndex | pluginId | requestCode;
         mActivity.startActivityForResult(intent, realRequestCode);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        HybridEnv.getPluginManager().onActivityResult(requestCode, resultCode, data);
-
         int windowIndex = requestCode >> 24;
         int pluginIndex = requestCode << 8 >> 24;
-        int realRequestCode = requestCode << 16;
+        int realRequestCode = requestCode & 0x000000FF;
+        if (DEBUG) {
+            Log.d(TAG, "onActivityResult: windowIndex = " + windowIndex);
+            Log.d(TAG, "onActivityResult: pluginIndex = " + pluginIndex);
+            Log.d(TAG, "onActivityResult: realRequestCode = " + realRequestCode);
+        }
         HybridWindow window = mWindowList.get(windowIndex);
         window.onActivityResult(pluginIndex, realRequestCode, resultCode, data);
     }

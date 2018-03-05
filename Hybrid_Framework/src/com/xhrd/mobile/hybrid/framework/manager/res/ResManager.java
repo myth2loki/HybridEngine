@@ -53,6 +53,8 @@ public class ResManager extends PluginBase {
             path = HybridEnv.getApplicationContext().getFilesDir().getParentFile().getAbsolutePath();
         } else if (CACHE_URI.equalsIgnoreCase(uri.getScheme())) {
             path = HybridEnv.getApplicationContext().getCacheDir().getAbsolutePath();
+        } else {
+            path = uri.toString();
         }
         return path;
     }

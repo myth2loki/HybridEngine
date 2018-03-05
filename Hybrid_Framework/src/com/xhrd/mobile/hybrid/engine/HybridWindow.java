@@ -23,7 +23,6 @@ import java.util.Map;
 
 /**
  * 窗口类，负责管理View。
- * Created by wangqianyu on 15/4/10.
  */
 public class HybridWindow extends RelativeLayout {
     private LinkedList<HybridView> mViewList = new LinkedList<HybridView>();
