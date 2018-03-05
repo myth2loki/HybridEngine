@@ -28,7 +28,7 @@ import java.util.Date;
 
 @JavascriptConfig(domain = "camera", scope = PluginData.Scope.App)
 public class Camera extends PluginBase {
-    private static final int CAPTURE_IMAGE = 10;
+    private static final int CAPTURE_IMAGE = 50000;
     private static final int CAPTURE_VIDEO = 11;
 
 

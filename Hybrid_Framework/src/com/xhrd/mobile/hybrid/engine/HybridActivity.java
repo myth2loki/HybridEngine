@@ -320,12 +320,12 @@ public class HybridActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         int windowIndex = requestCode >> 24;
         int pluginIndex = requestCode << 8 >> 24;
-        int realRequestCode = requestCode & 0x000000FF;
-        if (DEBUG) {
+        int realRequestCode = requestCode & 0x0000FFFF;
+//        if (DEBUG) {
             Log.d(TAG, "onActivityResult: windowIndex = " + windowIndex);
             Log.d(TAG, "onActivityResult: pluginIndex = " + pluginIndex);
             Log.d(TAG, "onActivityResult: realRequestCode = " + realRequestCode);
-        }
+//        }
         HybridWindow window = mWindowList.get(windowIndex);
         window.onActivityResult(pluginIndex, realRequestCode, resultCode, data);
     }
