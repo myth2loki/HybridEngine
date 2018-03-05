@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,8 +25,8 @@ public class NoneAdapter extends BaseAdapter {
 	private List<String> totalList;
 
 	DisplayImageOptions options = new DisplayImageOptions.Builder()
-			.showImageOnLoading(RDResourceManager.getInstance().getDrawableId("ic_rd_launcher"))
-			.showImageOnFail(RDResourceManager.getInstance().getDrawableId("ic_rd_launcher"))
+			.showImageOnLoading(HybridResourceManager.getInstance().getDrawableId("ic_rd_launcher"))
+			.showImageOnFail(HybridResourceManager.getInstance().getDrawableId("ic_rd_launcher"))
 			.cacheInMemory(true)
 			.cacheOnDisk(true)
 			.bitmapConfig(Bitmap.Config.RGB_565)
@@ -80,7 +80,7 @@ public class NoneAdapter extends BaseAdapter {
 		final ImageView imageView;
 		if (convertView == null) {
 			//imageView = (ImageView) LayoutInflater.from(mContext).inflate(R.layout.none_item, parent, false);
-			imageView = (ImageView)LayoutInflater.from(mContext).inflate(RDResourceManager.getInstance().getLayoutId("none_item"),parent,false);
+			imageView = (ImageView)LayoutInflater.from(mContext).inflate(HybridResourceManager.getInstance().getLayoutId("none_item"),parent,false);
 		} else {
 			imageView = (ImageView) convertView;
 		}

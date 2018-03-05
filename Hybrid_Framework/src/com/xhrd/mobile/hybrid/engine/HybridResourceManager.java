@@ -11,10 +11,10 @@ import com.xhrd.mobile.hybrid.util.ResourceUtil;
  * 管理本地资源
  * Created by wangqianyu on 15/6/5.
  */
-public class RDResourceManager {
-    private static RDResourceManager mInstance = new RDResourceManager();
+public class HybridResourceManager {
+    private static HybridResourceManager mInstance = new HybridResourceManager();
 
-    private RDResourceManager() {
+    private HybridResourceManager() {
     }
 
     /**
@@ -22,9 +22,9 @@ public class RDResourceManager {
      *
      * @return
      */
-    public synchronized static RDResourceManager getInstance() {
+    public synchronized static HybridResourceManager getInstance() {
         if (mInstance == null) {
-            mInstance = new RDResourceManager();
+            mInstance = new HybridResourceManager();
         }
         return mInstance;
     }

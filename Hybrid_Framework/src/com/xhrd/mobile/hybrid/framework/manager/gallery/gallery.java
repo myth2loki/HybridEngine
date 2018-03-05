@@ -10,8 +10,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridView;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
@@ -187,7 +187,7 @@ public class gallery extends PluginBase {
 
 
 	@JavascriptFunction
-	public void save(RDCloudView view, String[] params){
+	public void save(HybridView view, String[] params){
 		String inPath = params[0];
 		final String sunc = params[1];
 		final String err = params[2];
@@ -471,8 +471,8 @@ public class gallery extends PluginBase {
 
 	@Override
 	public void addMethodProp(PluginData data) {
-        data.addMethod("pick",new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, new String[]{RDResourceManager.getInstance().getString("request_gallery_permission_msg")});
-        data.addMethod("save",new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, new String[]{RDResourceManager.getInstance().getString("request_gallery_permission_msg")});
+        data.addMethod("pick",new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, new String[]{HybridResourceManager.getInstance().getString("request_gallery_permission_msg")});
+        data.addMethod("save",new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, new String[]{HybridResourceManager.getInstance().getString("request_gallery_permission_msg")});
 	}
 	
 	public PluginData.Scope getScope() {

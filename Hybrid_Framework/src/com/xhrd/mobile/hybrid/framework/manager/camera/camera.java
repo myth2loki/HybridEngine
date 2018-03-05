@@ -8,8 +8,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridView;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.manager.ResManagerFactory;
 import com.xhrd.mobile.hybrid.framework.PluginData;
@@ -35,7 +35,7 @@ public class camera extends PluginBase {
     private File mCapFile;
 
     @JavascriptFunction
-    public void captureImage(RDCloudView window, String[] params) {
+    public void captureImage(HybridView window, String[] params) {
         mImageSucFunc = params[0];
         mImageErrFunc = params[1];
         try {
@@ -81,7 +81,7 @@ public class camera extends PluginBase {
     }
 
     @JavascriptFunction
-    public void captureVideo(RDCloudView view, String[] params) {
+    public void captureVideo(HybridView view, String[] params) {
         mVideoSucFunc = params[0];
         mVideoErrFunc = params[1];
         try {
@@ -105,7 +105,7 @@ public class camera extends PluginBase {
 
     @Override
     public void addMethodProp(PluginData data) {
-        data.addMethod("captureImage",new String[]{Manifest.permission.CAMERA}, new String[]{RDResourceManager.getInstance().getString("request_camera_permission_msg")});
+        data.addMethod("captureImage",new String[]{Manifest.permission.CAMERA}, new String[]{HybridResourceManager.getInstance().getString("request_camera_permission_msg")});
         data.addMethod("captureVideo");
     }
     

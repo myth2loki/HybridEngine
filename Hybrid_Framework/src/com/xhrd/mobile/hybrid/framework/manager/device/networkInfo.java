@@ -1,7 +1,7 @@
 package com.xhrd.mobile.hybrid.framework.manager.device;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
@@ -24,7 +24,7 @@ public class networkInfo extends PluginBase {
 	private final int CONNECTION_CELL4G = 6;// 蜂窝移动4G网络
 
 	@JavascriptFunction
-	public int getCurrentType(RDCloudView view,String[] params) {
+	public int getCurrentType(HybridView view, String[] params) {
 		int type = CONNECTION_UNKNOW;
 		ConnectivityManager cm = (ConnectivityManager) HybridActivity.getInstance()
 				.getSystemService(Context.CONNECTIVITY_SERVICE);

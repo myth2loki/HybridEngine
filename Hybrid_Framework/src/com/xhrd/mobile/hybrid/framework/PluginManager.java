@@ -7,7 +7,7 @@ import android.util.Pair;
 import android.webkit.JsPromptResult;
 
 import com.xhrd.mobile.hybrid.engine.EngineEventListener;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.util.ClassUtil;
 import com.xhrd.mobile.hybrid.util.log.LogUtils;
 
@@ -231,17 +231,17 @@ public class PluginManager extends PluginManagerBase {
     }
 
     @Override
-    protected Object invokePluginMethodByName(RDCloudView view, PluginBase base, PluginData pluginData, String methodName, Object[] params, JsPromptResult jsPromptResult) {
+    protected Object invokePluginMethodByName(HybridView view, PluginBase base, PluginData pluginData, String methodName, Object[] params, JsPromptResult jsPromptResult) {
         return invokePluginMethodByNameInner(view, base, methodName, params);
     }
 
     @Override
-    protected Map<Class<?>, PluginBase> getWindowInjectedJSObj(RDCloudView view) {
+    protected Map<Class<?>, PluginBase> getWindowInjectedJSObj(HybridView view) {
         return view.getRDCloudWindow().getInjectedPluginJSObj();
     }
 
     @Override
-    protected Map<Integer, PluginBase> getViewInjectedJSObj(RDCloudView view) {
+    protected Map<Integer, PluginBase> getViewInjectedJSObj(HybridView view) {
         return view.getInjectedPluginJSObj();
     }
 

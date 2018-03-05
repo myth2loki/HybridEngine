@@ -10,7 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
@@ -39,7 +39,7 @@ public class screen extends PluginBase {
     }
 
     @JavascriptFunction
-    public void setBrightness(RDCloudView view,String[] params) {
+    public void setBrightness(HybridView view, String[] params) {
         final float brightness = Float.parseFloat(params[0]);
         final Activity act = HybridActivity.getInstance();
         if (act != null) {
@@ -79,7 +79,7 @@ public class screen extends PluginBase {
     }
 
     @JavascriptFunction
-    public String getBrightness(RDCloudView view,String[] params) {
+    public String getBrightness(HybridView view, String[] params) {
         return HybridActivity.getInstance().getWindow().getAttributes().screenBrightness+"";
 //        int screenBrightness = -1;
 //        try{
@@ -97,7 +97,7 @@ public class screen extends PluginBase {
     }
 
     @JavascriptFunction
-    public void lockOrientation(RDCloudView view,String[] params) {
+    public void lockOrientation(HybridView view, String[] params) {
 
         Activity act = HybridActivity.getInstance();
         if (act != null) {
@@ -153,7 +153,7 @@ public class screen extends PluginBase {
         return false;  
     }
     @JavascriptFunction
-    public void unlockOrientation(RDCloudView view,String[] params) {
+    public void unlockOrientation(HybridView view, String[] params) {
     	  Activity act = HybridActivity.getInstance();
           if (act != null) {
 //              int orientation = Integer.parseInt(params[0]);

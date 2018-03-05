@@ -3,9 +3,6 @@ package com.xhrd.mobile.hybrid.framework;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by az on 15/12/16.
- */
 public class RDApplicationAuthorInfo implements Parcelable {
     public String name;
     public String email;

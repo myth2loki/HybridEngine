@@ -28,7 +28,7 @@ import java.util.List;
  * Web Chrome Client管理器。
  * Created by lang on 15/4/18.
  */
-public abstract class AbsRDCloudChromeClient extends WebChromeClient {
+public abstract class AbsHybridChromeClient extends WebChromeClient {
 
     @Override
     public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
@@ -84,7 +84,7 @@ public abstract class AbsRDCloudChromeClient extends WebChromeClient {
                 }
             }
 
-            Object tempRet = HybridEnv.getPluginManager().exec((RDCloudView) view, message, params, result);
+            Object tempRet = HybridEnv.getPluginManager().exec((HybridView) view, message, params, result);
             exec(view, tempRet, result);
             return true;
         } else {
@@ -182,8 +182,8 @@ public abstract class AbsRDCloudChromeClient extends WebChromeClient {
     public void onProgressChanged(WebView view, int newProgress) {
         super.onProgressChanged(view, newProgress);
         if (newProgress >= 100) {
-            ((RDCloudView) view).disableLoadingBar();
-            RDCloudWindow window = ((RDCloudView) view).getRDCloudWindow();
+            ((HybridView) view).disableLoadingBar();
+            HybridWindow window = ((HybridView) view).getRDCloudWindow();
             if (window != null) {
                 window.setHttpProgress(newProgress);
             }
@@ -197,7 +197,7 @@ public abstract class AbsRDCloudChromeClient extends WebChromeClient {
     @Override
     public void onReceivedTitle(WebView view, String title) {
         super.onReceivedTitle(view, title);
-        RDCloudWindow window = ((RDCloudView) view).getRDCloudWindow();
+        HybridWindow window = ((HybridView) view).getRDCloudWindow();
         if (window != null) {
             window.setHttpTitle(title);
         }
@@ -208,7 +208,7 @@ public abstract class AbsRDCloudChromeClient extends WebChromeClient {
         quotaUpdater.updateQuota(requiredStorage * 2);
     }
 
-    public void preResultBack(final RDCloudView view, final JsPromptResult result, Object tempRet) {
+    public void preResultBack(final HybridView view, final JsPromptResult result, Object tempRet) {
     }
 
      protected abstract void exec(WebView view, Object tempRet, final JsPromptResult result);

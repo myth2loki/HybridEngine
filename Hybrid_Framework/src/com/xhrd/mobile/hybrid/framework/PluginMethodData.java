@@ -2,7 +2,7 @@ package com.xhrd.mobile.hybrid.framework;
 
 import android.text.TextUtils;
 
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 import java.util.Arrays;
 
@@ -69,7 +69,7 @@ public class PluginMethodData {
                 String rationale = permissionRationales[i];
                 //解析资源
                 if(!TextUtils.isEmpty(rationale) && rationale.startsWith("@string/")) {
-                    rationale = RDResourceManager.getInstance().getString(rationale.replace("@string/", ""));
+                    rationale = HybridResourceManager.getInstance().getString(rationale.replace("@string/", ""));
                 }
                 tempRationales[i] = rationale;
             }

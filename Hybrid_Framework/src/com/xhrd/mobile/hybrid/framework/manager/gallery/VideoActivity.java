@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridView;
 
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,22 +22,22 @@ public class VideoActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(RDResourceManager.getInstance().getLayoutId("activity_image"));
+		setContentView(HybridResourceManager.getInstance().getLayoutId("activity_image"));
 		filelist = new ArrayList<String>();
 		initView();
 	}
 
 	private void initView() {
-		gridView = (GridView) findViewById(RDResourceManager.getInstance().getId("gridView"));
+		gridView = (GridView) findViewById(HybridResourceManager.getInstance().getId("gridView"));
 		Util util = new Util(this);
 		videoPathList = util.getVideoPath();
 		Collections.reverse(videoPathList);
 		VideoAdapter adapter = new VideoAdapter(this,videoPathList,onItemClickClass);
 		gridView.setAdapter(adapter);
 		
-		Button back = (Button) findViewById(RDResourceManager.getInstance().getId("back"));
+		Button back = (Button) findViewById(HybridResourceManager.getInstance().getId("back"));
 		back.setOnClickListener(this);
-		Button confirm = (Button) findViewById(RDResourceManager.getInstance().getId("confirm"));
+		Button confirm = (Button) findViewById(HybridResourceManager.getInstance().getId("confirm"));
 		confirm.setOnClickListener(this);
 	}
 	

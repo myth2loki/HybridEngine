@@ -25,8 +25,8 @@ import java.util.Map;
  * 窗口类，负责管理View。
  * Created by wangqianyu on 15/4/10.
  */
-public class RDCloudWindow extends RelativeLayout {
-    private LinkedList<RDCloudView> mViewList = new LinkedList<RDCloudView>();
+public class HybridWindow extends RelativeLayout {
+    private LinkedList<HybridView> mViewList = new LinkedList<HybridView>();
     private PullToRefreshWebView mMainView;
     private String mName;
     private HybridActivity mActivity;
@@ -40,7 +40,7 @@ public class RDCloudWindow extends RelativeLayout {
      *
      * @param name      window名字
      */
-    public RDCloudWindow(HybridActivity activity, String name, int type, String data) {
+    public HybridWindow(HybridActivity activity, String name, int type, String data) {
         super(activity);
         setBackgroundColor(Color.WHITE);
         mActivity = activity;
@@ -48,7 +48,7 @@ public class RDCloudWindow extends RelativeLayout {
         openWindow(name, type, data);
     }
 
-    public RDCloudView getmMainView() {
+    public HybridView getmMainView() {
         return mMainView.getRefreshableView();
     }
 
@@ -60,7 +60,7 @@ public class RDCloudWindow extends RelativeLayout {
      * @param data       0 - url，1 - html内容
      */
     public void openWindow(String windowName, int type, String data) {
-        RDCloudWindowInfo info = new RDCloudWindowInfo();
+        HybridWindowInfo info = new HybridWindowInfo();
         info.windowName = windowName;
         info.width = LayoutParams.MATCH_PARENT;
         info.height = LayoutParams.MATCH_PARENT;
@@ -71,12 +71,12 @@ public class RDCloudWindow extends RelativeLayout {
             removeView(mMainView);
         }
         mMainView = new PullToRefreshWebView(this);
-        if (type == RDCloudView.DATA_TYPE_URL) {
+        if (type == HybridView.DATA_TYPE_URL) {
             addTopBottomBar(mMainView);
         } else {
             addView(mMainView, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         }
-        RDCloudView view = mMainView.getRefreshableView();
+        HybridView view = mMainView.getRefreshableView();
         mMainView.setOnRefreshListener(view);
         view.load(info);
     }
@@ -87,7 +87,7 @@ public class RDCloudWindow extends RelativeLayout {
         setFocusable(true);
         setBackgroundResource(android.R.color.white);
 
-        final RDResourceManager rdrm = RDResourceManager.getInstance();
+        final HybridResourceManager rdrm = HybridResourceManager.getInstance();
         RelativeLayout titleBar = (RelativeLayout) LayoutInflater.from(getContext()).inflate(rdrm.getLayoutId("layout_url_title_bar"), null);
         RelativeLayout.LayoutParams lp1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getContext().getResources().getDimensionPixelSize(rdrm.getResDimenId("url_bottom_bar_height")));
         lp1.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
@@ -183,8 +183,8 @@ public class RDCloudWindow extends RelativeLayout {
      * @param script           执行的script
      */
     public void evaluateJavascript(String targetWindowName, String script) {
-        RDCloudWindow destWindow = mActivity.findWindowByName(targetWindowName);
-        RDCloudView destView = destWindow.mMainView.getRefreshableView();
+        HybridWindow destWindow = mActivity.findWindowByName(targetWindowName);
+        HybridView destView = destWindow.mMainView.getRefreshableView();
         destView.evaluateJavascript(script, null);
     }
 
@@ -211,7 +211,7 @@ public class RDCloudWindow extends RelativeLayout {
      *
      * @param rdView
      */
-    private void registerPlugins(RDCloudView rdView) {
+    private void registerPlugins(HybridView rdView) {
         PluginManagerBase fm = HybridEnv.getPluginManager();
         fm.registerPlugin(rdView);
     }
@@ -288,7 +288,7 @@ public class RDCloudWindow extends RelativeLayout {
      * @param requestCode
      * @param pluginId
      */
-    public void startActivityForResult(RDCloudView view, Intent intent, int requestCode, int pluginId) {
+    public void startActivityForResult(HybridView view, Intent intent, int requestCode, int pluginId) {
         mActivity.startActivityForResult(intent, requestCode, this, pluginId);
     }
 
@@ -302,7 +302,7 @@ public class RDCloudWindow extends RelativeLayout {
         }
     }
 
-    public void requestPermissions(RDCloudView view, String[] permissions, int requestCode, int pluginId) {
+    public void requestPermissions(HybridView view, String[] permissions, int requestCode, int pluginId) {
         mActivity.requestPermissions(permissions, requestCode, this, pluginId);
     }
 

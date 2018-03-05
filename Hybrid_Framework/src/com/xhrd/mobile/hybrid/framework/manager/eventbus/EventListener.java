@@ -5,7 +5,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
@@ -43,7 +43,7 @@ public class EventListener extends PluginBase {
     private BatteryReceiver batteryReceiver;
 
     @Override
-    public void onCreate(RDCloudView view) {
+    public void onCreate(HybridView view) {
         super.onCreate(view);
 //        IntentFilter filter = new IntentFilter();
 //        filter.addAction(Intent.ACTION_BATTERY_CHANGED);
@@ -92,7 +92,7 @@ public class EventListener extends PluginBase {
     }
 
     @JavascriptFunction
-    public void addEventListener(RDCloudView rdView, String[] params) {
+    public void addEventListener(HybridView rdView, String[] params) {
         if (params.length < 2) {
             return;
         }
@@ -135,7 +135,7 @@ public class EventListener extends PluginBase {
     }
 
     @Override
-    public void onDeregistered(RDCloudView view) {
+    public void onDeregistered(HybridView view) {
         super.onDeregistered(view);
         for (Map.Entry<String, List<EventInfo>> entry : mEventMap.entrySet()) {
             List<EventInfo> willRemoveList = new ArrayList<EventInfo>();
@@ -149,7 +149,7 @@ public class EventListener extends PluginBase {
     }
 
     @JavascriptFunction
-    public void removeEventListener(RDCloudView rdView,String[] params) {
+    public void removeEventListener(HybridView rdView, String[] params) {
         String action = params[0];
         if (mEventMap.containsKey(action)) {
             mEventMap.get(action).clear();
@@ -159,7 +159,7 @@ public class EventListener extends PluginBase {
 
     String lastState = "11";
     @JavascriptFunction
-    public void sendEvent(RDCloudView rdCloudViews,String[] params) {
+    public void sendEvent(HybridView rdCloudViews, String[] params) {
         String action = params[0];
         String content = params[1];
         eventHandle(action, content);

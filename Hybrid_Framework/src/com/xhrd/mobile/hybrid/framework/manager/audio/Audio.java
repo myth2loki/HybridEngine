@@ -9,8 +9,8 @@ import android.Manifest;
 import android.util.SparseArray;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridView;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 
@@ -133,7 +133,7 @@ public class Audio extends PluginBase {
     }
 
     @Override
-    public void onDeregistered(RDCloudView view) {
+    public void onDeregistered(HybridView view) {
         super.onDeregistered(view);
         for (int i = 0; i < mRecorderList.size(); i++) {
             mRecorderList.valueAt(i).stop(view);
@@ -146,7 +146,7 @@ public class Audio extends PluginBase {
     }
 
     @JavascriptFunction
-    public String getRecorder(RDCloudView rdCloudView, String[] params) {
+    public String getRecorder(HybridView rdCloudView, String[] params) {
         int recorderId = mInteger.getAndIncrement();
         Recorder recorder = new Recorder(this);
         mRecorderList.put(recorderId, recorder);
@@ -167,7 +167,7 @@ public class Audio extends PluginBase {
     }
 
     @JavascriptFunction
-    public String recorderCall(RDCloudView rdCloudView, String[] params) {
+    public String recorderCall(HybridView rdCloudView, String[] params) {
         String method = params[0];
         int id = Integer.parseInt(params[1]);
         if ("record".equals(method)) {
@@ -209,7 +209,7 @@ public class Audio extends PluginBase {
     }
 
     @JavascriptFunction
-    public String createPlayer(RDCloudView rdCloudView, String[] params) {
+    public String createPlayer(HybridView rdCloudView, String[] params) {
         Player player = new Player(rdCloudView,params[0], this);
         int id = mInteger.getAndIncrement();
         mPlayerList.put(id, player);
@@ -217,7 +217,7 @@ public class Audio extends PluginBase {
     }
 
     @JavascriptFunction
-    public String playerCall(RDCloudView rdCloudView, String[] params) {
+    public String playerCall(HybridView rdCloudView, String[] params) {
         String method = params[0];
         int id = Integer.parseInt(params[1]);
         if (params.length > 2) {
@@ -266,8 +266,8 @@ public class Audio extends PluginBase {
     @Override
     public void addMethodProp(PluginData data) {
         data.addMethod("getRecorder", null, false , true);
-        data.addMethod("recorderCall", new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new String[]{RDResourceManager.getInstance().getString("request_audio_permission_msg")});
-        data.addMethod("createPlayer", null, false , true,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, new String[]{RDResourceManager.getInstance().getString("request_audio_permission_msg")});
+        data.addMethod("recorderCall", new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new String[]{HybridResourceManager.getInstance().getString("request_audio_permission_msg")});
+        data.addMethod("createPlayer", null, false , true,new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, new String[]{HybridResourceManager.getInstance().getString("request_audio_permission_msg")});
         data.addMethod("playerCall", new String[]{"method", "id"}, true, true);
         data.addProperty("ROUTE_SPEAKER", 0);
         data.addProperty("ROUTE_EARPIECE", 1);

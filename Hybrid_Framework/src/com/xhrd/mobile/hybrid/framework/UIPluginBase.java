@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +31,8 @@ public abstract class UIPluginBase extends PluginBase {
      */
     @PluginManagerBase.JavascriptUiFunction
     @JavascriptFunction(name = "setFrame")
-    public void setFrame(RDCloudView rdCloudView, String[] params) {
-        RDCloudView view = rdCloudView;
+    public void setFrame(HybridView rdCloudView, String[] params) {
+        HybridView view = rdCloudView;
 //        if (params.length < 1) {
 //            jsErrCallbackParamsLengthError(view);
 //            //jsErrCallback(view, EXCEPTION_JSON, view.getContext().getString(RDResourceManager.getInstance().getStringId("params_length_error")));
@@ -64,8 +64,8 @@ public abstract class UIPluginBase extends PluginBase {
      */
     @PluginManagerBase.JavascriptUiFunction
     @JavascriptFunction(name = "show", hasReturn = true)
-    public final void show(RDCloudView rdCloudView, String[] params) {
-        final RDCloudView target = rdCloudView;
+    public final void show(HybridView rdCloudView, String[] params) {
+        final HybridView target = rdCloudView;
         ViewGroup.LayoutParams vlp = new ViewGroup.LayoutParams(w, h);
         final WebView.LayoutParams lp = new WebView.LayoutParams(vlp);
         lp.x = x;
@@ -98,7 +98,7 @@ public abstract class UIPluginBase extends PluginBase {
      * @param rdCloudView
      * @param view
      */
-    protected void onShow(RDCloudView rdCloudView, View view) {}
+    protected void onShow(HybridView rdCloudView, View view) {}
 
     /**
      * 隐藏当前视图
@@ -108,7 +108,7 @@ public abstract class UIPluginBase extends PluginBase {
      */
     @PluginManagerBase.JavascriptUiFunction
     @JavascriptFunction(name = "hide", hasReturn = true)
-    public final void hide(RDCloudView rdCloudView, String[] params) {
+    public final void hide(HybridView rdCloudView, String[] params) {
         if (mView != null && mView.getVisibility() == View.VISIBLE) {
             onHide(rdCloudView, mView);
             mView.setVisibility(View.GONE);
@@ -120,7 +120,7 @@ public abstract class UIPluginBase extends PluginBase {
      * @param rdCloudView
      * @param view
      */
-    protected void onHide(RDCloudView rdCloudView, View view) {}
+    protected void onHide(HybridView rdCloudView, View view) {}
 
     /**
      * 移除当前视图
@@ -130,8 +130,8 @@ public abstract class UIPluginBase extends PluginBase {
      */
     @PluginManagerBase.JavascriptUiFunction
     @JavascriptFunction(name = "remove")
-    public final void remove(RDCloudView rdCloudView, String[] params) {
-        final RDCloudView target = rdCloudView;
+    public final void remove(HybridView rdCloudView, String[] params) {
+        final HybridView target = rdCloudView;
         if (mView != null) {
             mView.post(new Runnable() {
                 @Override
@@ -150,11 +150,11 @@ public abstract class UIPluginBase extends PluginBase {
      * @param rdCloudView
      * @param view
      */
-    protected void onRemove(RDCloudView rdCloudView, View view) {}
+    protected void onRemove(HybridView rdCloudView, View view) {}
 
     @PluginManagerBase.JavascriptUiFunction
     @JavascriptFunction(name = "isShowing", convertJS = true)
-    public boolean isShowing(RDCloudView rdCloudView, String[] params) {
+    public boolean isShowing(HybridView rdCloudView, String[] params) {
         return mView != null && mView.getVisibility() == View.VISIBLE;
     }
 
@@ -182,7 +182,7 @@ public abstract class UIPluginBase extends PluginBase {
      *
      * @return
      */
-    protected View getUI(RDCloudView target) {
+    protected View getUI(HybridView target) {
         if (mView == null) {
             mView = genUI(target);
         }
@@ -201,5 +201,5 @@ public abstract class UIPluginBase extends PluginBase {
      * @param view 当前RDCloudView
      * @return
      */
-    protected abstract View genUI(RDCloudView view);
+    protected abstract View genUI(HybridView view);
 }

@@ -2,7 +2,7 @@ package com.xhrd.mobile.hybrid.framework.manager.audio;
 
 import android.util.Log;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 
 
 /**
@@ -11,7 +11,7 @@ import com.xhrd.mobile.hybrid.engine.RDCloudView;
  */
 public class CountDownThread extends Thread{
 
-    private RDCloudView mView;
+    private HybridView mView;
     private Audio mAudio;
     private String mCountDownCallback;
     private boolean isRunning;
@@ -20,7 +20,7 @@ public class CountDownThread extends Thread{
     private boolean isStart;
     private long myTime;
 
-    public CountDownThread(RDCloudView rdCloudView, Audio audio, String countDownCallback, int duration, long currentTime, boolean isStart){
+    public CountDownThread(HybridView rdCloudView, Audio audio, String countDownCallback, int duration, long currentTime, boolean isStart){
         this.mView = rdCloudView;
         this.mAudio = audio;
         this.mCountDownCallback = countDownCallback;

@@ -15,7 +15,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,17 +40,17 @@ public class ActionSheetDialog {
 
     public ActionSheetDialog builder() {
         //获取Dialog布局
-        View view = LayoutInflater.from(context).inflate(RDResourceManager.getInstance().getLayoutId("view_actionsheet"), null);
+        View view = LayoutInflater.from(context).inflate(HybridResourceManager.getInstance().getLayoutId("view_actionsheet"), null);
 
         // 设置Dialog最小宽度为屏幕宽度
         view.setMinimumWidth(display.getWidth());
 
         // 获取自定义Dialog布局中的控件
-        sLayout_content = (ScrollView) view.findViewById(RDResourceManager.getInstance().getId("sLayout_content"));
+        sLayout_content = (ScrollView) view.findViewById(HybridResourceManager.getInstance().getId("sLayout_content"));
         lLayout_content = (LinearLayout) view
-                .findViewById(RDResourceManager.getInstance().getId("lLayout_content"));
-        txt_title = (TextView) view.findViewById(RDResourceManager.getInstance().getId("txt_title"));
-        txt_cancel = (TextView) view.findViewById(RDResourceManager.getInstance().getId("txt_cancel"));
+                .findViewById(HybridResourceManager.getInstance().getId("lLayout_content"));
+        txt_title = (TextView) view.findViewById(HybridResourceManager.getInstance().getId("txt_title"));
+        txt_cancel = (TextView) view.findViewById(HybridResourceManager.getInstance().getId("txt_cancel"));
 //		txt_cancel.setOnClickListener(new OnClickListener() {
 //			@Override
 //			public void onClick(View v) {
@@ -59,7 +59,7 @@ public class ActionSheetDialog {
 //		});
 
         // 定义Dialog布局和参数
-        dialog = new Dialog(context, RDResourceManager.getInstance().getStyleId("ActionSheetDialogStyle"));
+        dialog = new Dialog(context, HybridResourceManager.getInstance().getStyleId("ActionSheetDialogStyle"));
         dialog.setContentView(view);
         Window dialogWindow = dialog.getWindow();
         dialogWindow.setGravity(Gravity.LEFT | Gravity.BOTTOM);
@@ -139,24 +139,24 @@ public class ActionSheetDialog {
             // 背景图片
             if (size == 1) {
                 if (showTitle) {
-                    textView.setBackgroundResource(RDResourceManager.getInstance().getDrawableId("actionsheet_bottom_selector"));
+                    textView.setBackgroundResource(HybridResourceManager.getInstance().getDrawableId("actionsheet_bottom_selector"));
                 } else {
-                    textView.setBackgroundResource(RDResourceManager.getInstance().getDrawableId("actionsheet_single_selector"));
+                    textView.setBackgroundResource(HybridResourceManager.getInstance().getDrawableId("actionsheet_single_selector"));
                 }
             } else {
                 if (showTitle) {
                     if (i >= 1 && i < size) {
-                        textView.setBackgroundResource(RDResourceManager.getInstance().getDrawableId("actionsheet_middle_selector"));
+                        textView.setBackgroundResource(HybridResourceManager.getInstance().getDrawableId("actionsheet_middle_selector"));
                     } else {
-                        textView.setBackgroundResource(RDResourceManager.getInstance().getDrawableId("actionsheet_bottom_selector"));
+                        textView.setBackgroundResource(HybridResourceManager.getInstance().getDrawableId("actionsheet_bottom_selector"));
                     }
                 } else {
                     if (i == 1) {
-                        textView.setBackgroundResource(RDResourceManager.getInstance().getDrawableId("actionsheet_top_selector"));
+                        textView.setBackgroundResource(HybridResourceManager.getInstance().getDrawableId("actionsheet_top_selector"));
                     } else if (i < size) {
-                        textView.setBackgroundResource(RDResourceManager.getInstance().getDrawableId("actionsheet_middle_selector"));
+                        textView.setBackgroundResource(HybridResourceManager.getInstance().getDrawableId("actionsheet_middle_selector"));
                     } else {
-                        textView.setBackgroundResource(RDResourceManager.getInstance().getDrawableId("actionsheet_bottom_selector"));
+                        textView.setBackgroundResource(HybridResourceManager.getInstance().getDrawableId("actionsheet_bottom_selector"));
                     }
                 }
             }

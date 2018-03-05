@@ -23,10 +23,10 @@ import java.security.MessageDigest;
  * 解密辅助类
  * Created by wangqianyu on 15/6/8.
  */
-public class RDEncryptHelper {
+public class HybridEncryptHelper {
     private static char HEX_DIGITS[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
     private static MimeTypeMap mMimeType = MimeTypeMap.getSingleton();
-    private static RDDecBufferedInputStream.EncLruCache mCache = new RDDecBufferedInputStream.EncLruCache();
+    private static HybridDecBufferedInputStream.EncLruCache mCache = new HybridDecBufferedInputStream.EncLruCache();
 
     static {
         System.loadLibrary("encryption");
@@ -68,7 +68,7 @@ public class RDEncryptHelper {
                 String mime = mMimeType.getMimeTypeFromExtension(ext);
                 byte[] buffer = new byte[(int) file.length()];
 
-                RDDecBufferedInputStream.LruItem<ByteArrayInputStream> item = mCache.get(url);
+                HybridDecBufferedInputStream.LruItem<ByteArrayInputStream> item = mCache.get(url);
                 InputStream is = null;
                 if (item != null) {
                     if (item.item != null) {
@@ -81,7 +81,7 @@ public class RDEncryptHelper {
                         buffer = decrypt(buffer);
                     }
                     is = new ByteArrayInputStream(buffer);
-                    item = new RDDecBufferedInputStream.LruItem<ByteArrayInputStream>((ByteArrayInputStream) is, buffer.length);
+                    item = new HybridDecBufferedInputStream.LruItem<ByteArrayInputStream>((ByteArrayInputStream) is, buffer.length);
                     mCache.put(url, item);
                 }
 
@@ -89,7 +89,7 @@ public class RDEncryptHelper {
 //                return new WebResourceResponse(mime, "utf-8", new RDDecBufferedInputStream(url, fis));
             } catch (IOException e) {
                 if (BuildConfig.DEBUG) {
-                    Log.e(RDEncryptHelper.class.getSimpleName(), "decode " + url + " failed.", e);
+                    Log.e(HybridEncryptHelper.class.getSimpleName(), "decode " + url + " failed.", e);
                 }
             }
         }
@@ -122,7 +122,7 @@ public class RDEncryptHelper {
             }
 
         } catch (Exception e) {
-            Log.e(RDEncryptHelper.class.getSimpleName(), "getMD5 failed.", e);
+            Log.e(HybridEncryptHelper.class.getSimpleName(), "getMD5 failed.", e);
         }
         return "";
     }
@@ -137,9 +137,9 @@ public class RDEncryptHelper {
     public static InputStream getDecryptInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[inputStream.available()];
         inputStream.read(buffer);
-        int check = RDEncryptHelper.check(buffer);
+        int check = HybridEncryptHelper.check(buffer);
         if (check == 1) {// 判断是否加密
-            buffer = RDEncryptHelper.decrypt(buffer);
+            buffer = HybridEncryptHelper.decrypt(buffer);
         } else {
             // 没有加密，暂不处理
         }

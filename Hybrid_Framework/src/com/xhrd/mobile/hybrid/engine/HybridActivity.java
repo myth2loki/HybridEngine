@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.RDApplicationInfo;
@@ -36,7 +35,7 @@ public class HybridActivity extends Activity {
     private RDApplicationInfo mAppInfo;
     private Handler mExitHandler = new Handler();
 
-    private LinkedList<RDCloudWindow> mWindowList = new LinkedList<>();
+    private LinkedList<HybridWindow> mWindowList = new LinkedList<>();
     private FrameLayout mRootLayout;
 
     @Override
@@ -49,7 +48,7 @@ public class HybridActivity extends Activity {
         mActivity = this;
         initView();
 
-        openWindow("internal_window", RDCloudView.DATA_TYPE_ASSET, "internal_plugin.html");
+        openWindow("internal_window", HybridView.DATA_TYPE_ASSET, "internal_plugin.html");
 //        openWindow("index", RDCloudView.DATA_TYPE_ASSET, "index.html");
     }
 
@@ -95,12 +94,12 @@ public class HybridActivity extends Activity {
             return;
         }
 
-        RDCloudWindow window = new RDCloudWindow(this, windowName, type, data);
+        HybridWindow window = new HybridWindow(this, windowName, type, data);
         if (mWindowList.size() > 0) {
-            final RDCloudWindow lastWindow = mWindowList.peekLast();
+            final HybridWindow lastWindow = mWindowList.peekLast();
             lastWindow.onBackground();
-            window.startAnimation(AnimationUtils.loadAnimation(window.getContext(), RDResourceManager.getInstance().getAnimId("enter_in")));
-            lastWindow.startAnimation(AnimationUtils.loadAnimation(lastWindow.getContext(), RDResourceManager.getInstance().getAnimId("enter_out")));
+            window.startAnimation(AnimationUtils.loadAnimation(window.getContext(), HybridResourceManager.getInstance().getAnimId("enter_in")));
+            lastWindow.startAnimation(AnimationUtils.loadAnimation(lastWindow.getContext(), HybridResourceManager.getInstance().getAnimId("enter_out")));
         }
         mWindowList.add(window);
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
@@ -140,7 +139,7 @@ public class HybridActivity extends Activity {
         if (!canBack()) {
             return;
         }
-        RDCloudWindow window = mWindowList.peekLast();
+        HybridWindow window = mWindowList.peekLast();
         window.back();
     }
 
@@ -185,25 +184,25 @@ public class HybridActivity extends Activity {
             }
             return;
         }
-        RDCloudWindow window = findWindowByName(windowName);
+        HybridWindow window = findWindowByName(windowName);
         if (DEBUG) {
             Log.d(TAG, "backToWindow: Window = " + window);
         }
         if (window == null) {
             return;
         }
-        RDCloudWindow curWindow = mWindowList.peekLast();
+        HybridWindow curWindow = mWindowList.peekLast();
         if (window == curWindow) {
             if (DEBUG) {
                 Log.d(TAG, "backToWindow: ignore the same window");
             }
         }
 
-        window.startAnimation(AnimationUtils.loadAnimation(this, RDResourceManager.getInstance().getAnimId("exit_in")));
-        curWindow.startAnimation(AnimationUtils.loadAnimation(this, RDResourceManager.getInstance().getAnimId("exit_out")));
+        window.startAnimation(AnimationUtils.loadAnimation(this, HybridResourceManager.getInstance().getAnimId("exit_in")));
+        curWindow.startAnimation(AnimationUtils.loadAnimation(this, HybridResourceManager.getInstance().getAnimId("exit_out")));
 
         while (!mWindowList.isEmpty()) {
-            RDCloudWindow tempWindow = mWindowList.peekLast();
+            HybridWindow tempWindow = mWindowList.peekLast();
             if (tempWindow == window) {
                 break;
             }
@@ -217,7 +216,7 @@ public class HybridActivity extends Activity {
     }
 
     int findWindowIndexByName(String windowName) {
-        RDCloudWindow window;
+        HybridWindow window;
         for (int i = 0; i < mWindowList.size(); i++) {
             window = mWindowList.get(i);
             if (window.getName().equals(windowName)) {
@@ -228,7 +227,7 @@ public class HybridActivity extends Activity {
     }
 
     public void closeWindow(String windowName) {
-        RDCloudWindow window = findWindowByName(windowName);
+        HybridWindow window = findWindowByName(windowName);
         if (window == null) {
             if (DEBUG) {
                 Log.d(TAG, "closeWindow: windowName = " + windowName);
@@ -239,17 +238,17 @@ public class HybridActivity extends Activity {
         int curIndex = mWindowList.indexOf(window);
         if (curIndex > 0) {
             int prevIndex = curIndex - 1;
-            RDCloudWindow prevWindow = mWindowList.get(prevIndex);
-            prevWindow.startAnimation(AnimationUtils.loadAnimation(this, RDResourceManager.getInstance().getAnimId("exit_in")));
+            HybridWindow prevWindow = mWindowList.get(prevIndex);
+            prevWindow.startAnimation(AnimationUtils.loadAnimation(this, HybridResourceManager.getInstance().getAnimId("exit_in")));
         }
-        window.startAnimation(AnimationUtils.loadAnimation(this, RDResourceManager.getInstance().getAnimId("exit_out")));
+        window.startAnimation(AnimationUtils.loadAnimation(this, HybridResourceManager.getInstance().getAnimId("exit_out")));
 
         mRootLayout.removeView(window);
         mWindowList.remove(window);
     }
 
-    RDCloudWindow findWindowByName(String windowName) {
-        for (RDCloudWindow window : mWindowList) {
+    HybridWindow findWindowByName(String windowName) {
+        for (HybridWindow window : mWindowList) {
             if (window.getName().equals(windowName)) {
                 return window;
             }
@@ -268,7 +267,7 @@ public class HybridActivity extends Activity {
     }
 
     public void setWindowVisible(String windowName, boolean visible) {
-        RDCloudWindow window = findWindowByName(windowName);
+        HybridWindow window = findWindowByName(windowName);
         if (window == null) {
             if (DEBUG) {
                 Log.d(TAG, "closeWindow: windowName = " + windowName);
@@ -310,7 +309,7 @@ public class HybridActivity extends Activity {
      * @param window 窗口实例
      * @param pluginId 插件索引
      */
-    public void startActivityForResult(Intent intent, int requestCode, RDCloudWindow window, int pluginId) {
+    public void startActivityForResult(Intent intent, int requestCode, HybridWindow window, int pluginId) {
         int windowIndex = findWindowIndexByName(window.getName());
         windowIndex = windowIndex << 24;
         pluginId = pluginId << 16;
@@ -324,12 +323,12 @@ public class HybridActivity extends Activity {
         int windowIndex = requestCode >> 24;
         int pluginIndex = requestCode << 8 >> 24;
         int realRequestCode = requestCode << 16;
-        RDCloudWindow window = mWindowList.get(windowIndex);
+        HybridWindow window = mWindowList.get(windowIndex);
         window.onActivityResult(pluginIndex, realRequestCode, resultCode, data);
     }
 
     //pathCode Window|id|requestCode
-    public void requestPermissions(String[] permissions, int requestCode, RDCloudWindow window, int pluginId) {
+    public void requestPermissions(String[] permissions, int requestCode, HybridWindow window, int pluginId) {
         int windowIndex = findWindowIndexByName(window.getName());
         windowIndex = windowIndex << 24;
         pluginId = pluginId << 16;
@@ -341,7 +340,7 @@ public class HybridActivity extends Activity {
         int windowIndex = requestCode >> 24;
         int pluginId = requestCode << 8 >> 24;
         int realRequestCode = requestCode << 16;
-        RDCloudWindow window = mWindowList.get(windowIndex);
+        HybridWindow window = mWindowList.get(windowIndex);
         window.onRequestPermissionsResult(permissions, grantResults, realRequestCode, pluginId);
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.webkit.JsPromptResult;
 
 import com.xhrd.mobile.hybrid.engine.EngineEventListener;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -20,7 +20,7 @@ public class PluginManager6 extends PluginManager {
     }
 
     @Override
-    protected Object invokePluginMethodByName(RDCloudView view, PluginBase base, PluginData pluginData, String methodName, Object[] params, JsPromptResult jsPromptResult) {
+    protected Object invokePluginMethodByName(HybridView view, PluginBase base, PluginData pluginData, String methodName, Object[] params, JsPromptResult jsPromptResult) {
         return invokePluginMethodByNameInner6(view, base, pluginData, methodName, params, jsPromptResult);
     }
 }

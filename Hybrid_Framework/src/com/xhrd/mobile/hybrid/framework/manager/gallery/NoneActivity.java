@@ -11,7 +11,7 @@ import android.widget.GridView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +26,7 @@ public class NoneActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(RDResourceManager.getInstance().getLayoutId("activity_none_image"));
+		setContentView(HybridResourceManager.getInstance().getLayoutId("activity_none_image"));
 		filter = getIntent().getStringExtra("filter");
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(ImageLoaderConfiguration.createDefault(NoneActivity.this));
@@ -35,7 +35,7 @@ public class NoneActivity extends Activity {
 	}
 
 	private void initView() {
-		gridView = (GridView) findViewById(RDResourceManager.getInstance().getId("grid"));
+		gridView = (GridView) findViewById(HybridResourceManager.getInstance().getId("grid"));
 		final Util util = new Util(this);
 		final List<String> imageList = util.listAlldir();
 		final List<String> videoList = util.getVideoPath();

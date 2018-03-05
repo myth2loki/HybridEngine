@@ -30,7 +30,6 @@ import com.xhrd.mobile.hybrid.Config;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
-import com.xhrd.mobile.hybrid.framework.UIPluginBase;
 import com.xhrd.mobile.hybrid.util.SystemUtil;
 
 import java.io.File;
@@ -42,15 +41,14 @@ import java.util.Map;
 
 /**
  * WebView类，负责加载HTML界面，执行JS代码
- * Created by wangqianyu on 15/4/10.
  */
-class RDCloudOriginalView extends WebView implements RDCloudView {
+class HybridOriginalView extends WebView implements HybridView {
     private Map<Integer, PluginBase> mInjectedPluginJSObj = new HashMap<Integer, PluginBase>();
     private Map<Class<?>, PluginBase> mInjectedLocalPluginJSObj = new HashMap<Class<?>, PluginBase>();
 
-    private AbsRDCloudChromeClient mChromeClient;
+    private AbsHybridChromeClient mChromeClient;
     private WebSettings mWebSetting;
-    private RDCloudWindow mWindow;
+    private HybridWindow mWindow;
     private PullToRefreshWebView mRefresableParent;
     private String popName;
     private PullToRefreshWebView mPopoverParentView;
@@ -62,7 +60,7 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
     //加载蒙板
     private LinearLayout mLoadingBar;
     private ProgressBar mLoadingPb;
-    public RDCloudOriginalView(RDCloudWindow window) {
+    public HybridOriginalView(HybridWindow window) {
         super(window.getContext());
         mWindow = window;
         registerPlugins();
@@ -70,7 +68,7 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
     }
 
     @Override
-    public AbsRDCloudChromeClient getChromeClient() {
+    public AbsHybridChromeClient getChromeClient() {
         return mChromeClient;
     }
 
@@ -127,12 +125,12 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
         mWebSetting = getSettings();
         initBaseSetting();
 
-        setWebViewClient(new RDCloudViewClient(this));
+        setWebViewClient(new HybridViewClient(this));
 
         if (SystemUtil.isMarshmallow()){
-            mChromeClient = new RDCloudChromeClient6();
+            mChromeClient = new HybridChromeClient6();
         }else {
-            mChromeClient = new RDCloudChromeClient();
+            mChromeClient = new HybridChromeClient();
         }
         setWebChromeClient(mChromeClient);
         setDownloadListener(new DownloadListener() {
@@ -272,19 +270,19 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
      *
      * @param info
      */
-    public void load(final RDCloudWindowInfo info) {
+    public void load(final HybridWindowInfo info) {
         //将预加载javascript放到这里，保证4.4以前版本加载正确。
         String name = TextUtils.isEmpty(getPopName()) ? getWindowName() : getPopName();
-        loadUrl(String.format(RDCloudScript.Pre_RDScript, name));
+        loadUrl(String.format(HybridScript.Pre_RDScript, name));
         postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (info.type == RDCloudOriginalView.DATA_TYPE_ASSET) {
+                if (info.type == HybridOriginalView.DATA_TYPE_ASSET) {
                     String path = "file:///android_asset/hybrid/app" + File.separator + info.data ;
                     loadUrl(path);
-                } else if (info.type == RDCloudOriginalView.DATA_TYPE_TEXT) {
+                } else if (info.type == HybridOriginalView.DATA_TYPE_TEXT) {
                     loadData(info.data, "text/html; charset=utf-8", null);
-                } else if (info.type == RDCloudOriginalView.DATA_TYPE_URL) {
+                } else if (info.type == HybridOriginalView.DATA_TYPE_URL) {
                     initHttpSettings();
                     loadUrl(info.data);
                 }
@@ -355,7 +353,7 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
         return mWindow.getName();
     }
 
-    public RDCloudWindow getRDCloudWindow() {
+    public HybridWindow getRDCloudWindow() {
         return mWindow;
     }
 
@@ -458,7 +456,7 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
 
         int count = getChildCount();
         PullToRefreshWebView ptrView;
-        RDCloudOriginalView rdView;
+        HybridOriginalView rdView;
         for (int i = 0; i < count; i++) {
            View view = getChildAt(i);
             RectF rect = null;
@@ -484,7 +482,7 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
 
         int count = getChildCount();
         PullToRefreshWebView ptrView;
-        RDCloudOriginalView rdView;
+        HybridOriginalView rdView;
         for (int i = 0; i < count; i++) {
             View view = getChildAt(i);
 
@@ -511,7 +509,7 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
 
         int count = getChildCount();
         PullToRefreshWebView ptrView;
-        RDCloudOriginalView rdView;
+        HybridOriginalView rdView;
         for (int i = 0; i < count; i++) {
             View view = getChildAt(i);
             RectF rect = null;
@@ -537,7 +535,7 @@ class RDCloudOriginalView extends WebView implements RDCloudView {
 
         int count = getChildCount();
         PullToRefreshWebView ptrView;
-        RDCloudOriginalView rdView;
+        HybridOriginalView rdView;
         for (int i = 0; i < count; i++) {
             View view = getChildAt(i);
             RectF rect = null;

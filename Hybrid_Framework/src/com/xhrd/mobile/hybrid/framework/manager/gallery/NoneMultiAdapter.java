@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,10 +55,10 @@ public class NoneMultiAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder holder = null;
 		if (convertView == null) {
-			convertView = LayoutInflater.from(mContext).inflate(RDResourceManager.getInstance().getLayoutId("imgsitem"), null);
+			convertView = LayoutInflater.from(mContext).inflate(HybridResourceManager.getInstance().getLayoutId("imgsitem"), null);
 			holder = new Holder();
-			holder.imageView = (ImageView) convertView.findViewById(RDResourceManager.getInstance().getId("imageView"));
-			holder.checkBox = (CheckBox) convertView.findViewById(RDResourceManager.getInstance().getId("checkBox"));
+			holder.imageView = (ImageView) convertView.findViewById(HybridResourceManager.getInstance().getId("imageView"));
+			holder.checkBox = (CheckBox) convertView.findViewById(HybridResourceManager.getInstance().getId("checkBox"));
 			convertView.setTag(holder);
 		} else {
 			holder = (Holder)convertView.getTag();
@@ -66,8 +66,8 @@ public class NoneMultiAdapter extends BaseAdapter {
 
 		//显示图片的配置
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(RDResourceManager.getInstance().getDrawableId("ic_rd_launcher"))
-				.showImageOnFail(RDResourceManager.getInstance().getDrawableId("ic_rd_launcher"))
+				.showImageOnLoading(HybridResourceManager.getInstance().getDrawableId("ic_rd_launcher"))
+				.showImageOnFail(HybridResourceManager.getInstance().getDrawableId("ic_rd_launcher"))
 				.cacheInMemory(true)
 				.cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565)

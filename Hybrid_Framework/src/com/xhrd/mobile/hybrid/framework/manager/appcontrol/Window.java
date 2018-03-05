@@ -17,8 +17,8 @@ import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 import com.xhrd.mobile.hybrid.engine.IAppCallback;
 import com.xhrd.mobile.hybrid.engine.PullToRefreshWebView;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.engine.RDCloudWindowInfo;
+import com.xhrd.mobile.hybrid.engine.HybridView;
+import com.xhrd.mobile.hybrid.engine.HybridWindowInfo;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 
@@ -108,8 +108,8 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * @param params
      */
     @JavascriptFunction
-    public void openWindow(RDCloudView rdView, String[] params) {
-        RDCloudWindowInfo ri = new RDCloudWindowInfo();
+    public void openWindow(HybridView rdView, String[] params) {
+        HybridWindowInfo ri = new HybridWindowInfo();
         ri.windowName = params[0];
         if (TextUtils.isEmpty(ri.windowName)) {
             return;
@@ -127,7 +127,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * @param params
      */
     @JavascriptFunction
-    public void closeWindow(RDCloudView rdView, String[] params) {
+    public void closeWindow(HybridView rdView, String[] params) {
         if (params.length > 1) {
             //TODO 动画 {direct:xx, time:300, curve:xx}
         }
@@ -142,13 +142,13 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * @param params
      */
     @JavascriptFunction
-    public void closeSelf(RDCloudView rdView, String[] params) {
+    public void closeSelf(HybridView rdView, String[] params) {
         String windowName = rdView.getWindowName();
         closeWindow(rdView, new String[]{windowName});
     }
 
     @JavascriptFunction
-    public void back(RDCloudView rdView, String[] params) {
+    public void back(HybridView rdView, String[] params) {
         HybridActivity.getInstance().back();
 
     }
@@ -160,7 +160,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * @param params
      */
     @JavascriptFunction
-    public void setWindowFrame(RDCloudView rdView, String[] params) {
+    public void setWindowFrame(HybridView rdView, String[] params) {
         int x = Integer.parseInt(params[2]);
         int y = Integer.parseInt(params[3]);
         int width = Integer.parseInt(params[4]);
@@ -169,19 +169,19 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
     }
 
     @JavascriptFunction
-    public void showSoftKeyboard(RDCloudView rdView, String[] params) {
+    public void showSoftKeyboard(HybridView rdView, String[] params) {
         HybridActivity.getInstance().showSoftKeyboard();
     }
 
     @JavascriptFunction
-    public void alert(RDCloudView rdView, String[] params) {
+    public void alert(HybridView rdView, String[] params) {
 
         Dialog confirmDialog = new ShowDialog().createDialog(rdView, params, ShowDialog.F_ALERT, this);
         confirmDialog.show();
     }
 
     @JavascriptFunction
-    public void confirm(RDCloudView rdView, String[] params) {
+    public void confirm(HybridView rdView, String[] params) {
         Dialog confirmDialog = new ShowDialog().createDialog(rdView, params, ShowDialog.F_CONFIRM, this);
         confirmDialog.show();
 
@@ -200,17 +200,17 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
                      params[1] 回调函数
      */
     @JavascriptFunction
-    public void prompt(RDCloudView rdView, String[] params) {
+    public void prompt(HybridView rdView, String[] params) {
         Dialog promptDialog = new ShowDialog().createDialog(rdView, params, ShowDialog.F_PROMPT, this);
         promptDialog.show();
     }
 
-    private String getWindowName(RDCloudView rdCloudView){
+    private String getWindowName(HybridView rdCloudView){
         return rdCloudView.getWindowName();
     }
 
     @JavascriptFunction
-    public void toast(RDCloudView rdView, String[] params) {
+    public void toast(HybridView rdView, String[] params) {
         Toast.makeText(HybridActivity.getInstance().getApplication(), params[0], Toast.LENGTH_SHORT).show();
 
     }
@@ -221,7 +221,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * @param params
      */
     @JavascriptFunction
-    public void statusBarStyle(RDCloudView rdView, String[] params){
+    public void statusBarStyle(HybridView rdView, String[] params){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && params.length > 0) {
             String cStr = params[0];
             int color;
@@ -243,7 +243,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
     }
 
     @JavascriptFunction
-    public void downloadFile(RDCloudView rdView, String[] params){
+    public void downloadFile(HybridView rdView, String[] params){
         String url = params[0];
         rdView.loadUrl(url);
     }
@@ -285,13 +285,13 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * @param params
      */
     @JavascriptFunction
-    public void backToWindow(RDCloudView rdView, String[] params) {
+    public void backToWindow(HybridView rdView, String[] params) {
         String newWinName = params[0];
         HybridActivity.getInstance().backToWindow(newWinName);
     }
 
     @JavascriptFunction
-    public void setWindowVisible(RDCloudView rdView, String[] params) {
+    public void setWindowVisible(HybridView rdView, String[] params) {
         int visible = -1;
         try {
             visible = Integer.parseInt(params[0]);
@@ -306,7 +306,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
     }
 
     @JavascriptFunction
-    public void lockRotate(RDCloudView rdView, String[] params) {
+    public void lockRotate(HybridView rdView, String[] params) {
         boolean lock = Boolean.parseBoolean(params[0]);
         Activity act = HybridActivity.getInstance();
 
@@ -346,7 +346,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
 
 
     @Override
-    public void onDeregistered(RDCloudView view) {
+    public void onDeregistered(HybridView view) {
         super.onDeregistered(view);
         //recoverScreenOrientation(view.getWindowName());
     }
@@ -362,7 +362,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      */
     @SuppressLint("NewApi")
 	@JavascriptFunction
-    public void setAttr(RDCloudView rdView, String[] params) {
+    public void setAttr(HybridView rdView, String[] params) {
         try {
             JSONObject jo = new JSONObject(params[0]);
             String bgColorStr = jo.optString("bgColor");
@@ -389,7 +389,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * 添加头刷新事件
      */
     @JavascriptFunction
-    public void addHeaderRefreshing(RDCloudView rdView, String[] params) {
+    public void addHeaderRefreshing(HybridView rdView, String[] params) {
         String function = params[0];//js方法
         PullToRefreshWebView refreshWebView = rdView.getRefresableParent();
         refreshWebView.setPullRefreshEnabled(true);
@@ -405,7 +405,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * 添加底部刷新事件
      */
     @JavascriptFunction
-    public void addFooterRefreshing(RDCloudView rdView, String[] params) {
+    public void addFooterRefreshing(HybridView rdView, String[] params) {
         String funciton = params[0];//js方法
         PullToRefreshWebView refreshWebView = rdView.getRefresableParent();
         refreshWebView.setPullLoadEnabled(true);
@@ -421,7 +421,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * 移除头部刷新事件
      */
     @JavascriptFunction
-    public void removeHeaderRefreshing(RDCloudView rdView, String[] params) {
+    public void removeHeaderRefreshing(HybridView rdView, String[] params) {
         PullToRefreshWebView refreshWebView = rdView.getRefresableParent();
         refreshWebView.setPullRefreshEnabled(false);
     }
@@ -432,29 +432,29 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * 移除底部刷新事件
      */
     @JavascriptFunction
-    public void removeFooterRefreshing(RDCloudView rdView, String[] params) {
+    public void removeFooterRefreshing(HybridView rdView, String[] params) {
         PullToRefreshWebView refreshWebView = rdView.getRefresableParent();
         refreshWebView.setPullLoadEnabled(false);
     }
 
     @JavascriptFunction
-    public void endFooterRefresh(RDCloudView rdView, String[] params) {
+    public void endFooterRefresh(HybridView rdView, String[] params) {
         PullToRefreshWebView refreshWebView = rdView.getRefresableParent();
         refreshWebView.onPullUpRefreshComplete();
     }
 
     @JavascriptFunction
-    public void endHeaderRefresh(RDCloudView rdView, String[] params) {
+    public void endHeaderRefresh(HybridView rdView, String[] params) {
         PullToRefreshWebView refreshWebView = rdView.getRefresableParent();
         refreshWebView.onPullDownRefreshComplete();
     }
 
     @JavascriptFunction
-    public int getWidth(RDCloudView rdView, String[] params) {
+    public int getWidth(HybridView rdView, String[] params) {
         return rdView.getWidth();
     }
     @JavascriptFunction
-    public int getHeight(RDCloudView rdView, String[] params) {
+    public int getHeight(HybridView rdView, String[] params) {
         return rdView.getHeight();
     }
 
@@ -507,7 +507,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * 复原方向
      * @param rdView
      */
-    private void recoverScreenOrientation(RDCloudView rdView){
+    private void recoverScreenOrientation(HybridView rdView){
         // 获取屏幕方向，并移除key
         Integer orientation = screenOrientation.remove(rdView.isPopover() ? rdView.getPopName() : rdView.getWindowName());
         if(orientation != null){

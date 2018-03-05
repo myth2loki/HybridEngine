@@ -2,7 +2,7 @@ package com.xhrd.mobile.hybrid.framework.manager.audio;
 
 import android.util.Log;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 
 /**
  * Created by ljm on 2015/12/1.
@@ -11,13 +11,13 @@ import com.xhrd.mobile.hybrid.engine.RDCloudView;
  */
 public class CalculateTimeThread extends Thread {
 
-    private RDCloudView mView;
+    private HybridView mView;
     private Audio mAudio;
     private String mCalculateTimeCallback;
     private boolean isRunning;
     private int i = 0;
 
-    public CalculateTimeThread(RDCloudView rdCloudView, Audio audio, String calculateTimeCallback){
+    public CalculateTimeThread(HybridView rdCloudView, Audio audio, String calculateTimeCallback){
         this.mView = rdCloudView;
         this.mAudio = audio;
         this.mCalculateTimeCallback = calculateTimeCallback;

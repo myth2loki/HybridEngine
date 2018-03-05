@@ -7,17 +7,17 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.BatteryManager;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 
 /**
  * Created by wangqianyu on 15/11/23.
  */
 public class SysEventReceiver extends BroadcastReceiver {
     private EventListener mListener;
-    private RDCloudView mView;
+    private HybridView mView;
 
-    public SysEventReceiver(EventListener listener,RDCloudView view) {
-//        FrameworkManager fm = RDCloudApplication.getApp().getFrameworkManager();
+    public SysEventReceiver(EventListener listener,HybridView view) {
+//        FrameworkManager fm = RDCloudApplication.getApp().getPluginManager();
 //        this.mListener = (EventListener) fm.getPlugin("eventListener");
         this.mListener = listener;
         this.mView = view;

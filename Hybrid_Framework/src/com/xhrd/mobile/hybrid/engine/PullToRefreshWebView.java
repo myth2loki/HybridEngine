@@ -10,14 +10,14 @@ import android.view.MotionEvent;
  * @author Li Hong
  * @since 2013-8-22
  */
-public class PullToRefreshWebView extends PullToRefreshBase<RDCloudView> {
+public class PullToRefreshWebView extends PullToRefreshBase<HybridView> {
 
     /**
      * 构造方法
      * 
      * @param window RDCloudWindow
      */
-    public PullToRefreshWebView(RDCloudWindow window) {
+    public PullToRefreshWebView(HybridWindow window) {
         this(window, null);
     }
     
@@ -27,7 +27,7 @@ public class PullToRefreshWebView extends PullToRefreshBase<RDCloudView> {
      * @param window RDCloudWindow
      * @param attrs attrs
      */
-    public PullToRefreshWebView(RDCloudWindow window, AttributeSet attrs) {
+    public PullToRefreshWebView(HybridWindow window, AttributeSet attrs) {
         this(window, attrs, 0);
     }
     
@@ -38,22 +38,22 @@ public class PullToRefreshWebView extends PullToRefreshBase<RDCloudView> {
      * @param attrs attrs
      * @param defStyle defStyle
      */
-    public PullToRefreshWebView(RDCloudWindow window, AttributeSet attrs, int defStyle) {
+    public PullToRefreshWebView(HybridWindow window, AttributeSet attrs, int defStyle) {
         super(window, attrs);
     }
 
 
     @Override
-    protected RDCloudView createRefreshableView(Context context, AttributeSet attrs) {
+    protected HybridView createRefreshableView(Context context, AttributeSet attrs) {
         //用于添加window的上拉和下拉刷新
-        RDCloudView view = new RDCloudOriginalView(mWindow);
+        HybridView view = new HybridOriginalView(mWindow);
         view.setRefresableParent(this);
         return view;
     }
 
     @Override
     public final boolean onInterceptTouchEvent(MotionEvent event) {
-        RDCloudView view = getRefreshableView();
+        HybridView view = getRefreshableView();
         //Log.e("event action outside:", "view.isChildrenRefreshable(event)="+view.isChildrenRefreshable(event) + ", view isChildInterceptTouchEventEnabled: " + view.isChildInterceptTouchEventEnabled(event)+",view.isChildPullLoading(event)="+view.isChildPullLoading(event)+", view.isChildPullRefreshing(event)="+view.isChildPullRefreshing(event)+",super.onInterceptTouchEvent(event)="+super.onInterceptTouchEvent(event));
         if (view.isChildrenRefreshable(event)) {
             return false;

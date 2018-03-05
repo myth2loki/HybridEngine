@@ -15,14 +15,14 @@ import java.io.InputStream;
  * 加密解密流
  * Created by lanjingmin on 2015/6/30.
  */
-public class RDDecBufferedInputStream extends BufferedInputStream {
+public class HybridDecBufferedInputStream extends BufferedInputStream {
     private static final EncLruCache mCache = new EncLruCache();
     private String mUrl;
     private ByteArrayOutputStream mBaos = new ByteArrayOutputStream();
     private boolean mAlready;
     private boolean isEncrypted;
 
-    public RDDecBufferedInputStream(String url, InputStream in) {
+    public HybridDecBufferedInputStream(String url, InputStream in) {
         super(in);
         mUrl = url;
     }
@@ -56,7 +56,7 @@ public class RDDecBufferedInputStream extends BufferedInputStream {
         } else {
 //            byte[] bs = null;
             if (!isEncrypted) {
-                isEncrypted = RDEncryptHelper.check(buffer) == 1;
+                isEncrypted = HybridEncryptHelper.check(buffer) == 1;
 //                if (isEncrypted) {
 //                    bs = new byte[ret - 8];
 //                    System.arraycopy(buffer, 8, bs, 0, bs.length);
@@ -66,7 +66,7 @@ public class RDDecBufferedInputStream extends BufferedInputStream {
             if (isEncrypted) {
                 byte[] decBytes = null;
 //                if (bs == null) {
-                    decBytes = RDEncryptHelper.decrypt(buffer);
+                    decBytes = HybridEncryptHelper.decrypt(buffer);
 //                } else {
 //                    decBytes = RDEncryptHelper.decrypt(bs);
 //                }
@@ -103,7 +103,7 @@ public class RDDecBufferedInputStream extends BufferedInputStream {
                 if (file.length() > 8) {
                     byte[] buff = new byte[8];
                     int len = fis.read(buff);
-                    isEncrypted = RDEncryptHelper.check(buff) == 1;
+                    isEncrypted = HybridEncryptHelper.check(buff) == 1;
                     if (!isEncrypted) {
                         baos.write(buff, 0, len);
                     }
@@ -113,7 +113,7 @@ public class RDDecBufferedInputStream extends BufferedInputStream {
                 int len = -1;
                 while((len = fis.read(buff)) > -1) {
                     if (isEncrypted) {
-                        decBuf = RDEncryptHelper.decrypt(buff);
+                        decBuf = HybridEncryptHelper.decrypt(buff);
                         baos.write(decBuf, 0, decBuf.length);
                     } else {
                         baos.write(buff, 0, len);
@@ -133,7 +133,7 @@ public class RDDecBufferedInputStream extends BufferedInputStream {
                 }
             }
         } catch (IOException e) {
-            Log.e(RDDecBufferedInputStream.class.getSimpleName(), "fillBuffer failed.", e);
+            Log.e(HybridDecBufferedInputStream.class.getSimpleName(), "fillBuffer failed.", e);
             return false;
         }
     }

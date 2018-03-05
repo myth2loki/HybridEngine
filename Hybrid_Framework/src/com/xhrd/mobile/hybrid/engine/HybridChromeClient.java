@@ -10,9 +10,8 @@ import com.xhrd.mobile.hybrid.util.SystemUtil;
 
 /**
  * Web Chrome Client管理器。
- * Created by lang on 15/4/18.
  */
-public class RDCloudChromeClient extends AbsRDCloudChromeClient {
+public class HybridChromeClient extends AbsHybridChromeClient {
 
     @Override
     protected void exec(WebView view, Object tempRet, final JsPromptResult result) {

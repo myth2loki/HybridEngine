@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.manager.res.ResManager;
 
@@ -59,7 +59,7 @@ public class Recorder {
     private String mErrFunc;
 
     private Handler mHandler;
-    private RDCloudView view;
+    private HybridView view;
     private CountDownThread thread;
 
     private static Audio mAM;
@@ -83,7 +83,7 @@ public class Recorder {
      *
      * @param params 0. {filename:文件名, samplerate:256000, format:amr} 1. 成功函数 2. 失败函数
      */
-    public void record(final RDCloudView rdCloudView, String[] params) {
+    public void record(final HybridView rdCloudView, String[] params) {
         recordStartTime = System.currentTimeMillis();
         this.view = rdCloudView;
         if (params == null || params.length < 5) {
@@ -203,7 +203,7 @@ public class Recorder {
     /**
      * 更新分贝值
      */
-    private void updateMicStatus(RDCloudView rdCloudView) {
+    private void updateMicStatus(HybridView rdCloudView) {
         if (mRecorder != null) {
             int ratio = mRecorder.getMaxAmplitude() / BASE;
             int db = 0;// 分贝
@@ -222,7 +222,7 @@ public class Recorder {
         }
     };
 
-    public void stop(RDCloudView rdCloudView) {
+    public void stop(HybridView rdCloudView) {
         try {
             if (mRecorder != null) {
                 mRecorder.stop();
@@ -301,7 +301,7 @@ public class Recorder {
     /**
      * 音量回调
      */
-    public void addAveragePowerCallback(RDCloudView rdCloudView, String[] params) {
+    public void addAveragePowerCallback(HybridView rdCloudView, String[] params) {
         if (params.length > 1) {
             averagePowercallback = params[2];
             updateMicStatus(rdCloudView);
@@ -311,7 +311,7 @@ public class Recorder {
     /**
      * 倒计时回调
      */
-    public void addCountDownCallback(RDCloudView rdCloudView, String[] params) {
+    public void addCountDownCallback(HybridView rdCloudView, String[] params) {
         if (params.length > 1) {
             countDownCallback = params[2];
             if (mRecorder != null && duration != -1 && !TextUtils.isEmpty(countDownCallback)) {
@@ -326,7 +326,7 @@ public class Recorder {
     /**
      * 计时回调
      */
-    public void addCalculateTimeCallback(RDCloudView rdCloudView, String[] params) {
+    public void addCalculateTimeCallback(HybridView rdCloudView, String[] params) {
         if (params.length > 1) {
             calculateTimeCallback = params[2];
             if (mRecorder != null && !TextUtils.isEmpty(calculateTimeCallback)) {

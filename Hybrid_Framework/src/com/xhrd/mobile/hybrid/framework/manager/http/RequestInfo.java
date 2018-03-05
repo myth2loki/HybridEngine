@@ -1,6 +1,6 @@
 package com.xhrd.mobile.hybrid.framework.manager.http;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class RequestInfo {
     private long loadingCurrent;
     private HttpUtils http;
     private List<Fileinfo> fileUpInfos;
-    private RDCloudView view;
+    private HybridView view;
     private String callbackError;
     private String callbackSuccess;
     private String callbackprogress;
@@ -148,11 +148,11 @@ public class RequestInfo {
         this.loadingCurrent = loadingCurrent;
     }
 
-    public RDCloudView getCloudView() {
+    public HybridView getCloudView() {
         return view;
     }
 
-    public void setCloudView(RDCloudView view) {
+    public void setCloudView(HybridView view) {
         this.view = view;
     }
 

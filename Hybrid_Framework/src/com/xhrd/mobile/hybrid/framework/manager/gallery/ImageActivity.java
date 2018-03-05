@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridView;
 
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.framework.manager.gallery.ImageAdapter.OnItemClickClass;
 
 import java.util.ArrayList;
@@ -24,17 +24,17 @@ public class ImageActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(RDResourceManager.getInstance().getLayoutId("activity_image"));
+		setContentView(HybridResourceManager.getInstance().getLayoutId("activity_image"));
 		initView();
 
 		initData();
 	}
 
 	private void initView() {
-		gridView = (GridView) findViewById(RDResourceManager.getInstance().getId("gridView"));
-		back = (Button) findViewById(RDResourceManager.getInstance().getId("back"));
+		gridView = (GridView) findViewById(HybridResourceManager.getInstance().getId("gridView"));
+		back = (Button) findViewById(HybridResourceManager.getInstance().getId("back"));
 		back.setOnClickListener(this);
-		confirm = (Button) findViewById(RDResourceManager.getInstance().getId("confirm"));
+		confirm = (Button) findViewById(HybridResourceManager.getInstance().getId("confirm"));
 		confirm.setOnClickListener(this);
 		filelist = new ArrayList<String>();
 
@@ -74,9 +74,9 @@ public class ImageActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == RDResourceManager.getInstance().getId("back")){
+		if (v.getId() == HybridResourceManager.getInstance().getId("back")){
 			finish();
-		}else if (v.getId() == RDResourceManager.getInstance().getId("confirm")){
+		}else if (v.getId() == HybridResourceManager.getInstance().getId("confirm")){
 			Intent intent = new Intent();
 			intent.putStringArrayListExtra("filelist", filelist);
 			setResult(4, intent);

@@ -3,7 +3,7 @@ package com.xhrd.mobile.hybrid.framework.manager.progress;
 import android.app.Dialog;
 import android.content.Context;
 
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 /**
  * Created by maxinliang on 15/6/28.
@@ -14,7 +14,7 @@ public class RDDialog extends Dialog{
     //public int width;
 
     public RDDialog(Context context) {
-        super(context, RDResourceManager.getInstance().getStyleId("progressRDDialog"));
+        super(context, HybridResourceManager.getInstance().getStyleId("progressRDDialog"));
     }
 
     

@@ -13,9 +13,8 @@ import java.util.Map;
 
 /**
  * WebView类，负责加载HTML界面，执行JS代码
- * Created by wangqianyu on 15/4/10.
  */
-public interface RDCloudView extends PullToRefreshBase.OnRefreshListener {
+public interface HybridView extends PullToRefreshBase.OnRefreshListener {
     String JAVASCRIPT_HEAD = "javascript:";
     int DATA_TYPE_ASSET = 0;
     int DATA_TYPE_TEXT = 1;
@@ -40,7 +39,7 @@ public interface RDCloudView extends PullToRefreshBase.OnRefreshListener {
      */
     void addView(View view);
 
-    AbsRDCloudChromeClient getChromeClient();
+    AbsHybridChromeClient getChromeClient();
 
     void setVerticalScrollBarEnabled(boolean enabled);
 
@@ -64,7 +63,7 @@ public interface RDCloudView extends PullToRefreshBase.OnRefreshListener {
      *
      * @param info
      */
-    void load(final RDCloudWindowInfo info);
+    void load(final HybridWindowInfo info);
 
     void loadUrl(String url);
 
@@ -85,7 +84,7 @@ public interface RDCloudView extends PullToRefreshBase.OnRefreshListener {
      * 获取窗口
      * @return 窗口，如果没有窗口绑定则返回null
      */
-    RDCloudWindow getRDCloudWindow();
+    HybridWindow getRDCloudWindow();
 
     /**
      * 执行一段js脚本

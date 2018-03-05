@@ -1,6 +1,6 @@
 package com.xhrd.mobile.hybrid.framework.manager.geolocation;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 
 /**
  * Created by ljm on 2015/11/18.
@@ -9,11 +9,11 @@ public class GeolacationThread extends Thread{
 
     private geolocation mGeolocation;
     private long mMaximumAge;
-    private RDCloudView mRDCloudView;
+    private HybridView mRDCloudView;
     private String mSunc;
     private boolean isRunning;
 
-    public GeolacationThread(geolocation Geolacation,RDCloudView rdCloudView,String sunc,long maximumAge){
+    public GeolacationThread(geolocation Geolacation, HybridView rdCloudView, String sunc, long maximumAge){
         this.mGeolocation = Geolacation;
         this.mRDCloudView = rdCloudView;
         this.mSunc = sunc;
@@ -41,7 +41,7 @@ public class GeolacationThread extends Thread{
         isRunning = false;
     }
 
-    public RDCloudView getRDCloudView(){
+    public HybridView getRDCloudView(){
         return mRDCloudView;
     }
 }

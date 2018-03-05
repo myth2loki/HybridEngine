@@ -5,8 +5,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridView;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.manager.res.ResManager;
 
@@ -26,7 +26,7 @@ public class Player implements MediaPlayer.OnCompletionListener, MediaPlayer.OnE
     private AudioManager mAM;
     private Audio mAM1;
 
-    public Player(RDCloudView rdCloudView, String path, Audio am) {
+    public Player(HybridView rdCloudView, String path, Audio am) {
         HybridEnv.getPluginManager().getPlugin(ResManager.DOMAIN);
         ResManager rm = ResManager.getInstance();
         this.mPath = rm.getPath(Uri.parse(path));
@@ -44,14 +44,14 @@ public class Player implements MediaPlayer.OnCompletionListener, MediaPlayer.OnE
     public void play(final String[] params) {
         File file = new File(mPath);
         if (!file.exists()){
-            mAM1.jsCallback(params[1], RDResourceManager.getInstance().getString("audio_not_file"));
+            mAM1.jsCallback(params[1], HybridResourceManager.getInstance().getString("audio_not_file"));
             return;
         }
         mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
-                mAM1.jsCallback(params[1], RDResourceManager.getInstance().getString("audio_error"));
+                mAM1.jsCallback(params[1], HybridResourceManager.getInstance().getString("audio_error"));
                 return true;
             }
         });

@@ -2,26 +2,16 @@ package com.xhrd.mobile.hybrid.framework;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudScript;
-import com.xhrd.mobile.hybrid.framework.manager.actionsheet.ActionSheet;
+import com.xhrd.mobile.hybrid.Config;
+import com.xhrd.mobile.hybrid.engine.HybridScript;
 import com.xhrd.mobile.hybrid.framework.manager.appcontrol.AppWidget;
 import com.xhrd.mobile.hybrid.framework.manager.appcontrol.Window;
-import com.xhrd.mobile.hybrid.framework.manager.audio.Audio;
-import com.xhrd.mobile.hybrid.framework.manager.camera.camera;
-import com.xhrd.mobile.hybrid.framework.manager.device.device;
-import com.xhrd.mobile.hybrid.framework.manager.device.display;
-import com.xhrd.mobile.hybrid.framework.manager.device.networkInfo;
-import com.xhrd.mobile.hybrid.framework.manager.device.os;
-import com.xhrd.mobile.hybrid.framework.manager.device.screen;
 import com.xhrd.mobile.hybrid.framework.manager.eventbus.EventListener;
-import com.xhrd.mobile.hybrid.framework.manager.gallery.gallery;
-import com.xhrd.mobile.hybrid.framework.manager.geolocation.geolocation;
-import com.xhrd.mobile.hybrid.framework.manager.progress.progress;
-import com.xhrd.mobile.hybrid.framework.manager.storage.storage;
 import com.xhrd.mobile.hybrid.framework.manager.toast.ToastManager;
 import com.xhrd.mobile.hybrid.util.ResourceUtil;
 
@@ -29,6 +19,8 @@ import com.xhrd.mobile.hybrid.util.ResourceUtil;
  * Created by Administrator on 2018/3/2.
  */
 public class HybridEnv {
+    private static final String TAG = "HybridEnv";
+    private static final boolean DEBUG = Config.DEBUG;
 
     private static PluginManagerBase sPluginManager;
     private static Context sApplicationContext;
@@ -45,45 +37,42 @@ public class HybridEnv {
 
             @Override
             public void run() {
-                String funcHeader = RDCloudScript.RD + ".require=function(name){";
+                String funcHeader = HybridScript.RD + ".require=function(name){";
                 String funcFirstPart = "if (!arguments || arguments.length == 0){return;} console.log(arguments[0]);";
                 String funcFooter = "};";
                 StringBuffer sb = new StringBuffer();
                 sb.append(funcHeader);
                 sb.append(funcFirstPart);
-                sb.append(initFrameworkManager());
+                sb.append(initDefaultPlugins());
                 sb.append(funcFooter);
-                RDCloudScript.RDScript += sb.toString();
-//                context.sendBroadcast(new Intent(WelcomeActivity.LOAD_FINISHED));
+                HybridScript.RDScript += sb.toString();
             }
-        }).start();
+        }).run();
     }
 
     /**
      * 初始化内部插件
      * @return
      */
-    private static String initFrameworkManager() {
-        sPluginManager = PluginManagerFactory.getFrameworkManager();
-
-        sPluginManager.addPlugin(progress.class);
+    private static String initDefaultPlugins() {
         sPluginManager.addPlugin(AppWidget.class);
-        sPluginManager.addPlugin(device.class);
-        sPluginManager.addPlugin(display.class);
-        sPluginManager.addPlugin(networkInfo.class);
-        sPluginManager.addPlugin(os.class);
-        sPluginManager.addPlugin(screen.class);
-        sPluginManager.addPlugin(Audio.class);
-        sPluginManager.addPlugin(camera.class);
         sPluginManager.addPlugin(Window.class);
-        sPluginManager.addPlugin(geolocation.class);
-        sPluginManager.addPlugin(storage.class);
-        sPluginManager.addPlugin(gallery.class);
         sPluginManager.addPlugin(EventListener.class);
         sPluginManager.addPlugin(ToastManager.class);
-        sPluginManager.addPlugin(gallery.class);
-        sPluginManager.addPlugin(ActionSheet.class);
         return sPluginManager.genJavascript();
+    }
+
+    public static void addPlugin(Class<? extends PluginBase> clazz) {
+        //懒加载
+        if (sPluginManager == null) {
+            sPluginManager = PluginManagerFactory.getPluginManager();
+        }
+        if (clazz == null) {
+            if (DEBUG) {
+                Log.d(TAG, "addPlugin: class of plugin is null.");
+            }
+        }
+        sPluginManager.addPlugin(clazz);
     }
 
     public static void enableDebug(boolean enabled) {

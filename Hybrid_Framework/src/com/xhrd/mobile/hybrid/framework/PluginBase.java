@@ -2,6 +2,7 @@ package com.xhrd.mobile.hybrid.framework;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -10,10 +11,10 @@ import android.webkit.ValueCallback;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
-import com.xhrd.mobile.hybrid.engine.RDCloudScript;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.engine.RDCloudWindow;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridScript;
+import com.xhrd.mobile.hybrid.engine.HybridView;
+import com.xhrd.mobile.hybrid.engine.HybridWindow;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.util.SystemUtil;
 
 import java.lang.ref.WeakReference;
@@ -33,15 +34,15 @@ public abstract class PluginBase {
     public static final String EXCEPTION_JSON = "new Error(%s)";
     private static final AtomicInteger mInteger = new AtomicInteger();
 
-    private List<RDCloudView> mRDViewList = new ArrayList<RDCloudView>();
+    private List<HybridView> mRDViewList = new ArrayList<HybridView>();
     private Handler mHandler;
     private PluginData mPluginData;
     private int mId = mInteger.getAndIncrement();
 
-    private Map<Integer, WeakReference<RDCloudView>> mPermRDCloudViewMap = new HashMap<>();
+    private Map<Integer, WeakReference<HybridView>> mPermRDCloudViewMap = new HashMap<>();
 
     public PluginBase() {
-        mHandler = new Handler(HybridEnv.getApplicationContext().getMainLooper());
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
     /**
@@ -64,8 +65,8 @@ public abstract class PluginBase {
      * js方法的参数长度错误
      * @param view
      */
-    public void jsErrCallbackParamsLengthError(RDCloudView view){
-        jsErrCallback(view, EXCEPTION_JSON, view.getContext().getString(RDResourceManager.getInstance().getStringId("params_length_error")));
+    public void jsErrCallbackParamsLengthError(HybridView view){
+        jsErrCallback(view, EXCEPTION_JSON, view.getContext().getString(HybridResourceManager.getInstance().getStringId("params_length_error")));
     }
 
     /**
@@ -101,7 +102,7 @@ public abstract class PluginBase {
      * @param func jsFunction
      * @param content 参数
      */
-    public void jsCallback(final RDCloudView view, boolean remove, String func, Object content) {
+    public void jsCallback(final HybridView view, boolean remove, String func, Object content) {
         List<String> keyAndFunc = getKeyAndFunc(func);
         final StringBuffer sb = new StringBuffer("javascript:var f =").append(keyAndFunc.get(0)).append("; f(");
         if (content.getClass().isAssignableFrom(String.class)) {
@@ -127,7 +128,7 @@ public abstract class PluginBase {
      * @param view RDCloudView
      * @param result JS结果
      */
-    public void jsCallback(final RDCloudView view, final JSFuncResult result) {
+    public void jsCallback(final HybridView view, final JSFuncResult result) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -155,7 +156,7 @@ public abstract class PluginBase {
         });
     }
 
-    private void resultBack(RDCloudView rdCloudView, JSFuncResult funcResult) {
+    private void resultBack(HybridView rdCloudView, JSFuncResult funcResult) {
         Object ret = funcResult.getResult();
         if (ret != null) {
             if (ret instanceof IJSData) {
@@ -172,7 +173,7 @@ public abstract class PluginBase {
      * @param view RDCloudView
      * @param function JS函数类
      */
-    public void jsCallback(final RDCloudView view, final JSFunction function) {
+    public void jsCallback(final HybridView view, final JSFunction function) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -189,7 +190,7 @@ public abstract class PluginBase {
      * @param view RDCloudView
      * @param script JS数据类
      */
-    public void jsCallback(final RDCloudView view, final JSScript script) {
+    public void jsCallback(final HybridView view, final JSScript script) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -233,7 +234,7 @@ public abstract class PluginBase {
      * @param func
      * @param params
      */
-    public void jsCallback(final RDCloudView view, boolean remove, String func, Object... params) {
+    public void jsCallback(final HybridView view, boolean remove, String func, Object... params) {
         List<String> keyAndFunc = getKeyAndFunc(func);
     	StringBuffer sb = new StringBuffer();
         sb.append("javascript: var f = ").append(keyAndFunc.get(0)).append("; f(");
@@ -261,7 +262,7 @@ public abstract class PluginBase {
         });
     }
 
-    public void jsonCallBack(final RDCloudView view, boolean remove, String func, String json) {
+    public void jsonCallBack(final HybridView view, boolean remove, String func, String json) {
         List<String> keyAndFunc = getKeyAndFunc(func);
         final StringBuffer sb = new StringBuffer("javascript:var f = ").append(keyAndFunc.get(0)).append("; f(").append(json).append(");");
         if (remove) {
@@ -291,7 +292,7 @@ public abstract class PluginBase {
      * @param func
      * @param content
      */
-    public void jsErrCallback(final RDCloudView view, String func, final Object content) {
+    public void jsErrCallback(final HybridView view, String func, final Object content) {
         final String f = "var f = " + func + ";";
         mHandler.post(new Runnable() {
             @Override
@@ -305,7 +306,7 @@ public abstract class PluginBase {
         });
     }
 
-    private RDCloudView getLastTargetView() {
+    private HybridView getLastTargetView() {
         if (mRDViewList.size() == 0) {
             return null;
         }
@@ -330,7 +331,7 @@ public abstract class PluginBase {
         String simpleName = TextUtils.isEmpty(mPluginData.mDomain) ? getClass().getSimpleName() : mPluginData.mDomain;
         StringBuffer sb = new StringBuffer();
         sb.append("if(name=='").append(simpleName).append("'){");
-        sb.append("     return ").append(String.format(exec_template, RDCloudScript.JS_SCHEMA, getClass().getName(), "newInstance", -1));
+        sb.append("     return ").append(String.format(exec_template, HybridScript.JS_SCHEMA, getClass().getName(), "newInstance", -1));
         sb.append("}");
         return sb.toString();
     }
@@ -341,7 +342,7 @@ public abstract class PluginBase {
      * @return
      */
     @Deprecated
-    protected RDCloudView getTargetView() {
+    protected HybridView getTargetView() {
         if(mRDViewList.size()>0) {
             return mRDViewList.get(0);
         }
@@ -370,9 +371,9 @@ public abstract class PluginBase {
         startActivityForResult(getTargetView(), itt, requestCode);
     }
 
-    protected void startActivityForResult(RDCloudView view, Intent itt, int requestCode) {
+    protected void startActivityForResult(HybridView view, Intent itt, int requestCode) {
         int pathCode = mId;
-        RDCloudWindow window = view.getRDCloudWindow();
+        HybridWindow window = view.getRDCloudWindow();
         if (getScope() == PluginData.Scope.App) {
             //全局插件无需走路径选择。
             HybridActivity.getInstance().startActivityForResult(itt, requestCode);
@@ -409,10 +410,10 @@ public abstract class PluginBase {
         return ContextCompat.checkSelfPermission(HybridEnv.getApplicationContext(), permission);
     }
 
-    protected final void requestPermissions(RDCloudView view, String[] permissions, int requestCode) {
-        mPermRDCloudViewMap.put(requestCode, new WeakReference<RDCloudView>(view));
+    protected final void requestPermissions(HybridView view, String[] permissions, int requestCode) {
+        mPermRDCloudViewMap.put(requestCode, new WeakReference<HybridView>(view));
         int pathCode = mId;
-        RDCloudWindow window = view.getRDCloudWindow();
+        HybridWindow window = view.getRDCloudWindow();
         window.requestPermissions(view, permissions, requestCode, pathCode);
     }
 
@@ -423,9 +424,9 @@ public abstract class PluginBase {
      * @param grantResults
      */
     public final void onRequestPermissionsResultInner(int requestCode, String[] permissions, int[] grantResults) {
-        WeakReference<RDCloudView> ref = mPermRDCloudViewMap.remove(requestCode);
+        WeakReference<HybridView> ref = mPermRDCloudViewMap.remove(requestCode);
         if (ref != null) {
-            RDCloudView view = ref.get();
+            HybridView view = ref.get();
             if (view != null) {
                 onRequestPermissionsResult(ref.get(), requestCode, permissions, grantResults);
             } else {
@@ -441,14 +442,14 @@ public abstract class PluginBase {
      * @param permissions
      * @param grantResults
      */
-    public void onRequestPermissionsResult(RDCloudView view, int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(HybridView view, int requestCode, String[] permissions, int[] grantResults) {
 
     }
 
     /**
      * 构造时
      */
-    public void onCreate(RDCloudView view) {
+    public void onCreate(HybridView view) {
 
     }
 
@@ -456,7 +457,7 @@ public abstract class PluginBase {
      * 注册时调用。(在注册js时)
      * @param view
      */
-    public void onRegistered(RDCloudView view) {
+    public void onRegistered(HybridView view) {
         if (!mRDViewList.contains(view)) {
             mRDViewList.add(view);
         }
@@ -466,7 +467,7 @@ public abstract class PluginBase {
      * 反注册时调用。(再反注册js时)
      * @param view
      */
-    public void onDeregistered(RDCloudView view) {
+    public void onDeregistered(HybridView view) {
         mRDViewList.remove(view);
     }
 

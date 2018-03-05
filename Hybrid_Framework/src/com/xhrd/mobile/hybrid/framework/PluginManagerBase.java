@@ -14,11 +14,11 @@ import android.widget.Toast;
 
 import com.xhrd.mobile.hybrid.Config;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.AbsRDCloudChromeClient;
+import com.xhrd.mobile.hybrid.engine.AbsHybridChromeClient;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
-import com.xhrd.mobile.hybrid.engine.RDCloudScript;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridScript;
+import com.xhrd.mobile.hybrid.engine.HybridView;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.util.ClassUtil;
 import com.xhrd.mobile.hybrid.util.SystemUtil;
 import com.xhrd.mobile.hybrid.util.log.LogUtils;
@@ -85,7 +85,7 @@ public abstract class PluginManagerBase {
         mGlobalPluginMap.remove(data.mClass);
     }
 
-    public void registerPlugin(RDCloudView view) {
+    public void registerPlugin(HybridView view) {
         for (PluginBase base : mGlobalPluginMap.values()) {
             view.registerPlugin(base);
         }
@@ -219,10 +219,10 @@ public abstract class PluginManagerBase {
             String domain = TextUtils.isEmpty(pluginData.mDomain) ? pluginData.mClass.getSimpleName() : pluginData.mDomain;
             if (this instanceof FrameworkManager) {
                 globalSB.append(PluginData.JS_OBJECT_BEGIN_FRAMEWORK).append(domain).append('=').append(pluginData.genJavascript()).append(';');
-                globalSB.append(RDCloudScript.RD).append('.').append(domain).append('=').append(PluginData.JS_OBJECT_BEGIN_FRAMEWORK).append(domain).append(';');
+                globalSB.append(HybridScript.RD).append('.').append(domain).append('=').append(PluginData.JS_OBJECT_BEGIN_FRAMEWORK).append(domain).append(';');
             } else {
                 globalSB.append(PluginData.JS_OBJECT_BEGIN_PLUGIN).append(domain).append('=').append(pluginData.genJavascript()).append(';');
-                globalSB.append(RDCloudScript.RD).append('.').append(domain).append('=').append(PluginData.JS_OBJECT_BEGIN_PLUGIN).append(domain).append(';');
+                globalSB.append(HybridScript.RD).append('.').append(domain).append('=').append(PluginData.JS_OBJECT_BEGIN_PLUGIN).append(domain).append(';');
             }
         }
 
@@ -231,16 +231,16 @@ public abstract class PluginManagerBase {
             String domain = TextUtils.isEmpty(base.getPluginData().mDomain) ? base.getClass().getSimpleName() : base.getPluginData().mDomain;
             if (this instanceof FrameworkManager) {
                 globalSB.append(PluginData.JS_OBJECT_BEGIN_FRAMEWORK).append(domain).append('=').append(base.genJavascript()).append(';');
-                globalSB.append(RDCloudScript.RD).append('.').append(domain).append('=').append(PluginData.JS_OBJECT_BEGIN_FRAMEWORK).append(domain).append(';');
+                globalSB.append(HybridScript.RD).append('.').append(domain).append('=').append(PluginData.JS_OBJECT_BEGIN_FRAMEWORK).append(domain).append(';');
             } else {
                 globalSB.append(PluginData.JS_OBJECT_BEGIN_PLUGIN).append(domain).append('=').append(base.genJavascript()).append(';');
-                globalSB.append(RDCloudScript.RD).append('.').append(domain).append('=').append(PluginData.JS_OBJECT_BEGIN_PLUGIN).append(domain).append(';');
+                globalSB.append(HybridScript.RD).append('.').append(domain).append('=').append(PluginData.JS_OBJECT_BEGIN_PLUGIN).append(domain).append(';');
             }
             // plugin的property和jsMethod都已添加到了plugin的data中，后续不许再添加了
             base.getPluginData().mGenerated = true;
         }
 
-        RDCloudScript.RDScript += globalSB.toString();
+        HybridScript.RDScript += globalSB.toString();
 
 
         StringBuffer sb = new StringBuffer();
@@ -314,7 +314,7 @@ public abstract class PluginManagerBase {
      * @param jsPromptResult 返回值处理类，6.0系统以上使用
      * @return
      */
-    public Object exec(RDCloudView view, String message, List<String> params, final JsPromptResult jsPromptResult) {
+    public Object exec(HybridView view, String message, List<String> params, final JsPromptResult jsPromptResult) {
         if (Config.DEBUG) {
             Log.d("FrameworkManager", "exec -- message: " + message + ",   defaultValue: " + params);
         }
@@ -360,7 +360,7 @@ public abstract class PluginManagerBase {
      * @throws ClassNotFoundException
      * @throws InstantiationException
      */
-    protected final Object execOnView(final RDCloudView view, String className,final String methodName, int id,final String[] params, final JsPromptResult jsPromptResult) throws
+    protected final Object execOnView(final HybridView view, String className, final String methodName, int id, final String[] params, final JsPromptResult jsPromptResult) throws
             InvocationTargetException, IllegalAccessException, ClassNotFoundException, InstantiationException {
         if (view.getRDCloudWindow() == null) {
 //            LogManager log = (LogManager) getPlugin("log");
@@ -511,7 +511,7 @@ public abstract class PluginManagerBase {
      * @param params
      * @return
      */
-    protected final Object invokePluginMethodByNameInner6(final RDCloudView view, final PluginBase base, final PluginData pluginData, final String methodName, final Object[] params, final JsPromptResult jsPromptResult) {
+    protected final Object invokePluginMethodByNameInner6(final HybridView view, final PluginBase base, final PluginData pluginData, final String methodName, final Object[] params, final JsPromptResult jsPromptResult) {
         //如果是6.0及以上版本执行权限检查
         PluginMethodData pluginMethodData = pluginData.getPluginMethodDataByMethodName(methodName);
 
@@ -564,14 +564,14 @@ public abstract class PluginManagerBase {
      * @param permissions
      * @return
      */
-    private Object invokePluginMethodByNameInner6(final RDCloudView view, final PluginBase base, final PluginData pluginData,
+    private Object invokePluginMethodByNameInner6(final HybridView view, final PluginBase base, final PluginData pluginData,
                                                   final String methodName, final Object[] params, final JsPromptResult jsPromptResult,
                                                   final String[] permissions, final String[] denyInfo) {
         if(permissions == null || permissions.length == 0 || existsPermissions(base, permissions)) {
             return invokePluginMethodByNameInner(view, base, methodName, params);
         }
 
-        final AbsRDCloudChromeClient chromeClient = view.getChromeClient();
+        final AbsHybridChromeClient chromeClient = view.getChromeClient();
 
         int permissionLength = permissions.length;
         int generalPermissionLength = permissionLength;
@@ -675,7 +675,7 @@ public abstract class PluginManagerBase {
                                 if(!TextUtils.isEmpty(msg)) {
                                     msg = msg.substring(0,msg.length()-1);
                                 }else {
-                                    msg = RDResourceManager.getInstance().getString("request_special_permission_msg");
+                                    msg = HybridResourceManager.getInstance().getString("request_special_permission_msg");
                                 }
                             }
                             denyToast(chromeClient,view,jsPromptResult,msg);
@@ -697,7 +697,7 @@ public abstract class PluginManagerBase {
                     if (shouldShowRequestPermissionsRationale(base, requestPermissions) == -1) {
                         requestPermissionError = getPermissionMsg(denyInfo);
                     } else {
-                        requestPermissionError = RDResourceManager.getInstance().getString("request_permission_error");
+                        requestPermissionError = HybridResourceManager.getInstance().getString("request_permission_error");
                     }
                     denyToast(chromeClient,view,jsPromptResult,requestPermissionError);
                 }
@@ -714,7 +714,7 @@ public abstract class PluginManagerBase {
      * @param jsPromptResult
      * @param denyInfo 提醒内容
      */
-    private void denyToast(AbsRDCloudChromeClient chromeClient, final RDCloudView view, final JsPromptResult jsPromptResult, final String denyInfo) {
+    private void denyToast(AbsHybridChromeClient chromeClient, final HybridView view, final JsPromptResult jsPromptResult, final String denyInfo) {
         // 权限申请失败
         LogUtils.e4defualtTag(denyInfo);
         chromeClient.preResultBack(view, jsPromptResult, denyInfo);
@@ -738,7 +738,7 @@ public abstract class PluginManagerBase {
             msg += permissionMsg[i] + "、";
         }
         if(TextUtils.isEmpty(msg)) {
-            msg = RDResourceManager.getInstance().getString("request_permission_msg");
+            msg = HybridResourceManager.getInstance().getString("request_permission_msg");
         }else {
             msg = msg.substring(0,msg.length()-1);
         }
@@ -769,7 +769,7 @@ public abstract class PluginManagerBase {
      * @param params
      * @return
      */
-    protected final Object invokePluginMethodByNameInner(final RDCloudView view, final PluginBase base, final String methodName, final Object[] params) {
+    protected final Object invokePluginMethodByNameInner(final HybridView view, final PluginBase base, final String methodName, final Object[] params) {
         Object ret = null;
         int paramType = 0;
         Class<?>[] p = new Class<?>[]{String.class, String[].class};
@@ -785,7 +785,7 @@ public abstract class PluginManagerBase {
                     paramType = 2;
                 } catch (NoSuchMethodException e1) {
                     try {
-                        p = new Class<?>[]{RDCloudView.class};
+                        p = new Class<?>[]{HybridView.class};
                         method = base.getClass().getMethod(methodName, p);
                         paramType = 3;
                     } catch (NoSuchMethodException e3) {
@@ -795,7 +795,7 @@ public abstract class PluginManagerBase {
                             paramType = 4;
                         } catch (NoSuchMethodException e4) {
                             try {
-                                p = new Class<?>[]{RDCloudView.class, String[].class};
+                                p = new Class<?>[]{HybridView.class, String[].class};
                                 method = base.getClass().getMethod(methodName, p);
                                 paramType = 5;
                             } catch (NoSuchMethodException e5) {
@@ -910,7 +910,7 @@ public abstract class PluginManagerBase {
      * @return
      */
     public static boolean isJavaScript(String message) {
-        return message.startsWith(RDCloudScript.JS_SCHEMA);
+        return message.startsWith(HybridScript.JS_SCHEMA);
     }
 
     /**
@@ -919,11 +919,11 @@ public abstract class PluginManagerBase {
      * @return
      */
     public static boolean isFrameworkCall(String message) {
-        return message.startsWith(RDCloudScript.JS_SCHEMA_0);
+        return message.startsWith(HybridScript.JS_SCHEMA_0);
     }
 
-    protected abstract Map<Class<?>, PluginBase> getWindowInjectedJSObj(RDCloudView view);
-    protected abstract Map<Integer, PluginBase> getViewInjectedJSObj(RDCloudView view);
+    protected abstract Map<Class<?>, PluginBase> getWindowInjectedJSObj(HybridView view);
+    protected abstract Map<Integer, PluginBase> getViewInjectedJSObj(HybridView view);
 
     /**
      * 执行插件方法
@@ -935,7 +935,7 @@ public abstract class PluginManagerBase {
      * @param jsPromptResult
      * @return
      */
-    protected abstract Object invokePluginMethodByName(final RDCloudView view, final PluginBase base, PluginData pluginData, final String methodName, final Object[] params, final JsPromptResult jsPromptResult);
+    protected abstract Object invokePluginMethodByName(final HybridView view, final PluginBase base, PluginData pluginData, final String methodName, final Object[] params, final JsPromptResult jsPromptResult);
 
     /**
      * Created by maxinliang on 15/6/12.

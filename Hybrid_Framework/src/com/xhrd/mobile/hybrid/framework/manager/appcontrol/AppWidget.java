@@ -16,7 +16,7 @@ import android.view.WindowManager;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
@@ -45,7 +45,7 @@ public class AppWidget extends PluginBase {
 
     private static final int REQUEST_CODE_FOR_OPEN_APP = 1;
 
-    private Map<RDCloudView, String> mCallbackMap = new HashMap<RDCloudView, String>();
+    private Map<HybridView, String> mCallbackMap = new HashMap<HybridView, String>();
     private String appPath = "";
 
     public static final int STATUS_SUCESS = 1;
@@ -100,7 +100,7 @@ public class AppWidget extends PluginBase {
     }
 
     @JavascriptFunction
-    public void installApp(RDCloudView rdCloudView, String[] params) {
+    public void installApp(HybridView rdCloudView, String[] params) {
         if(params != null && params.length > 0){
             appPath = ResManagerFactory.getResManager().getPath(params[0]);
             File apkfile = new File(appPath);
@@ -114,7 +114,7 @@ public class AppWidget extends PluginBase {
     }
 
     @JavascriptFunction
-    public void openApp(RDCloudView rdCloudView, String[] params) {
+    public void openApp(HybridView rdCloudView, String[] params) {
         if (params.length > 1) {
             try {
                 JSONObject jo = new JSONObject(params[0]);
@@ -175,14 +175,14 @@ public class AppWidget extends PluginBase {
         if (requestCode == REQUEST_CODE_FOR_OPEN_APP) {
             if (resultCode == Activity.RESULT_OK) {
                 String result = getResultJson(data);
-                for (Map.Entry<RDCloudView, String> entry : mCallbackMap.entrySet()) {
+                for (Map.Entry<HybridView, String> entry : mCallbackMap.entrySet()) {
                     JSFunction func = new JSFunction(entry.getValue(), true);
                     func.addParamNumber(STATUS_SUCESS);
                     func.addParamObject(result);
                     jsCallback(entry.getKey(), func);
                 }
             } else {
-                for (Map.Entry<RDCloudView, String> entry : mCallbackMap.entrySet()) {
+                for (Map.Entry<HybridView, String> entry : mCallbackMap.entrySet()) {
                     jsCallback(entry.getKey(), true, entry.getValue(), STATUS_FAILED + "");
                 }
             }
@@ -240,12 +240,8 @@ public class AppWidget extends PluginBase {
         );
     }
 
-//                                clazz.equals(BigDecimal.class) ||
-//                                clazz.equals(BigInteger.class) ||
-//                                clazz.equals(Date.class) ||
-//                                clazz.equals(DateTime.class) ||
     @JavascriptFunction
-    public void isAppInstalled(final RDCloudView rdCloudView, String[] params) {
+    public void isAppInstalled(final HybridView rdCloudView, String[] params) {
         if (params.length >= 2) {
             if (TextUtils.isEmpty(params[0])) {
                 return;

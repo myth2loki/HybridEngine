@@ -1,9 +1,8 @@
 package com.xhrd.mobile.hybrid.engine;
 
 /**窗口信息
- * Created by langjingin on 15/4/22.
  */
-public class RDCloudWindowInfo {
+public class HybridWindowInfo {
 
     public String windowName;
     public String pageName;

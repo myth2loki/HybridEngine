@@ -94,25 +94,25 @@ public class HeaderLoadingLayout extends LoadingLayout {
      * @param context context
      */
     private void init(Context context) {
-        onPullToRefreshText=RDResourceManager.getInstance().getString("pushmsg_center_pull_down_text");
-        onReleaseToRefreshText=RDResourceManager.getInstance().getString("pull_to_refresh_header_hint_ready");
-        onRefreshingText=RDResourceManager.getInstance().getString("pull_to_refresh_header_hint_loading");
+        onPullToRefreshText= HybridResourceManager.getInstance().getString("pushmsg_center_pull_down_text");
+        onReleaseToRefreshText= HybridResourceManager.getInstance().getString("pull_to_refresh_header_hint_ready");
+        onRefreshingText= HybridResourceManager.getInstance().getString("pull_to_refresh_header_hint_loading");
 
 
         //pull_to_refresh_header_hint_ll
         //pull_to_refresh_last_update_time_ll
 
 
-        mHeaderContainer = (RelativeLayout) findViewById(RDResourceManager.getInstance().getId("pull_to_refresh_header_content"));
+        mHeaderContainer = (RelativeLayout) findViewById(HybridResourceManager.getInstance().getId("pull_to_refresh_header_content"));
 
-        pull_to_refresh_header_hint_ll =(LinearLayout)findViewById(RDResourceManager.getInstance().getId("pull_to_refresh_header_hint_ll"));
-        pull_to_refresh_last_update_time_ll =(LinearLayout)findViewById(RDResourceManager.getInstance().getId("pull_to_refresh_last_update_time_ll"));
+        pull_to_refresh_header_hint_ll =(LinearLayout)findViewById(HybridResourceManager.getInstance().getId("pull_to_refresh_header_hint_ll"));
+        pull_to_refresh_last_update_time_ll =(LinearLayout)findViewById(HybridResourceManager.getInstance().getId("pull_to_refresh_last_update_time_ll"));
 
 
-        mArrowImageView = (ImageView) findViewById(RDResourceManager.getInstance().getId("pull_to_refresh_header_arrow"));
-        mHintTextView = (TextView) findViewById(RDResourceManager.getInstance().getId("pull_to_refresh_header_hint_textview"));
-        mProgressBar = (ProgressBar) findViewById(RDResourceManager.getInstance().getId("pull_to_refresh_header_progressbar"));
-        mHeaderTimeView = (TextView) findViewById(RDResourceManager.getInstance().getId("pull_to_refresh_header_time"));
+        mArrowImageView = (ImageView) findViewById(HybridResourceManager.getInstance().getId("pull_to_refresh_header_arrow"));
+        mHintTextView = (TextView) findViewById(HybridResourceManager.getInstance().getId("pull_to_refresh_header_hint_textview"));
+        mProgressBar = (ProgressBar) findViewById(HybridResourceManager.getInstance().getId("pull_to_refresh_header_progressbar"));
+        mHeaderTimeView = (TextView) findViewById(HybridResourceManager.getInstance().getId("pull_to_refresh_header_time"));
 
 
         float pivotValue = 0.5f;    // SUPPRESS CHECKSTYLE
@@ -199,7 +199,7 @@ public class HeaderLoadingLayout extends LoadingLayout {
     protected View createLoadingView(Context context, AttributeSet attrs) {
 
 
-        View container = LayoutInflater.from(context).inflate(RDResourceManager.getInstance().getLayoutId("pull_to_refresh_header"), null);
+        View container = LayoutInflater.from(context).inflate(HybridResourceManager.getInstance().getLayoutId("pull_to_refresh_header"), null);
         return container;
     }
 

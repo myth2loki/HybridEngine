@@ -3,7 +3,7 @@ package com.xhrd.mobile.hybrid.framework.manager.progress;
 import com.xhrd.mobile.hybrid.annotation.JavascriptConfig;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.annotation.JavascriptProperty;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
@@ -27,7 +27,7 @@ public class progress extends PluginBase {
     private RDDialog dialog;
 
     @JavascriptFunction(name = "showProgress")
-    public void showProgress(RDCloudView rdCloudView, String[] params) {
+    public void showProgress(HybridView rdCloudView, String[] params) {
 
         if (params.length == 1) {
             String configJson = params[0];
@@ -52,7 +52,7 @@ public class progress extends PluginBase {
      * @param params
      */
     @JavascriptFunction(name = "showToast")
-    public void showToast(RDCloudView rdCloudView, String[] params) {
+    public void showToast(HybridView rdCloudView, String[] params) {
 
         if (params.length < 2) {
             return;
@@ -135,7 +135,7 @@ public class progress extends PluginBase {
     }
 
     @JavascriptFunction(name = "hideProgress")
-    public void hideProgress(RDCloudView rdCloudView, String[] params) {
+    public void hideProgress(HybridView rdCloudView, String[] params) {
         if (dialog != null)
             dialog.dismiss();
     }

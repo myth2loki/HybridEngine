@@ -2,7 +2,7 @@ package com.xhrd.mobile.hybrid.util;
 
 import android.util.Log;
 
-import com.xhrd.mobile.hybrid.engine.RDEncryptHelper;
+import com.xhrd.mobile.hybrid.engine.HybridEncryptHelper;
 import com.xhrd.mobile.hybrid.framework.manager.ResManagerFactory;
 
 import org.w3c.dom.Document;
@@ -50,7 +50,7 @@ public class AppKeyXmlUtil {
                 try {
                     inputStream = new FileInputStream(configPath);
 
-                    inputStream = RDEncryptHelper.getDecryptInputStream(inputStream);// 解密
+                    inputStream = HybridEncryptHelper.getDecryptInputStream(inputStream);// 解密
                     Document document = XmlUtil.xmlPath2Doc(inputStream);
                     if (document == null) {
                         Log.e("read xml", "读取pluginConfigs.xml---》document为null");

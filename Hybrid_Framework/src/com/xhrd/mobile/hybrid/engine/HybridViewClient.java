@@ -16,15 +16,15 @@ import android.webkit.WebViewClient;
 /**
  * WebViewClient
  */
-public class RDCloudViewClient extends WebViewClient {
-    public static final String RDCLOUD_LOAD_FINISHED = RDCloudViewClient.class.getName() + "_rdcloud_load_finished";
-    public static final String RDCLOUD_WINDOW_NAME = RDCloudViewClient.class.getName() + "rdcloud_window_name";
-    public static final String RDCLOUD_POPOVER_NAME = RDCloudViewClient.class.getName() + "rdcloud_popover_name";
+public class HybridViewClient extends WebViewClient {
+    public static final String RDCLOUD_LOAD_FINISHED = HybridViewClient.class.getName() + "_rdcloud_load_finished";
+    public static final String RDCLOUD_WINDOW_NAME = HybridViewClient.class.getName() + "rdcloud_window_name";
+    public static final String RDCLOUD_POPOVER_NAME = HybridViewClient.class.getName() + "rdcloud_popover_name";
 
-    private RDCloudView mRDView;
+    private HybridView mRDView;
     private boolean mIsLoadFinished;
 
-    public RDCloudViewClient(RDCloudView rdView) {
+    public HybridViewClient(HybridView rdView) {
         this.mRDView = rdView;
     }
 
@@ -36,18 +36,18 @@ public class RDCloudViewClient extends WebViewClient {
         if(!view.getSettings().getLoadsImagesAutomatically()) {
             view.getSettings().setLoadsImagesAutomatically(true);
         }
-        view.loadUrl(RDCloudScript.RDScript);
+        view.loadUrl(HybridScript.RDScript);
         super.onPageFinished(view, url);
         view.loadUrl("javascript: (function(){rd.window.name = arguments[0]})('" + mRDView.getWindowName() + "');");
-        RDCloudScript.jsFix(view);
+        HybridScript.jsFix(view);
         CookieSyncManager.getInstance().sync();
         //或者移除自己。
-        ((RDCloudView) view).onLoad();
-        ((RDCloudView) view).onForeground();
+        ((HybridView) view).onLoad();
+        ((HybridView) view).onForeground();
         view.post(new Runnable() {
             @Override
             public void run() {
-                RDCloudWindow window = ((RDCloudView) view).getRDCloudWindow();
+                HybridWindow window = ((HybridView) view).getRDCloudWindow();
                 if (window != null) {
                     window.setHttpTitle(view.getTitle());
                 }

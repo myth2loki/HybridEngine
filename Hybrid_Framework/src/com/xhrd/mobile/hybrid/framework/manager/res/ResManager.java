@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptConfig;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
@@ -36,7 +36,7 @@ public class ResManager extends PluginBase {
     }
 
     @JavascriptFunction(name = "getPath", hasReturn = true, convertJS = true)
-    private String getPath(RDCloudView view, String[] params) {
+    private String getPath(HybridView view, String[] params) {
         if (params.length == 0) {
             return null;
         }

@@ -20,8 +20,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridView;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
@@ -49,7 +49,7 @@ public class geolocation extends PluginBase implements LocationListener{
 	}
 
 	@JavascriptFunction
-	public void getCurrentPosition(RDCloudView rdCloudView,String[] params) {
+	public void getCurrentPosition(HybridView rdCloudView, String[] params) {
 		String sucFunc = params[0];
 		String errFunc = params[1];
 		String option = params[2];
@@ -96,7 +96,7 @@ public class geolocation extends PluginBase implements LocationListener{
 	}
 
 	@JavascriptFunction
-	public void watchPosition(RDCloudView rdCloudView,String[] params) {
+	public void watchPosition(HybridView rdCloudView, String[] params) {
 		for (GeolacationThread thread : list){
 			if (thread.getRDCloudView() == rdCloudView){
 				return;
@@ -165,7 +165,7 @@ public class geolocation extends PluginBase implements LocationListener{
 	}
 
 	@JavascriptFunction
-	public void clearWatch(RDCloudView view,String[] params) {
+	public void clearWatch(HybridView view, String[] params) {
 		mLocationManager.removeUpdates(this);
 		for (GeolacationThread thread : list){
 			if (thread.getRDCloudView() == view){
@@ -256,7 +256,7 @@ public class geolocation extends PluginBase implements LocationListener{
 
 	@Override
 	public void addMethodProp(PluginData data) {
-        data.addMethod("getCurrentPosition",new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION}, new String[]{RDResourceManager.getInstance().getString("request_geolocation_permission_msg")});
+        data.addMethod("getCurrentPosition",new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION}, new String[]{HybridResourceManager.getInstance().getString("request_geolocation_permission_msg")});
         data.addMethod("watchPosition");
         data.addMethod("clearWatch");
 	}
@@ -266,7 +266,7 @@ public class geolocation extends PluginBase implements LocationListener{
     }
 
 	@Override
-	public void onDeregistered(RDCloudView view) {
+	public void onDeregistered(HybridView view) {
 		super.onDeregistered(view);
 		for (GeolacationThread thread : list){
 			if (thread.getRDCloudView() == view){

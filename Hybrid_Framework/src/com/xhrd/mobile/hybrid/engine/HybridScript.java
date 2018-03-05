@@ -7,9 +7,8 @@ import com.xhrd.mobile.hybrid.Config;
 
 /**
  * Javascript脚本类，封装了系统提供的js接口，以及插件的js接口。
- * Created by wangqianyu on 15/4/10.
  */
-public class RDCloudScript {
+public class HybridScript {
     /**
      * 通用协议，框架通过迭代所有内部功能/外部插件来执行
      */

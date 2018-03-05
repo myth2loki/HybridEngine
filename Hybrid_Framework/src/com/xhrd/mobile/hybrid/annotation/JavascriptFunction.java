@@ -43,7 +43,7 @@ public @interface JavascriptFunction {
     String[] permissionRationales() default {};
 
     /**
-     * 是否转换返回的js
+     * 是否doze
      * @return
      */
     boolean doze() default false;

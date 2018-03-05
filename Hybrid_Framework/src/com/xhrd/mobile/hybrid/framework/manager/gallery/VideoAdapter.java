@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 import java.util.List;
 
@@ -49,10 +49,10 @@ public class VideoAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Holder holder = null;
 		if (convertView == null) {
-			convertView = LayoutInflater.from(mContext).inflate(RDResourceManager.getInstance().getLayoutId("imgsitem"), null);
+			convertView = LayoutInflater.from(mContext).inflate(HybridResourceManager.getInstance().getLayoutId("imgsitem"), null);
 			holder = new Holder();
-			holder.imageView = (ImageView) convertView.findViewById(RDResourceManager.getInstance().getId("imageView"));
-			holder.checkBox = (CheckBox) convertView.findViewById(RDResourceManager.getInstance().getId("checkBox"));
+			holder.imageView = (ImageView) convertView.findViewById(HybridResourceManager.getInstance().getId("imageView"));
+			holder.checkBox = (CheckBox) convertView.findViewById(HybridResourceManager.getInstance().getId("checkBox"));
 			convertView.setTag(holder);
 		} else {
 			holder = (Holder)convertView.getTag();

@@ -13,7 +13,7 @@ import android.widget.GridView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class NoneMultiActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(RDResourceManager.getInstance().getLayoutId("activity_image"));
+		setContentView(HybridResourceManager.getInstance().getLayoutId("activity_image"));
 		filelist = new ArrayList<String>();
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(ImageLoaderConfiguration.createDefault(this));
@@ -36,16 +36,16 @@ public class NoneMultiActivity extends Activity implements OnClickListener {
 	}
 
 	private void initView() {
-		gridView = (GridView) findViewById(RDResourceManager.getInstance().getId("gridView"));
+		gridView = (GridView) findViewById(HybridResourceManager.getInstance().getId("gridView"));
 		Util util = new Util(this);
 		videoPathList = util.getVideoPath();
 		imageList = util.listAlldir();
 		NoneMultiAdapter adapter = new NoneMultiAdapter(this, videoPathList, imageList,onItemClickClass);
 		gridView.setAdapter(adapter);
 		
-		Button back = (Button) findViewById(RDResourceManager.getInstance().getId("back"));
+		Button back = (Button) findViewById(HybridResourceManager.getInstance().getId("back"));
 		back.setOnClickListener(this);
-		Button confirm = (Button) findViewById(RDResourceManager.getInstance().getId("confirm"));
+		Button confirm = (Button) findViewById(HybridResourceManager.getInstance().getId("confirm"));
 		confirm.setOnClickListener(this);
 		
 	}
@@ -71,9 +71,9 @@ public class NoneMultiActivity extends Activity implements OnClickListener {
 	};
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == RDResourceManager.getInstance().getId("back")) {
+		if (v.getId() == HybridResourceManager.getInstance().getId("back")) {
 			finish();
-		} else if (v.getId() == RDResourceManager.getInstance().getId("confirm")) {
+		} else if (v.getId() == HybridResourceManager.getInstance().getId("confirm")) {
 			Intent intent = new Intent();
 			intent.putStringArrayListExtra("filelist", filelist);
 			setResult(4, intent);

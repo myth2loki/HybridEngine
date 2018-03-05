@@ -31,14 +31,14 @@ import java.text.SimpleDateFormat;
  * @since 2013-7-29
  * @param <T>
  */
-public abstract class PullToRefreshBase<T extends RDCloudView> extends LinearLayout implements IPullToRefresh<T> {
+public abstract class PullToRefreshBase<T extends HybridView> extends LinearLayout implements IPullToRefresh<T> {
     /**
      * 定义了下拉刷新和上拉加载更多的接口。
      * 
      * @author Li Hong
      * @since 2013-7-29
      */
-    public interface OnRefreshListener<V extends RDCloudView> {
+    public interface OnRefreshListener<V extends HybridView> {
      
         /**
          * 下拉松手后会被调用
@@ -95,14 +95,14 @@ public abstract class PullToRefreshBase<T extends RDCloudView> extends LinearLay
     private FrameLayout mRefreshableViewWrapper;
     /**时间转换*/
     private SimpleDateFormat  dateFormat=new SimpleDateFormat("MM-dd HH:mm");
-    protected RDCloudWindow mWindow;
+    protected HybridWindow mWindow;
     
     /**
      * 构造方法
      * 
      * @param window RDCloudWindow
      */
-    public PullToRefreshBase(RDCloudWindow window) {
+    public PullToRefreshBase(HybridWindow window) {
         super(window.getContext());
         mWindow = window;
         init(window.getContext(), null);
@@ -114,7 +114,7 @@ public abstract class PullToRefreshBase<T extends RDCloudView> extends LinearLay
      * @param window RDCloudWindow
      * @param attrs attrs
      */
-    public PullToRefreshBase(RDCloudWindow window, AttributeSet attrs) {
+    public PullToRefreshBase(HybridWindow window, AttributeSet attrs) {
         super(window.getContext(), attrs);
         mWindow = window;
         init(window.getContext(), attrs);

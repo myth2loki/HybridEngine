@@ -7,7 +7,7 @@ package com.xhrd.mobile.hybrid.engine;
  * @since 2013-8-22
  * @param <T>
  */
-interface IPullToRefresh<T extends RDCloudView> {
+interface IPullToRefresh<T extends HybridView> {
     
     /**
      * 设置当前下拉刷新是否可用

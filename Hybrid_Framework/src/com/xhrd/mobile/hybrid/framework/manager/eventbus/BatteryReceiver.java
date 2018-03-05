@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 
 /**
  * Created by Administrator on 2015/12/17.
@@ -13,10 +13,10 @@ import com.xhrd.mobile.hybrid.engine.RDCloudView;
 public class BatteryReceiver extends BroadcastReceiver{
 
     private EventListener mListener;
-    private RDCloudView mView;
+    private HybridView mView;
 
-    public BatteryReceiver(EventListener listener,RDCloudView view) {
-//        FrameworkManager fm = RDCloudApplication.getApp().getFrameworkManager();
+    public BatteryReceiver(EventListener listener,HybridView view) {
+//        FrameworkManager fm = RDCloudApplication.getApp().getPluginManager();
 //        this.mListener = (EventListener) fm.getPlugin("eventListener");
         this.mListener = listener;
         this.mView = view;

@@ -1,13 +1,13 @@
 package com.xhrd.mobile.hybrid.framework.manager.eventbus;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 
 /**
  * Created by lilong on 15/5/21.
  */
 class EventInfo {
     public String function;
-    public RDCloudView rdCloudView;
+    public HybridView rdCloudView;
 
     @Override
     public boolean equals(Object o) {

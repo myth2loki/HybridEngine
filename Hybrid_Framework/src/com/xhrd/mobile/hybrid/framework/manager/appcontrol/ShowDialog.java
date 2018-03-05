@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridView;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 
 import org.json.JSONArray;
@@ -82,7 +82,7 @@ public class ShowDialog {
 	 * @return
 	 */
 	public Dialog createDialog(View view,Context context) {
-		Dialog dialog = new Dialog(context, RDResourceManager.getInstance().getStyleId("custom_dialog"));
+		Dialog dialog = new Dialog(context, HybridResourceManager.getInstance().getStyleId("custom_dialog"));
 		dialog.setContentView(view);
 		dialog.setCancelable(false);
 		return dialog;
@@ -97,7 +97,7 @@ public class ShowDialog {
 		return createDialog(View.inflate(context, viewId, null),context);
 	}
 
-	public Dialog createDialog(final RDCloudView pView,String[] params,final int pDialogType,final Window win) {
+	public Dialog createDialog(final HybridView pView, String[] params, final int pDialogType, final Window win) {
 		return createDialog(pView,params,win,pDialogType,null);
 	}
 
@@ -118,14 +118,14 @@ public class ShowDialog {
 	 * @param win 当前window用来执行回调
 	 * @return
 	 */
-	public Dialog createDialog(final RDCloudView pView,String[] params,final Window win,final int pDialogType,final IDialogListener pConfrimListener) {
-		View view =  View.inflate(HybridActivity.getInstance(), RDResourceManager.getInstance().getLayoutId("default_layout"), null);
-		TextView tv_title = (TextView) view.findViewById(RDResourceManager.getInstance().getId("tv_dialog_title")); // 获取标题控件
-		TextView tv_content = (TextView) view.findViewById(RDResourceManager.getInstance().getId("tv_dialog_content")); // 获取标题控件
-		final EditText edit_content = (EditText)view.findViewById(RDResourceManager.getInstance().getId("edit_content"));
-		LinearLayout ll_edit_content = (LinearLayout)view.findViewById(RDResourceManager.getInstance().getId("ll_edit_content"));
-		LinearLayout ll_content = (LinearLayout) view.findViewById(RDResourceManager.getInstance().getId("ll_content")); // 获取标题控件
-		LinearLayout ll_button = (LinearLayout)view.findViewById(RDResourceManager.getInstance().getId("ll_button"));
+	public Dialog createDialog(final HybridView pView, String[] params, final Window win, final int pDialogType, final IDialogListener pConfrimListener) {
+		View view =  View.inflate(HybridActivity.getInstance(), HybridResourceManager.getInstance().getLayoutId("default_layout"), null);
+		TextView tv_title = (TextView) view.findViewById(HybridResourceManager.getInstance().getId("tv_dialog_title")); // 获取标题控件
+		TextView tv_content = (TextView) view.findViewById(HybridResourceManager.getInstance().getId("tv_dialog_content")); // 获取标题控件
+		final EditText edit_content = (EditText)view.findViewById(HybridResourceManager.getInstance().getId("edit_content"));
+		LinearLayout ll_edit_content = (LinearLayout)view.findViewById(HybridResourceManager.getInstance().getId("ll_edit_content"));
+		LinearLayout ll_content = (LinearLayout) view.findViewById(HybridResourceManager.getInstance().getId("ll_content")); // 获取标题控件
+		LinearLayout ll_button = (LinearLayout)view.findViewById(HybridResourceManager.getInstance().getId("ll_button"));
 
 		final Dialog dialog = createDialog(view, HybridActivity.getInstance());
 		String title = null;

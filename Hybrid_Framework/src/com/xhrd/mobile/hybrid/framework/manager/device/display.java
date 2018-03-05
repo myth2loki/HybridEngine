@@ -1,7 +1,7 @@
 package com.xhrd.mobile.hybrid.framework.manager.device;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
@@ -62,7 +62,7 @@ public class display extends PluginBase {
     }
 
 	@JavascriptFunction
-    public int getResolutionHeight(RDCloudView view,String[] params)
+    public int getResolutionHeight(HybridView view, String[] params)
     {
     	getRelatedAttributeValue();
     	int resolutionHeight = mScreenHeight-mStatusBarHeight-mTitleBarHeight;
@@ -70,7 +70,7 @@ public class display extends PluginBase {
     }
 
 	@JavascriptFunction
-    public int getResolutionWidth(RDCloudView view,String[] params)
+    public int getResolutionWidth(HybridView view, String[] params)
     {
     	getRelatedAttributeValue();
     	return mScreenWidth;

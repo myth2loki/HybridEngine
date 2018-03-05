@@ -81,17 +81,17 @@ public class FooterLoadingLayout extends LoadingLayout {
     private void init(Context context) {
         //pull_to_load_footer_hint_ll
 
-        onPullToRefreshText=RDResourceManager.getInstance().getString("pull_to_refresh_header_hint_normal2");
-        onReleaseToRefreshText=RDResourceManager.getInstance().getString("pull_to_refresh_header_hint_ready");
-        onRefreshingText=RDResourceManager.getInstance().getString("pull_to_refresh_header_hint_loading");
+        onPullToRefreshText= HybridResourceManager.getInstance().getString("pull_to_refresh_header_hint_normal2");
+        onReleaseToRefreshText= HybridResourceManager.getInstance().getString("pull_to_refresh_header_hint_ready");
+        onRefreshingText= HybridResourceManager.getInstance().getString("pull_to_refresh_header_hint_loading");
 
 
 
-        mFootImage = (ImageView)findViewById(RDResourceManager.getInstance().getId("pull_to_load_footer"));
-        mHintView = (TextView) findViewById(RDResourceManager.getInstance().getId("pull_to_load_footer_hint_textview"));
+        mFootImage = (ImageView)findViewById(HybridResourceManager.getInstance().getId("pull_to_load_footer"));
+        mHintView = (TextView) findViewById(HybridResourceManager.getInstance().getId("pull_to_load_footer_hint_textview"));
 
-        pull_to_load_footer_hint_ll = (LinearLayout) findViewById(RDResourceManager.getInstance().getId("pull_to_load_footer_hint_ll"));
-        progressBar = (ProgressBar)findViewById(RDResourceManager.getInstance().getId("pull_to_refresh_header_progressbar"));
+        pull_to_load_footer_hint_ll = (LinearLayout) findViewById(HybridResourceManager.getInstance().getId("pull_to_load_footer_hint_ll"));
+        progressBar = (ProgressBar)findViewById(HybridResourceManager.getInstance().getId("pull_to_refresh_header_progressbar"));
         float pivotValue = 0.5f;    // SUPPRESS CHECKSTYLE
         float toDegree = -180f;     // SUPPRESS CHECKSTYLE
         // 初始化旋转动画
@@ -108,13 +108,13 @@ public class FooterLoadingLayout extends LoadingLayout {
     
     @Override
     protected View createLoadingView(Context context, AttributeSet attrs) {
-        View container = LayoutInflater.from(context).inflate( RDResourceManager.getInstance().getLayoutId("pull_to_load_footer"), null);
+        View container = LayoutInflater.from(context).inflate( HybridResourceManager.getInstance().getLayoutId("pull_to_load_footer"), null);
         return container;
     }
 
     @Override
     public int getContentSize() {
-        View view = findViewById( RDResourceManager.getInstance().getId("pull_to_load_footer_content"));
+        View view = findViewById( HybridResourceManager.getInstance().getId("pull_to_load_footer_content"));
         if (null != view) {
             return view.getHeight();
         }
@@ -187,7 +187,7 @@ public class FooterLoadingLayout extends LoadingLayout {
     @Override
     protected void onNoMoreData() {
         mHintView.setVisibility(View.VISIBLE);
-        mHintView.setText(RDResourceManager.getInstance().getString("pull_to_refresh_no_more_data"));
+        mHintView.setText(HybridResourceManager.getInstance().getString("pull_to_refresh_no_more_data"));
     }
 
     @Override

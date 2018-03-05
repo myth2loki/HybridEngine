@@ -1,34 +1,31 @@
 package com.xhrd.mobile.hybrid.framework.manager.actionsheet;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.xhrd.mobile.hybrid.annotation.JavascriptConfig;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
+import com.xhrd.mobile.hybrid.annotation.JavascriptProperty;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+@JavascriptConfig(domain = "actionSheet", scope = PluginData.Scope.App, properties = {
+            @JavascriptProperty(name = "Test", value = "'test'")
+        })
 public class ActionSheet extends PluginBase {
-    private Context mContext;
-    private String option;
     private String sunc;
 
     public ActionSheet(){
-        mContext = HybridActivity.getInstance();
     }
 
-    @Override
-    public String getDefaultDomain() {
-        return "actionSheet";
-    }
 
-    @JavascriptFunction
-    public void show(RDCloudView rdCloudView,String[] params){
+    @JavascriptFunction(name = "show")
+    public void show(HybridView rdCloudView, String[] params){
         String option = params[0];
         sunc = params[1];
         try {
@@ -51,7 +48,7 @@ public class ActionSheet extends PluginBase {
      * @param destructiveTitle
      * @param array
      */
-    private void showActionSheet(final RDCloudView rdCloudView,String title, String cancelTitle, String destructiveTitle, JSONArray array) {
+    private void showActionSheet(final HybridView rdCloudView, String title, String cancelTitle, String destructiveTitle, JSONArray array) {
         try {
             ActionSheetDialog actionSheetDialog = new ActionSheetDialog(HybridActivity.getInstance());
             actionSheetDialog = actionSheetDialog.builder();
@@ -91,16 +88,4 @@ public class ActionSheet extends PluginBase {
         }
     }
 
-
-    @Override
-    protected void addMethodProp(PluginData data) {
-        data.addMethod("show");
-    }
-
-
-
-    @Override
-    public PluginData.Scope getScope() {
-        return PluginData.Scope.App;
-    }
 }

@@ -17,9 +17,10 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.xhrd.mobile.hybrid.annotation.JavascriptConfig;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
-import com.xhrd.mobile.hybrid.engine.RDCloudView;
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridView;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
@@ -31,7 +32,8 @@ import java.util.UUID;
 /**
  * Created by wangqianyu on 15/4/24.
  */
-public class device extends PluginBase {
+@JavascriptConfig(domain = "device", scope = PluginData.Scope.App)
+public class Device extends PluginBase {
 
 	private Context mContext;
 	private WakeLock mWakeLock = null;
@@ -40,7 +42,7 @@ public class device extends PluginBase {
 	private int mLooping;
 	private SharedPreferences msp;
 
-	public device() {
+	public Device() {
 		mContext = HybridEnv.getApplicationContext();
 	}
 
@@ -48,7 +50,7 @@ public class device extends PluginBase {
 	@TargetApi(Build.VERSION_CODES.DONUT)
 	@Override
 	public void addMethodProp(PluginData data) {
-		data.addMethod("dial",new String[]{Manifest.permission.CALL_PHONE}, new String[]{RDResourceManager.getInstance().getString("request_device_dial_permission_msg")});
+		data.addMethod("dial",new String[]{Manifest.permission.CALL_PHONE}, new String[]{HybridResourceManager.getInstance().getString("request_device_dial_permission_msg")});
 		data.addMethod("beep");
 		data.addMethod("pauseBeep");
 		data.addMethod("vibrate");
@@ -66,8 +68,8 @@ public class device extends PluginBase {
 			//不能填空字符，会导致js格式错误
 			data.addObject("imsi", "null");
 		}
-		data.addMethodWithReturn("getIMEI", new String[]{Manifest.permission.READ_PHONE_STATE}, new String[]{RDResourceManager.getInstance().getString("request_device_read_hpone_permission_msg")});
-		data.addMethodWithReturn("getIMSI", new String[]{Manifest.permission.READ_PHONE_STATE}, new String[]{RDResourceManager.getInstance().getString("request_device_read_hpone_permission_msg")});
+		data.addMethodWithReturn("getIMEI", new String[]{Manifest.permission.READ_PHONE_STATE}, new String[]{HybridResourceManager.getInstance().getString("request_device_read_hpone_permission_msg")});
+		data.addMethodWithReturn("getIMSI", new String[]{Manifest.permission.READ_PHONE_STATE}, new String[]{HybridResourceManager.getInstance().getString("request_device_read_hpone_permission_msg")});
 		data.addProperty("model", Build.MODEL);
 		data.addProperty("vendor", Build.MANUFACTURER);
 		data.addProperty("uuid", UUID.randomUUID().toString());
@@ -78,7 +80,7 @@ public class device extends PluginBase {
 	 * @param params 参数一：电话号码,参数二：是否直接拨号,true是 false否
 	 */
 	@JavascriptFunction
-	public void dial(RDCloudView view,String[] params) {
+	public void dial(HybridView view, String[] params) {
 		String callTypeString = Intent.ACTION_CALL;
 		boolean isConfirm = false;
 		try {
@@ -97,7 +99,7 @@ public class device extends PluginBase {
 	 * @param params 参数一循环播放次数
 	 */
 	@JavascriptFunction
-	public void beep(RDCloudView view,String[] params) {
+	public void beep(HybridView view, String[] params) {
 		if(mMediaPlayer!=null)
 		{
 			mMediaPlayer.start();
@@ -126,7 +128,7 @@ public class device extends PluginBase {
 	 * @param params
 	 */
 	@JavascriptFunction
-	public void pauseBeep(RDCloudView view,String[] params) {
+	public void pauseBeep(HybridView view, String[] params) {
 		if (mMediaPlayer != null) {
 			mMediaPlayer.pause();
 		}
@@ -167,7 +169,7 @@ public class device extends PluginBase {
 	 * @param params 参数一 震动时长，以毫秒为单位
 	 */
 	@JavascriptFunction
-	public void vibrate(RDCloudView view,String[] params) {
+	public void vibrate(HybridView view, String[] params) {
 		long milliseconds = 500;
 		try {
 			milliseconds = params != null ? Long.parseLong(params[0]) : 500;
@@ -186,7 +188,7 @@ public class device extends PluginBase {
 	 * @param params 参数一 是否常亮，true常亮，false不常亮。参数二回调提醒
 	 */
 	@JavascriptFunction
-	public boolean setWakelock(RDCloudView view, String[] params) {
+	public boolean setWakelock(HybridView view, String[] params) {
 
 		try {
 			isWakeLock = params != null ? Boolean.parseBoolean(params[0]) : false;
@@ -219,7 +221,7 @@ public class device extends PluginBase {
 	 */
 	@TargetApi(Build.VERSION_CODES.ECLAIR_MR1)
 	@JavascriptFunction
-	public boolean isWakelock(RDCloudView view, String[] params) {
+	public boolean isWakelock(HybridView view, String[] params) {
 //    	jsCallback(params[0],isWakelock+"");
 		return isWakeLock;
 	}
@@ -229,7 +231,7 @@ public class device extends PluginBase {
 	 * @param params 参数一 音量大小(范围0-1)。参数二 回调提醒
 	 */
 	@JavascriptFunction
-	public boolean setVolume(RDCloudView view,String[] params) {
+	public boolean setVolume(HybridView view, String[] params) {
 		float current = 0;
 		try{
 			current = params != null ? Float.parseFloat(params[0]) : 0;
@@ -254,7 +256,7 @@ public class device extends PluginBase {
 	 * @return
 	 */
 	@JavascriptFunction
-	public String getVolume(RDCloudView view,String[] params) {
+	public String getVolume(HybridView view, String[] params) {
 		AudioManager mAudioManager = (AudioManager) mContext
 				.getSystemService(Context.AUDIO_SERVICE);
 		int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -275,7 +277,7 @@ public class device extends PluginBase {
 	 * @param params 参数一回调提醒
 	 */
 	@JavascriptFunction
-	public void getOSInfo(RDCloudView view,String[] params)
+	public void getOSInfo(HybridView view, String[] params)
 	{
 		TelephonyManager mTelephonyMgr = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
 		String imsi = mTelephonyMgr.getSubscriberId();
@@ -305,12 +307,12 @@ public class device extends PluginBase {
 	}
 
 	@JavascriptFunction
-	public String getIMEI(RDCloudView view, String[] params) {
+	public String getIMEI(HybridView view, String[] params) {
 		return getImei();
 	}
 
 	@JavascriptFunction
-	public String getIMSI(RDCloudView view, String[] params) {
+	public String getIMSI(HybridView view, String[] params) {
 		return getImsi();
 	}
 
@@ -366,7 +368,6 @@ public class device extends PluginBase {
 						}
 					}
 				} catch (Exception e) {
-//					imsi = null;
 				}
 			}
 			if (!isExistImsi) {//imsi==null || "".equals(imsi)
@@ -380,20 +381,14 @@ public class device extends PluginBase {
 						}
 					}
 				} catch (Exception e) {
-//					imsi = null;
 				}
 			}
 			if (imsi==null || "".equals(imsi)) {
 				imsi = "[]";
 			}else {
-//				if(imsi.endsWith(",")) {
-//					imsi = imsi.substring(0,imsi.lastIndexOf(","));
-//				}
 				imsi = "["+imsi+"]";
-//				imsi = imsi;
 			}
 		} catch (Exception e) {
-//			return "000000";
 		}
 		return imsi;
 	}

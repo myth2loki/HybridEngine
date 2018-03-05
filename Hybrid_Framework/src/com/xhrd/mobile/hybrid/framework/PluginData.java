@@ -6,7 +6,7 @@ import android.util.Pair;
 import com.xhrd.mobile.hybrid.annotation.JavascriptConfig;
 import com.xhrd.mobile.hybrid.annotation.JavascriptProperty;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
-import com.xhrd.mobile.hybrid.engine.RDCloudScript;
+import com.xhrd.mobile.hybrid.engine.HybridScript;
 import com.xhrd.mobile.hybridframework.BuildConfig;
 
 import java.lang.reflect.Constructor;
@@ -17,8 +17,8 @@ import java.util.List;
  * 插件实体类，负责拼装插件相关js代码。
  */
 public class PluginData {
-    public static final String JS_OBJECT_BEGIN_FRAMEWORK = RDCloudScript.RD_FRAMEWORK + ".internal.";
-    public static final String JS_OBJECT_BEGIN_PLUGIN = RDCloudScript.RD_PLUGIN + ".internal.";
+    public static final String JS_OBJECT_BEGIN_FRAMEWORK = HybridScript.RD_FRAMEWORK + ".internal.";
+    public static final String JS_OBJECT_BEGIN_PLUGIN = HybridScript.RD_PLUGIN + ".internal.";
 
     private static final String js_arg_low = "ja2sa(arguments)";
     private static final String js_staves = "_.";
@@ -494,7 +494,7 @@ public class PluginData {
     }
     
     private String getJSSchema() {
-        return isFramework ? RDCloudScript.JS_SCHEMA_0 : RDCloudScript.JS_SCHEMA_1;
+        return isFramework ? HybridScript.JS_SCHEMA_0 : HybridScript.JS_SCHEMA_1;
     }
 
     /**
@@ -643,7 +643,7 @@ public class PluginData {
             sb.append("     console.log('1------->'+name);");
         }
         //使用newInstance表明new
-        sb.append("     return ").append(String.format(exec_template, RDCloudScript.JS_SCHEMA, mClass.getName(), "newInstance", -1));
+        sb.append("     return ").append(String.format(exec_template, HybridScript.JS_SCHEMA, mClass.getName(), "newInstance", -1));
         sb.append("}");
         return sb.toString();
     }

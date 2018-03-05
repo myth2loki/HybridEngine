@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.framework.manager.res.ResManager;
 import com.xhrd.mobile.hybrid.util.LruCacheUtil;
 
@@ -34,7 +34,7 @@ public class ProgressUtil {
         progressDialog.setCancelable(true);// 可用“返回键”取消
         progressDialog.setCanceledOnTouchOutside(false);// 不可点击dialog外部取消
 
-        View v = LayoutInflater.from(context).inflate(RDResourceManager.getInstance().getLayoutId("progress_rd_dialog"), null);// 得到加载view
+        View v = LayoutInflater.from(context).inflate(HybridResourceManager.getInstance().getLayoutId("progress_rd_dialog"), null);// 得到加载view
 
         setProgressPublicData(v, bgFillColor, alpha, title, titleSize, titleColor, detailTitle, detailTitleSize, detailTitleColor);
 
@@ -54,11 +54,11 @@ public class ProgressUtil {
         progressDialog.setCancelable(true);// 可用“返回键”取消
         progressDialog.setCanceledOnTouchOutside(false);// 不可点击dialog外部取消
 
-        View v = LayoutInflater.from(context).inflate(RDResourceManager.getInstance().getLayoutId("progress_rd_dialog2"), null);// 得到加载view
+        View v = LayoutInflater.from(context).inflate(HybridResourceManager.getInstance().getLayoutId("progress_rd_dialog2"), null);// 得到加载view
 
         setProgressPublicData(v, bgFillColor, alpha, title, titleSize, titleColor, detailTitle, detailTitleSize, detailTitleColor);
 
-        final ImageView spaceshipImage = (ImageView) v.findViewById(RDResourceManager.getInstance().getId("progress_rd_iv"));
+        final ImageView spaceshipImage = (ImageView) v.findViewById(HybridResourceManager.getInstance().getId("progress_rd_iv"));
 
         if (imgPaths == null || imgPaths.length == 0) {
             spaceshipImage.setVisibility(View.GONE);
@@ -128,12 +128,12 @@ public class ProgressUtil {
         int fillColor = Color.parseColor(bgFillColor);//内部填充颜色
         gd.setColor(fillColor);
         gd.setCornerRadius(roundRadius);
-        gd.setStroke(strokeWidth, RDResourceManager.getInstance().getColorId("white"));
+        gd.setStroke(strokeWidth, HybridResourceManager.getInstance().getColorId("white"));
         gd.setAlpha(alpha);
         v.setBackgroundDrawable(gd);
 
         // title文字
-        TextView titleTv = (TextView) v.findViewById(RDResourceManager.getInstance().getId("titleTv"));
+        TextView titleTv = (TextView) v.findViewById(HybridResourceManager.getInstance().getId("titleTv"));
         if (!TextUtils.isEmpty(title)) {
             titleTv.setText(title);
         }
@@ -145,7 +145,7 @@ public class ProgressUtil {
         }
 
         // detailTitle文字
-        TextView detailTitleTv = (TextView) v.findViewById(RDResourceManager.getInstance().getId("detailTitleTv"));
+        TextView detailTitleTv = (TextView) v.findViewById(HybridResourceManager.getInstance().getId("detailTitleTv"));
         if (!TextUtils.isEmpty(detailTitle)) {
             detailTitleTv.setText(detailTitle);
         }

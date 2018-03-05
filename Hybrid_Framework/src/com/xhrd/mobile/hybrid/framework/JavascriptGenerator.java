@@ -2,7 +2,7 @@ package com.xhrd.mobile.hybrid.framework;
 
 import android.util.Pair;
 
-import com.xhrd.mobile.hybrid.engine.RDCloudScript;
+import com.xhrd.mobile.hybrid.engine.HybridScript;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +32,13 @@ public class JavascriptGenerator {
         StringBuffer second = new StringBuffer();
         if (convertReturn) {
             second.append("try{var ret;");
-            second.append(String.format("ret=exec('%s://%s/%s/'+this.id, %s, %s, %s);", RDCloudScript.JS_SCHEMA, mClassName, funcName, "[funcName," + mId + "]", hasReturn, convertReturn));
+            second.append(String.format("ret=exec('%s://%s/%s/'+this.id, %s, %s, %s);", HybridScript.JS_SCHEMA, mClassName, funcName, "[funcName," + mId + "]", hasReturn, convertReturn));
             second.append("return eval('('+ret+')');");
             second.append("}catch(e){").append("return null;").append("}");
         } else if (hasReturn) {
-            second.append(String.format("return exec('%s://%s/%s/'+this.id, %s, %s, %s);", RDCloudScript.JS_SCHEMA, mClassName, funcName, "funcName," + mId, hasReturn, convertReturn));
+            second.append(String.format("return exec('%s://%s/%s/'+this.id, %s, %s, %s);", HybridScript.JS_SCHEMA, mClassName, funcName, "funcName," + mId, hasReturn, convertReturn));
         } else {
-            second.append(String.format("exec('%s://%s/%s/'+this.id, %s, %s, %s);", RDCloudScript.JS_SCHEMA, mClassName, funcName, "funcName," + mId, hasReturn, convertReturn));
+            second.append(String.format("exec('%s://%s/%s/'+this.id, %s, %s, %s);", HybridScript.JS_SCHEMA, mClassName, funcName, "funcName," + mId, hasReturn, convertReturn));
         }
         Pair<String, String> pair = new Pair<String, String>(first, second.toString());
         mFuncList.add(pair);

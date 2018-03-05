@@ -6,7 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.util.LruCache;
 
-import com.xhrd.mobile.hybrid.engine.RDResourceManager;
+import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 import java.io.File;
 
@@ -83,7 +83,7 @@ public class LruCacheUtil {
     public Drawable getDrawable(String path) {
         Bitmap bitmap = getBitmap(path);
         if (bitmap != null) {
-            return new BitmapDrawable(RDResourceManager.getInstance().getResources(), bitmap);
+            return new BitmapDrawable(HybridResourceManager.getInstance().getResources(), bitmap);
         }
         return null;
     }
