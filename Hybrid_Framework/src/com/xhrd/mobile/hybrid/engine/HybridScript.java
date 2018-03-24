@@ -12,15 +12,15 @@ public class HybridScript {
     /**
      * 通用协议，框架通过迭代所有内部功能/外部插件来执行
      */
-    public static final String JS_SCHEMA = "RDCloud";
+    public static final String JS_SCHEMA = "hybrid";
     /**
      * 内部功能调用协议
      */
-    public static final String JS_SCHEMA_0 = "RDCloud0";
+    public static final String JS_SCHEMA_0 = "hybrid0";
     /**
      * 外部插件调用协议
      */
-    public static final String JS_SCHEMA_1 = "RDCloud1";
+    public static final String JS_SCHEMA_1 = "hybrid1";
     /**
      * 框架域名
      */

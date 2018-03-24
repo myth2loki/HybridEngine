@@ -27,36 +27,36 @@ public class Audio extends PluginBase {
             "record:function(recordOpts, sucFunc, errFunc){" +
                 "if (arguments == null || arguments.length == 0)" +
                     "return; " +
-                "exec('RDCloud://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['record',this.id,recordOpts, sucFunc, errFunc], false, false);" +
+                "exec('hybrid://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['record',this.id,recordOpts, sucFunc, errFunc], false, false);" +
             "}, " +
             "playJustRecord:function(){" +
-                "exec('RDCloud://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['playJustRecord',this.id], false, false);" +
+                "exec('hybrid://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['playJustRecord',this.id], false, false);" +
             "}, " +
             "getCurrentTime:function(){" +
-                "var size = exec('RDCloud://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['getCurrentTime',this.id], true, true);" +
+                "var size = exec('hybrid://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['getCurrentTime',this.id], true, true);" +
                     "return size;" +
             "}, " +
             "getDuration:function(){" +
-                "var size = exec('RDCloud://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['getDuration',this.id], true, true);" +
+                "var size = exec('hybrid://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['getDuration',this.id], true, true);" +
                     "return size;" +
             "}, " +
             "addAveragePowerCallback:function(sucFunc){" +
                 "if (arguments == null || arguments.length == 0)" +
                     "return; " +
-                "exec('RDCloud://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['addAveragePowerCallback',this.id,sucFunc], false, false);" +
+                "exec('hybrid://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['addAveragePowerCallback',this.id,sucFunc], false, false);" +
             "}, " +
             "addCountDownCallback:function(sucFunc){" +
                 "if (arguments == null || arguments.length == 0)" +
                     "return; " +
-                "exec('RDCloud://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['addCountDownCallback',this.id,sucFunc], false, false);" +
+                "exec('hybrid://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['addCountDownCallback',this.id,sucFunc], false, false);" +
             "}, " +
             "addCalculateTimeCallback:function(sucFunc){" +
                  "if (arguments == null || arguments.length == 0)" +
                     "return; " +
-                 "exec('RDCloud://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['addCalculateTimeCallback',this.id,sucFunc], false, false);" +
+                 "exec('hybrid://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['addCalculateTimeCallback',this.id,sucFunc], false, false);" +
             "}, " +
             "stop:function(){" +
-                "exec('RDCloud://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['stop',this.id], false, false);" +
+                "exec('hybrid://" + Audio.class.getName() + "/recorderCall/'+this.hostId, ['stop',this.id], false, false);" +
             "}}";
 
     /**
@@ -68,49 +68,49 @@ public class Audio extends PluginBase {
             "id:%d," +
             "hostId:%d," +
             "play:function(sucFunc, errFunc){" +
-                "exec('RDCloud://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['play',this.id, sucFunc, errFunc], false, false);" +
+                "exec('hybrid://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['play',this.id, sucFunc, errFunc], false, false);" +
                 //"rd.AudioManager.playerCall('play', %d, ja2sa(arguments));" +
             "}, " +
             "setRoute:function(){" +
                 "if (arguments == null || arguments.length == 0)" +
                     "return; " +
-                    "exec('RDCloud://" + Audio.class.getName() + "playerCall/'+this.hostId, ['setRoute',this.id,arguments[0]], false, false);" +
+                    "exec('hybrid://" + Audio.class.getName() + "playerCall/'+this.hostId, ['setRoute',this.id,arguments[0]], false, false);" +
                     //"rd.AudioManager.playerCall('setRoute', %d, ja2sa(arguments));" +
             "}, " +
             "seekTo:function(){" +
             	"if (arguments == null || arguments.length == 0)" +
                 	"return; " +
-                "exec('RDCloud://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['seekTo',this.id,arguments[0]], false, false);" +
+                "exec('hybrid://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['seekTo',this.id,arguments[0]], false, false);" +
                 //"rd.AudioManager.playerCall('seekTo', %d, ja2sa(arguments));" +
             "}, " +
             "getMode:function(){" +
                 //"var ret = rd.AudioManager.playerCall('getMode', %d, ja2sa(arguments));" +
-                "var ret = exec('RDCloud://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['getMode',this.id], true, false);" +
+                "var ret = exec('hybrid://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['getMode',this.id], true, false);" +
                 "return parseInt(ret);" +
             "}, " +
             "pause:function(){" +
-                "exec('RDCloud://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['pause',this.id], false, false);" +
+                "exec('hybrid://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['pause',this.id], false, false);" +
                 //"rd.AudioManager.playerCall('pause', %d, ja2sa(arguments));" +
             "}, " +
             "resume:function(){" +
-                "exec('RDCloud://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['resume',this.id], false, false);" +
+                "exec('hybrid://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['resume',this.id], false, false);" +
                 //"rd.AudioManager.playerCall('resume', %d, ja2sa(arguments));" +
             "}, " +
             "getDuration:function(){" +
-                "var size = exec('RDCloud://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['getDuration',this.id], true, false);" +
+                "var size = exec('hybrid://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['getDuration',this.id], true, false);" +
                 "console.log('size: ' + size);" +
                 "return size;" +
         	"}, " +
         	"getPosition:function(){" +
-                "var time = exec('RDCloud://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['getPosition',this.id], true, false);" +
+                "var time = exec('hybrid://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['getPosition',this.id], true, false);" +
                 "return time;" +
     		"}, " +
             "isPlaying:function(){" +
-                "var b = exec('RDCloud://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['isPlaying',this.id], true, true);" +
+                "var b = exec('hybrid://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['isPlaying',this.id], true, true);" +
                 "return b == '1';" +
     		"}, " +
             "stop:function(){" +
-                "exec('RDCloud://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['stop',this.id], false, false);" +
+                "exec('hybrid://" + Audio.class.getName() + "/playerCall/'+this.hostId, ['stop',this.id], false, false);" +
                 //"rd.AudioManager.playerCall('stop', %d, ja2sa(arguments));" +
             "}}";
     private AtomicInteger mInteger;

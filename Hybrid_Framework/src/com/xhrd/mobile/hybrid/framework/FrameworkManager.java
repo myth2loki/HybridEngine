@@ -18,7 +18,7 @@ public class FrameworkManager extends PluginManagerBase {
 
     @Override
     protected Map<Class<?>, PluginBase> getWindowInjectedJSObj(HybridView view) {
-        return view.getRDCloudWindow().getInjectedPluginJSObj();
+        return view.getHybridWindow().getInjectedPluginJSObj();
     }
 
     @Override

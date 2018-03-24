@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import com.xhrd.mobile.hybrid.annotation.JavascriptConfig;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.engine.HybridView;
-import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.manager.ResManagerFactory;
 import com.xhrd.mobile.hybrid.framework.PluginData;
@@ -23,20 +22,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Camera模块管理设备的摄像头，可用于拍照、摄像操作，通过RD.framework.get("CameraManager")获取摄像头管理对象。
- */
+ * Camera模块管理设备的摄像头，可用于拍照操作
+ * */
 
 @JavascriptConfig(domain = "camera", scope = PluginData.Scope.App)
 public class Camera extends PluginBase {
     private static final int CAPTURE_IMAGE = 50000;
-    private static final int CAPTURE_VIDEO = 11;
-
 
     private String mImageSucFunc, mImageErrFunc;
-    private String mVideoSucFunc, mVideoErrFunc;
     private File mCapFile;
 
-    @JavascriptFunction(name = "captureImage", permissions = {Manifest.permission.CAMERA})
+    @JavascriptFunction(name = "captureImage", permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void captureImage(HybridView window, String[] params) {
         mImageSucFunc = params[0];
         mImageErrFunc = params[1];
@@ -73,47 +69,7 @@ public class Camera extends PluginBase {
             } else {
                 jsCallback(mImageErrFunc, "");
             }
-        } else if (requestCode == CAPTURE_VIDEO) {
-            if (resultCode == Activity.RESULT_OK && mCapFile != null && mCapFile.exists()) {
-                jsCallback(mVideoSucFunc, mCapFile.getAbsolutePath());
-            } else {
-                jsCallback(mVideoErrFunc, "capture video failed.");
-            }
         }
     }
-
-    @JavascriptFunction
-    public void captureVideo(HybridView view, String[] params) {
-        mVideoSucFunc = params[0];
-        mVideoErrFunc = params[1];
-        try {
-            String camOptsStr = params[2];
-            JSONObject optsJO = new JSONObject(camOptsStr);
-            String filename = optsJO.optString("filename", "");
-            filename = ResManagerFactory.getResManager().getPath(filename);
-            File file = new File(filename);
-            mCapFile = file;
-            if (file.isDirectory()) {
-                File dcimFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
-                mCapFile = new File(dcimFolder, new SimpleDateFormat("yyyyMMdd HHmmss").format(new Date()) + ".mp4");
-            }
-        } catch (JSONException e) {
-            jsCallback(mVideoErrFunc, e.getMessage());
-        }
-        Intent itt = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        itt.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mCapFile));
-        startActivityForResult(itt, CAPTURE_VIDEO);
-    }
-
-//    @Override
-//    public void addMethodProp(PluginData data) {
-//        data.addMethod("captureImage",new String[]{Manifest.permission.CAMERA}, new String[]{HybridResourceManager.getInstance().getString("request_camera_permission_msg")});
-//        data.addMethod("captureVideo");
-//    }
-    
-//    @Override
-//    public PluginData.Scope getScope() {
-//    	return PluginData.Scope.App;
-//    }
 
 }

@@ -138,7 +138,8 @@
 
 			function isPlaying(){
 				if(player != null){
-					alert(player.isPlaying());
+					//alert(player.isPlaying() ? "正在播放" : "未播放");
+					rd.toast.show(player.isPlaying() ? "正在播放" : "未播放");
 				}
 			}
 			

@@ -8,7 +8,6 @@ import android.os.PowerManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.Pair;
 import android.webkit.JsPromptResult;
 import android.widget.Toast;
 
@@ -38,7 +37,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Created by maxinliang on 15/6/11.
+ * 插件管理抽象
  */
 public abstract class PluginManagerBase {
 
@@ -178,9 +177,7 @@ public abstract class PluginManagerBase {
                 } else {// Window, New
                     pluginDataList.add(data);
                 }
-
             } else {                       //不符合注解模式
-
                 try {
                     Object plugin = data.mConsturctor.newInstance();
                     if (plugin instanceof PluginBase) {
@@ -362,7 +359,7 @@ public abstract class PluginManagerBase {
      */
     protected final Object execOnView(final HybridView view, String className, final String methodName, int id, final String[] params, final JsPromptResult jsPromptResult) throws
             InvocationTargetException, IllegalAccessException, ClassNotFoundException, InstantiationException {
-        if (view.getRDCloudWindow() == null) {
+        if (view.getHybridWindow() == null) {
 //            LogManager log = (LogManager) getPlugin("log");
 //            log.e("Window or popover", new String[]{"js calls happened after a Window or popover has been removed."});
             Log.i(getClass().getSimpleName(), "js calls happened after a Window or popover has been removed.");
@@ -385,44 +382,12 @@ public abstract class PluginManagerBase {
         //创建新的实例
         if ("newInstance".equals(methodName)) {
             Class<?>[] p = new Class<?>[]{Class.class};
-            try {
-                if (pluginData.mScope == PluginData.Scope.App) {
-                    PluginBase base = mGlobalPluginMap.get(pluginData.mClass);
-                    if (base == null) {
-                        Method method = clazz.getMethod(methodName, p);
-                        Pair<String, PluginBase> retPair = (Pair<String, PluginBase>) method.invoke(null, clazz);
-                        retPair.second.onCreate(view);
-                        retPair.second.onRegistered(view);
-                        base = retPair.second;
-                        mGlobalPluginMap.put(base.getClass(), base);
-                    }
-                    //PluginData在读取plugins.xml时创建
-                    //ret = base.getPluginData().genJavascript();
-                    ret = getJsByPlugin(base);
-                } else if (pluginData.mScope == PluginData.Scope.Window) {
-                    Map<Class<?>, PluginBase> map = getWindowInjectedJSObj(view);
-                    PluginBase base = map.get(pluginData.mClass);
-                    if (base == null) {
-                        Method method = clazz.getMethod(methodName, p);
-                        Pair<String, PluginBase> retPair = (Pair<String, PluginBase>) method.invoke(null, clazz);
-                        retPair.second.onCreate(view);
-                        retPair.second.onRegistered(view);
-                        base = retPair.second;
-                        base.setPluginData(pluginData);
-                        map.put(pluginData.mClass, base);
-                    }
-                    ret = getJsByPlugin(base);
-                } else {
-                    //存储createNew范围的本地功能插件。
-                    PluginBase base = (PluginBase) clazz.newInstance();
-                    base.setPluginData(pluginData);
-                    base.onCreate(view);
-                    view.registerPlugin(base);
-                    ret = getJsByPlugin(base);
-                }
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+            //存储createNew范围的本地功能插件。
+            PluginBase base = (PluginBase) clazz.newInstance();
+            base.setPluginData(pluginData);
+            base.onCreate(view);
+            view.registerPlugin(base);
+            ret = getJsByPlugin(base);
         } else {
             //调用插件方法
             PluginBase base = null;
@@ -685,7 +650,7 @@ public abstract class PluginManagerBase {
                 }
                 if (requestPermissions == null || existsPermissions(base, requestPermissions)) {
                     // 权限申请成功，执行对应方法，需在ui线程中执行，不然可能会报错
-                    view.getRDCloudWindow().post(new Runnable() {
+                    view.getHybridWindow().post(new Runnable() {
                         @Override
                         public void run() {
                             Object ret = invokePluginMethodByNameInner(view, base, methodName, params);
@@ -718,7 +683,7 @@ public abstract class PluginManagerBase {
         // 权限申请失败
         LogUtils.e4defualtTag(denyInfo);
         chromeClient.preResultBack(view, jsPromptResult, denyInfo);
-        view.getRDCloudWindow().post(new Runnable() {
+        view.getHybridWindow().post(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(view.getContext(), denyInfo, Toast.LENGTH_LONG).show();
@@ -799,72 +764,64 @@ public abstract class PluginManagerBase {
                                 method = base.getClass().getMethod(methodName, p);
                                 paramType = 5;
                             } catch (NoSuchMethodException e5) {
-                                method = base.getClass().getMethod(methodName);
-                                paramType = 6;
+                                try {
+                                    method = base.getClass().getMethod(methodName);
+                                    paramType = 6;
+                                } catch (NoSuchMethodException e6) {
+                                    // no method found
+                                }
                             }
                         }
                     }
                 }
             }
 
-            if (method.isAnnotationPresent(JavascriptFunction.class)) {
+            if (method == null) {
+                for (Method m : base.getClass().getDeclaredMethods()) {
+                    if (m.isAnnotationPresent(JavascriptFunction.class)) {
+                        JavascriptFunction annotation = m.getAnnotation(JavascriptFunction.class);
+                        if (!methodName.equals(annotation.name())) {
+                            continue;
+                        }
+                        method = m;
+                        Class<?>[] types = m.getParameterTypes();
+                        switch (types.length) {
+                            case 0:
+                                paramType = 6;
+                                break;
+                            case 1:
+                                if (types[0] == HybridView.class) {
+                                    paramType = 3;
+                                } else if (types[0] == String[].class) {
+                                    paramType = 4;
+                                }
+                                break;
+                            case 2:
+                                if (types[0] == HybridView.class && types[1] == String[].class) {
+                                    paramType = 5;
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+
+            if (method != null) {
                 switch (paramType) {
                     case 3:
-                        ret = method.invoke(base, view);// RDCloudView
+                        ret = method.invoke(base, view);// HybridView
                         break;
                     case 4:
                         ret = method.invoke(base, new Object[]{params});// params[]
                         break;
                     case 5:
-                        ret = method.invoke(base, view, params);// RDCloudView, params[]
+                        ret = method.invoke(base, view, params);// HybridView, params[]
                         break;
                     case 6:
                         ret = method.invoke(base);// 无参
                         break;
                 }
             }
-//            else {
-//                //如果方法找错了，循环查找
-//                List<Method> methodList = new ArrayList<Method>();
-//                Class<?> clazz = base.getClass();
-//                methodList.addAll(Arrays.asList(clazz.getMethods()));
-//                for (Method m : methodList) {
-//                    if (m.isAnnotationPresent(JavascriptFunction.class) && m.getName().equals(methodName)) {
-//                        Class<?>[] paramTypes = m.getParameterTypes();
-//                        try {
-//                            switch (paramTypes.length) {
-//                                case 0:
-//                                    ret = m.invoke(base);
-//                                    break;
-//                                case 1:
-//                                    if (paramTypes[0] == RDCloudView.class) {
-//                                        ret = m.invoke(base, view);
-//                                    } else if (paramTypes[0] == String.class) {
-//                                        ret = m.invoke(base, windowName);
-//                                    } else if (paramTypes[0] == String[].class) {
-//                                        ret = m.invoke(base, params);
-//                                    }
-//                                    break;
-//                                case 2:
-//                                    if (paramTypes[0] == RDCloudView.class) {
-//                                        ret = m.invoke(base, view, params);
-//                                    } else if (paramTypes[0] == String.class) {
-//                                        ret = m.invoke(base, windowName, params);
-//                                    }
-//                                    break;
-//                                default:
-////                                    Log.w(getClass().getSimpleName(), "can not find out method " + m.getName() + " with " + paramTypes.length + " parameter types, default to call it without parameter.");
-////                                    ret = m.invoke(base);
-//                                    Log.w(getClass().getSimpleName(), "mismatched with " + m.getName() + " which has " + paramTypes.length + " parameters.");
-//                                    break;
-//                            }
-//                        } catch (Exception e1) {
-//                            Log.e(getClass().getSimpleName(), "invoke plugin's method(" + m.getName() + ") failed.", e1);
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
         } catch (Exception e) {
             if (DEBUG) {
                 Log.e(getClass().getSimpleName(), "invoke plugin's method(" + methodName + ") failed.", e);
@@ -936,6 +893,26 @@ public abstract class PluginManagerBase {
      * @return
      */
     protected abstract Object invokePluginMethodByName(final HybridView view, final PluginBase base, PluginData pluginData, final String methodName, final Object[] params, final JsPromptResult jsPromptResult);
+
+    public Object postMessage(String domain, Map<String, Object> params) {
+        PluginData pluginData = null;
+        for (PluginData data : mPluginDataList) {
+            if (domain.equalsIgnoreCase(data.mDomain)) {
+                pluginData = data;
+                break;
+            }
+        }
+
+        if (pluginData == null) {
+            return null;
+        }
+
+        PluginBase plugin = mGlobalPluginMap.get(pluginData.mClass);
+        if (plugin != null) {
+            return plugin.postMessage(domain, params);
+        }
+        return null;
+    }
 
     /**
      * Created by maxinliang on 15/6/12.

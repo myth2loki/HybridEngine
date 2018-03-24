@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginData;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
@@ -39,7 +40,7 @@ public class storage extends PluginBase {
 	 * @return
 	 */
 	@JavascriptFunction
-	public String getItem(String windowName,String[] param){
+	public String getItem(HybridView view, String[] param){
 //		String key = param[0];
 //		String value = msp.getString(key, "");
 //		if (value.length() > 0) {

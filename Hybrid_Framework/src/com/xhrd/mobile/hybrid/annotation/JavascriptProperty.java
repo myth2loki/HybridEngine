@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 /**
  * 注释js属性
- * <br/>Created by maxinliang on 15/6/12.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})

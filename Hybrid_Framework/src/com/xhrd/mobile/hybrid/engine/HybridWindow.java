@@ -309,10 +309,6 @@ public class HybridWindow extends RelativeLayout {
         PullToRefreshWebView rdView = mMainView;
         PluginBase plugin;
 
-        if (HybridEnv.getPluginManager().onRequestPermissionsResult(pluginId, requestCode, permissions, grantResults)) {
-            return;
-        }
-
         Map<Integer, PluginBase> pluginMap = rdView.getRefreshableView().getInjectedPluginJSObj();
         plugin = pluginMap.get(pluginId);
         if (plugin != null) {

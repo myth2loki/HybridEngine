@@ -12,12 +12,12 @@ import com.xhrd.mobile.hybrid.engine.HybridScript;
 import com.xhrd.mobile.hybrid.framework.manager.appcontrol.AppWidget;
 import com.xhrd.mobile.hybrid.framework.manager.appcontrol.Window;
 import com.xhrd.mobile.hybrid.framework.manager.camera.Camera;
-import com.xhrd.mobile.hybrid.framework.manager.eventbus.EventListener;
+import com.xhrd.mobile.hybrid.framework.manager.eventbus.EventBus;
 import com.xhrd.mobile.hybrid.framework.manager.toast.ToastManager;
 import com.xhrd.mobile.hybrid.util.ResourceUtil;
 
 /**
- * Created by Administrator on 2018/3/2.
+ * 混合引擎初始化
  */
 public class HybridEnv {
     private static final String TAG = "HybridEnv";
@@ -26,6 +26,10 @@ public class HybridEnv {
     private static PluginManagerBase sPluginManager;
     private static Context sApplicationContext;
 
+    /**
+     * 初始化混合引擎
+     * @param context
+     */
     public static void init(final Context context) {
         CookieSyncManager.createInstance(context);
         CookieManager.getInstance().setAcceptCookie(true);
@@ -48,7 +52,7 @@ public class HybridEnv {
                 sb.append(funcFooter);
                 HybridScript.RDScript += sb.toString();
             }
-        }).run();
+        }).start();
     }
 
     /**
@@ -58,7 +62,7 @@ public class HybridEnv {
     private static String initDefaultPlugins() {
         sPluginManager.addPlugin(AppWidget.class);
         sPluginManager.addPlugin(Window.class);
-        sPluginManager.addPlugin(EventListener.class);
+        sPluginManager.addPlugin(EventBus.class);
         sPluginManager.addPlugin(ToastManager.class);
         sPluginManager.addPlugin(Camera.class);
         return sPluginManager.genJavascript();
@@ -77,6 +81,10 @@ public class HybridEnv {
         sPluginManager.addPlugin(clazz);
     }
 
+    /**
+     * 是否打开WebView调试
+     * @param enabled
+     */
     public static void enableDebug(boolean enabled) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(enabled);

@@ -62,7 +62,11 @@
                 cm.captureImage(function(){
                     var src = arguments[0] + "?" + Math.random();
                     document.getElementById("image").src = src;
-                }, function(){}, {filename:"/sdcard/11111.jpg"});
+                },
+                function(){
+                    alert("取消拍照");
+                },
+                {filename:"/sdcard/11111.jpg"});
             }
         </script>
 </html>

@@ -12,10 +12,10 @@ import com.xhrd.mobile.hybrid.engine.HybridView;
  */
 public class BatteryReceiver extends BroadcastReceiver{
 
-    private EventListener mListener;
+    private EventBus mListener;
     private HybridView mView;
 
-    public BatteryReceiver(EventListener listener,HybridView view) {
+    public BatteryReceiver(EventBus listener, HybridView view) {
 //        FrameworkManager fm = RDCloudApplication.getApp().getPluginManager();
 //        this.mListener = (EventListener) fm.getPlugin("eventListener");
         this.mListener = listener;
@@ -52,13 +52,13 @@ public class BatteryReceiver extends BroadcastReceiver{
                     break;
             }
         } else if (Intent.ACTION_BATTERY_LOW.equals(action)) {
-            mListener.sendEvent(mView,new String[]{EventListener.BATTER_STATE_CHANGED, String.valueOf(EventListener.BATTERY_STATE_TYPE_LOW)});
+            mListener.sendEvent(mView,new String[]{EventBus.BATTER_STATE_CHANGED, String.valueOf(EventBus.BATTERY_STATE_TYPE_LOW)});
         } else if (Intent.ACTION_BATTERY_OKAY.equals(action)) {
-            mListener.sendEvent(mView,new String[]{EventListener.BATTER_STATE_CHANGED, String.valueOf(EventListener.BATTERY_STATE_TYPE_OKAY)});
+            mListener.sendEvent(mView,new String[]{EventBus.BATTER_STATE_CHANGED, String.valueOf(EventBus.BATTERY_STATE_TYPE_OKAY)});
         } else if (Intent.ACTION_POWER_CONNECTED.equals(action)) {
-            mListener.sendEvent(mView,new String[]{EventListener.BATTER_STATE_CHANGED, String.valueOf(EventListener.BATTERY_STATE_TYPE_CHARGING)});
+            mListener.sendEvent(mView,new String[]{EventBus.BATTER_STATE_CHANGED, String.valueOf(EventBus.BATTERY_STATE_TYPE_CHARGING)});
         } else if (Intent.ACTION_POWER_DISCONNECTED.equals(action)) {
-            mListener.sendEvent(mView,new String[]{EventListener.BATTER_STATE_CHANGED, String.valueOf(EventListener.BATTERY_STATE_TYPE_NOT_CHARGING)});
+            mListener.sendEvent(mView,new String[]{EventBus.BATTER_STATE_CHANGED, String.valueOf(EventBus.BATTERY_STATE_TYPE_NOT_CHARGING)});
         }
     }
 }

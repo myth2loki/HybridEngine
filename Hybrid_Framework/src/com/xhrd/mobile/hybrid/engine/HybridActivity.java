@@ -3,6 +3,7 @@ package com.xhrd.mobile.hybrid.engine;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,11 +30,12 @@ public class HybridActivity extends Activity {
     private static final boolean DEBUG = BuildConfig.DEBUG;
     private static final String TAG = HybridActivity.class.getSimpleName();
 
-    private static final int EXIT_MESSAGE = 0;
+    public static final String TITLE = "title";
+    public static final String TYPE = "type";
+    public static final String DATA = "data";
 
     private static HybridActivity mActivity;
     private RDApplicationInfo mAppInfo;
-    private Handler mExitHandler = new Handler();
 
     private LinkedList<HybridWindow> mWindowList = new LinkedList<>();
     private FrameLayout mRootLayout;
@@ -48,8 +50,17 @@ public class HybridActivity extends Activity {
         mActivity = this;
         initView();
 
-        openWindow("internal_window", HybridView.DATA_TYPE_ASSET, "internal_plugin.html");
-//        openWindow("index", RDCloudView.DATA_TYPE_ASSET, "index.html");
+        Intent extras = getIntent();
+        String title = extras.getStringExtra(TITLE);
+        int type = extras.getIntExtra(TYPE, HybridView.DATA_TYPE_ASSET);
+        String data = extras.getStringExtra(DATA);
+        openWindow(title, type, data);
+//        openWindow("internal_window", HybridView.DATA_TYPE_ASSET, "internal_plugin.html");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -60,11 +71,6 @@ public class HybridActivity extends Activity {
     @Override
     public void onContentChanged() {
         super.onContentChanged();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     /**
@@ -278,28 +284,13 @@ public class HybridActivity extends Activity {
         window.setWindowVisible(visible);
     }
 
-//    @Override
-//    public void onConfigurationChanged(final Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        for (RDCloudWindow Window : mWindowList) {
-//            Window.onWindowSizeChanged(newConfig);
-//        }
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        mContainer.onActivityResult(requestCode, resultCode, data);
-//    }
-//
-//    public void evaluateScript(String compName, String winName, String popName, String js) {
-//        mContainer.evaluateScript(compName, winName, popName, js);
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        mContainer.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//    }
+    @Override
+    public void onConfigurationChanged(final Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        for (HybridWindow Window : mWindowList) {
+            Window.onWindowSizeChanged(newConfig);
+        }
+    }
 
     /**
      * 打开带返回参数的窗口
@@ -343,6 +334,11 @@ public class HybridActivity extends Activity {
         int windowIndex = requestCode >> 24;
         int pluginId = requestCode << 8 >> 24;
         int realRequestCode = requestCode << 16;
+
+        if (HybridEnv.getPluginManager().onRequestPermissionsResult(pluginId, requestCode, permissions, grantResults)) {
+            return;
+        }
+
         HybridWindow window = mWindowList.get(windowIndex);
         window.onRequestPermissionsResult(permissions, grantResults, realRequestCode, pluginId);
     }

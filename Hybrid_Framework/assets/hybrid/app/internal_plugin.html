@@ -61,11 +61,6 @@
             </li>
             <li class="ui-table-view-cell">
                 <a class="ui-navigate-right">
-                    打开音频插件播放
-                </a>
-            </li>
-            <li class="ui-table-view-cell">
-                <a class="ui-navigate-right">
                     打开照相功能
                 </a>
             </li>
@@ -76,17 +71,7 @@
             </li>
             <li class="ui-table-view-cell">
                 <a class="ui-navigate-right">
-                   短信功能
-                </a>
-            </li>
-            <li class="ui-table-view-cell">
-                <a class="ui-navigate-right">
                     打开定位功能
-                </a>
-            </li>
-            <li class="ui-table-view-cell">
-                <a class="ui-navigate-right">
-                    打开下载功能
                 </a>
             </li>
             <li class="ui-table-view-cell">
@@ -96,41 +81,12 @@
             </li>
             <li class="ui-table-view-cell">
                 <a class="ui-navigate-right">
-                    打开zip功能
-                </a>
-            </li>
-            <li class="ui-table-view-cell">
-                <a class="ui-navigate-right">
-                    打开gallery功能
-                </a>
-            </li>
-            <li class="ui-table-view-cell">
-                <a class="ui-navigate-right">
                     打开窗口测试
                 </a>
             </li>
             <li class="ui-table-view-cell">
                 <a class="ui-navigate-right">
-                    事件总线
-                </a>
-            </li>
-            <li class="ui-table-view-cell">
-                <a class="ui-navigate-right">
-                    log打印
-                </a>
-            </li>
-            <li class="ui-table-view-cell">
-                <a class="ui-navigate-right">
-                    联系人Contacts
-                </a>
-            </li>
-
-            <li class="ui-table-view-cell">
-                <input type="text" id="tvSlide" value="all"/>
-            </li>
-            <li class="ui-table-view-cell">
-                <a class="ui-navigate-right">
-                    properties
+                    消息总线
                 </a>
             </li>
             <li class="ui-table-view-cell">
@@ -150,12 +106,7 @@
             </li>
             <li class="ui-table-view-cell">
                 <a class="ui-navigate-right">
-                    openUrl
-                </a>
-            </li>
-            <li class="ui-table-view-cell">
-                <a class="ui-navigate-right">
-                    通过html代码打开
+                    加载模块测试
                 </a>
             </li>
             <li class="ui-table-view-cell">
@@ -218,7 +169,7 @@
                             case '打开窗口测试':
                                 openTestWindow();
                                 break;  
-                            case '事件总线':
+                            case '消息总线':
                                 openEvent();
                                 break;  
                             case 'properties':
@@ -245,8 +196,8 @@
                                 converflow();
                                 break;
 
-                            case 'openUrl':
-                                openUrl();
+                            case '加载模块测试':
+                                loadTest();
                                 break;
                             case '通过html代码打开':
                                 openWindowByHtml();
@@ -576,8 +527,8 @@ rd.window.setSlideLayout(params);
 		    alert("content: " + content);
 		}
 
-		function openUrl() {
-		    rd.window.openWindow('baidu_webpage', 2, 'http://www.baidu.com');
+		function loadTest() {
+		    rd.window.openWindow('load_resource', 0, 'load_resource.html');
 		}
 
 		function openImageCompressor() {

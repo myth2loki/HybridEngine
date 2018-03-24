@@ -9,6 +9,7 @@ import com.xhrd.mobile.hybrid.engine.HybridView;
 import com.xhrd.mobile.hybrid.framework.HybridEnv;
 import com.xhrd.mobile.hybrid.framework.PluginBase;
 import com.xhrd.mobile.hybrid.framework.PluginData;
+import com.xhrd.mobile.hybrid.framework.PluginManagerBase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,9 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by lilong on 15/5/19.
+ * 消息总线
  */
-public class EventListener extends PluginBase {
+public class EventBus extends PluginBase {
     static final String NETWORK_STATE_CHANGED = "network_state_changed";
     static final String BATTER_STATE_CHANGED = "battery_state_changed";
 
@@ -182,5 +183,10 @@ public class EventListener extends PluginBase {
     @Override
     public PluginData.Scope getScope() {
         return PluginData.Scope.App;
+    }
+
+    public Object postMessage(String domain, Map<String, Object> params) {
+        PluginManagerBase pluginManager = HybridEnv.getPluginManager();
+        return pluginManager.postMessage(domain, params);
     }
 }

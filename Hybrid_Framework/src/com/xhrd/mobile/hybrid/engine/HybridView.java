@@ -17,7 +17,7 @@ import java.util.Map;
 public interface HybridView extends PullToRefreshBase.OnRefreshListener {
     String JAVASCRIPT_HEAD = "javascript:";
     int DATA_TYPE_ASSET = 0;
-    int DATA_TYPE_TEXT = 1;
+    int DATA_TYPE_FILE = 1;
     int DATA_TYPE_URL = 2;
 
     String FROYO_USERAGENT = "Mozilla/5.0 (Linux; U; "
@@ -84,7 +84,7 @@ public interface HybridView extends PullToRefreshBase.OnRefreshListener {
      * 获取窗口
      * @return 窗口，如果没有窗口绑定则返回null
      */
-    HybridWindow getRDCloudWindow();
+    HybridWindow getHybridWindow();
 
     /**
      * 执行一段js脚本
@@ -115,7 +115,7 @@ public interface HybridView extends PullToRefreshBase.OnRefreshListener {
 
     /**
      * 获取当前名字
-     * @return 当前名字，如果是popover返回pop名字，如果是window返回window名字
+     * @return 当前名字，返回window名字
      */
     String getName();
 

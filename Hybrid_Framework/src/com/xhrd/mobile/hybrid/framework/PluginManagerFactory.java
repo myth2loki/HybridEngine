@@ -1,13 +1,6 @@
 package com.xhrd.mobile.hybrid.framework;
 
-import android.content.Context;
-
-import com.xhrd.mobile.hybrid.engine.EngineEventListener;
 import com.xhrd.mobile.hybrid.util.SystemUtil;
-
-import org.xmlpull.v1.XmlPullParser;
-
-import java.util.LinkedList;
 
 /**
  *

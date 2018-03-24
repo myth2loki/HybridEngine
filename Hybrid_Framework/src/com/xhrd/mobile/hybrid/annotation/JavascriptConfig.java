@@ -12,7 +12,6 @@ import java.lang.annotation.Target;
  * 注解plugin的scope，默认为PluginData.Scope.New
  * <br/>
  * 注解plugin是否为UiView
- * <br/>Created by maxinliang on 15/6/10.
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

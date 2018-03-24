@@ -28,7 +28,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 供内部framework插件使用。
- * Created by wangqianyu on 15/4/13.
  */
 public abstract class PluginBase {
     public static final String EXCEPTION_JSON = "new Error(%s)";
@@ -373,7 +372,7 @@ public abstract class PluginBase {
 
     protected void startActivityForResult(HybridView view, Intent itt, int requestCode) {
         int pathCode = mId;
-        HybridWindow window = view.getRDCloudWindow();
+        HybridWindow window = view.getHybridWindow();
         if (getScope() == PluginData.Scope.App) {
             //全局插件无需走路径选择。
             HybridActivity.getInstance().startActivityForResult(itt, requestCode);
@@ -413,7 +412,7 @@ public abstract class PluginBase {
     protected final void requestPermissions(HybridView view, String[] permissions, int requestCode) {
         mPermRDCloudViewMap.put(requestCode, new WeakReference<HybridView>(view));
         int pathCode = mId;
-        HybridWindow window = view.getRDCloudWindow();
+        HybridWindow window = view.getHybridWindow();
         window.requestPermissions(view, permissions, requestCode, pathCode);
     }
 
@@ -522,4 +521,7 @@ public abstract class PluginBase {
 
     }
 
+    public Object postMessage(String domain, Map<String, Object> params) {
+        return null;
+    }
 }

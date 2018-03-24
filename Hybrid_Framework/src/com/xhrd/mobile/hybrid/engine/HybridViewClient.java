@@ -47,7 +47,7 @@ public class HybridViewClient extends WebViewClient {
         view.post(new Runnable() {
             @Override
             public void run() {
-                HybridWindow window = ((HybridView) view).getRDCloudWindow();
+                HybridWindow window = ((HybridView) view).getHybridWindow();
                 if (window != null) {
                     window.setHttpTitle(view.getTitle());
                 }

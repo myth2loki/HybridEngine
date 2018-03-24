@@ -139,7 +139,7 @@ class HybridOriginalView extends WebView implements HybridView {
                 Uri uri = Uri.parse(url);
                 Intent itt = new Intent(Intent.ACTION_VIEW, uri);
                 getContext().startActivity(itt);
-                getRDCloudWindow().closeWindow(getRDCloudWindow().getName());
+                getHybridWindow().closeWindow(getHybridWindow().getName());
             }
         });
         setVerticalScrollbarOverlay(true);
@@ -277,12 +277,14 @@ class HybridOriginalView extends WebView implements HybridView {
         postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (info.type == HybridOriginalView.DATA_TYPE_ASSET) {
-                    String path = "file:///android_asset/hybrid/app" + File.separator + info.data ;
+                if (info.type == DATA_TYPE_ASSET) {
+                    String path = "file:///android_asset/hybrid/app" + File.separator + info.data;
                     loadUrl(path);
-                } else if (info.type == HybridOriginalView.DATA_TYPE_TEXT) {
-                    loadData(info.data, "text/html; charset=utf-8", null);
-                } else if (info.type == HybridOriginalView.DATA_TYPE_URL) {
+                } else if (info.type == DATA_TYPE_FILE) {
+//                    loadData(info.data, "text/html; charset=utf-8", null);
+                    String path = "file://" + File.separator + info.data;
+                    loadUrl(path);
+                } else if (info.type == DATA_TYPE_URL) {
                     initHttpSettings();
                     loadUrl(info.data);
                 }
@@ -303,7 +305,7 @@ class HybridOriginalView extends WebView implements HybridView {
      * @param plugin
      */
     public void registerPlugin(Object plugin) {
-        if (getRDCloudWindow() == null) {
+        if (getHybridWindow() == null) {
             //已经关闭
             return;
         }
@@ -353,7 +355,7 @@ class HybridOriginalView extends WebView implements HybridView {
         return mWindow.getName();
     }
 
-    public HybridWindow getRDCloudWindow() {
+    public HybridWindow getHybridWindow() {
         return mWindow;
     }
 

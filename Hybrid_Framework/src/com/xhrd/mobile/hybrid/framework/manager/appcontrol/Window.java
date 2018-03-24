@@ -165,7 +165,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
         int y = Integer.parseInt(params[3]);
         int width = Integer.parseInt(params[4]);
         int height = Integer.parseInt(params[5]);
-        rdView.getRDCloudWindow().setWindowFrame(x, y, width, height);
+        rdView.getHybridWindow().setWindowFrame(x, y, width, height);
     }
 
     @JavascriptFunction

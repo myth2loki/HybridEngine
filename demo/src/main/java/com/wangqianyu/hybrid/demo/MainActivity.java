@@ -3,7 +3,6 @@ package com.wangqianyu.hybrid.demo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
+import com.xhrd.mobile.hybrid.engine.HybridView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 Intent itt = new Intent(MainActivity.this, HybridActivity.class);
+                itt.putExtra(HybridActivity.TITLE, "internal_plugin");
+                itt.putExtra(HybridActivity.TYPE, HybridView.DATA_TYPE_ASSET);
+                itt.putExtra(HybridActivity.DATA, "internal_plugin.html");
                 startActivity(itt);
             }
         });

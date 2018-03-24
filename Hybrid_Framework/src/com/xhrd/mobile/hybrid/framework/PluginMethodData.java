@@ -6,9 +6,6 @@ import com.xhrd.mobile.hybrid.engine.HybridResourceManager;
 
 import java.util.Arrays;
 
-/**
- * Created by az on 16/1/4.
- */
 public class PluginMethodData {
 
     private String name;

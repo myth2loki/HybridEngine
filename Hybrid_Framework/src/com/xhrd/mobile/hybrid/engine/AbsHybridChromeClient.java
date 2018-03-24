@@ -26,7 +26,6 @@ import java.util.List;
 
 /**
  * Web Chrome Client管理器。
- * Created by lang on 15/4/18.
  */
 public abstract class AbsHybridChromeClient extends WebChromeClient {
 
@@ -183,7 +182,7 @@ public abstract class AbsHybridChromeClient extends WebChromeClient {
         super.onProgressChanged(view, newProgress);
         if (newProgress >= 100) {
             ((HybridView) view).disableLoadingBar();
-            HybridWindow window = ((HybridView) view).getRDCloudWindow();
+            HybridWindow window = ((HybridView) view).getHybridWindow();
             if (window != null) {
                 window.setHttpProgress(newProgress);
             }
@@ -197,7 +196,7 @@ public abstract class AbsHybridChromeClient extends WebChromeClient {
     @Override
     public void onReceivedTitle(WebView view, String title) {
         super.onReceivedTitle(view, title);
-        HybridWindow window = ((HybridView) view).getRDCloudWindow();
+        HybridWindow window = ((HybridView) view).getHybridWindow();
         if (window != null) {
             window.setHttpTitle(title);
         }

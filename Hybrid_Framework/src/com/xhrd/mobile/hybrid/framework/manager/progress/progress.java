@@ -64,7 +64,7 @@ public class progress extends PluginBase {
         dialog.show();
 
         // 显示的时间（如果time=0,则一直不消失，等待执行hideProgress()方法）
-        rdCloudView.getRDCloudWindow().postDelayed(new Runnable() {
+        rdCloudView.getHybridWindow().postDelayed(new Runnable() {
             @Override
             public void run() {
                 synchronized (dialog) {
