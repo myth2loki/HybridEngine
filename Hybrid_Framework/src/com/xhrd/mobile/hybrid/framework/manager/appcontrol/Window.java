@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.xhrd.mobile.hybrid.annotation.JavascriptConfig;
 import com.xhrd.mobile.hybrid.annotation.JavascriptFunction;
 import com.xhrd.mobile.hybrid.engine.HybridActivity;
 import com.xhrd.mobile.hybrid.engine.IAppCallback;
@@ -28,7 +29,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@JavascriptConfig(domain = "window", scope = PluginData.Scope.App)
 public class Window extends PluginBase implements MyCallInterface, IAppCallback {
 
     private static final String CALLBACK_ON_LOAD = "onLoad";
@@ -43,9 +44,9 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
 
     @Override
     public void addMethodProp(PluginData data) {
-        data.addMethod("openWindow");
+//        data.addMethod("openWindow");
         //data.addMethod("openWindowByComponent");
-        data.addMethod("closeWindow");
+//        data.addMethod("closeWindow");
         data.addMethod("closeSelf");
         data.addMethod("alert");
         data.addMethod("confirm");
@@ -53,7 +54,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
         data.addMethod("evaluateScript");
         data.addMethod("toast");
         data.addMethod("setWindowVisible");
-        data.addMethod("backToWindow");
+//        data.addMethod("backToWindow");
         data.addMethod("lockRotate");
         data.addMethod("setAttr");
         data.addMethod("addHeaderRefreshing");
@@ -107,7 +108,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * @param rdView
      * @param params
      */
-    @JavascriptFunction
+    @JavascriptFunction(name = "openWindow")
     public void openWindow(HybridView rdView, String[] params) {
         HybridWindowInfo ri = new HybridWindowInfo();
         ri.windowName = params[0];
@@ -126,7 +127,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * @param rdView
      * @param params
      */
-    @JavascriptFunction
+    @JavascriptFunction(name = "closeWindow")
     public void closeWindow(HybridView rdView, String[] params) {
         if (params.length > 1) {
             //TODO 动画 {direct:xx, time:300, curve:xx}
@@ -284,7 +285,7 @@ public class Window extends PluginBase implements MyCallInterface, IAppCallback 
      * @param rdView
      * @param params
      */
-    @JavascriptFunction
+    @JavascriptFunction(name = "backToWindow")
     public void backToWindow(HybridView rdView, String[] params) {
         String newWinName = params[0];
         HybridActivity.getInstance().backToWindow(newWinName);

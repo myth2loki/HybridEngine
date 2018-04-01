@@ -92,7 +92,7 @@ public class EventBus extends PluginBase {
         data.addProperty("BATTERY_STATE_TYPE_PLUGGED_WIRELESS", BATTERY_STATE_TYPE_PLUGGED_WIRELESS);
     }
 
-    @JavascriptFunction
+    @JavascriptFunction(name = "addEventListener")
     public void addEventListener(HybridView rdView, String[] params) {
         if (params.length < 2) {
             return;
@@ -126,13 +126,18 @@ public class EventBus extends PluginBase {
         eventInfo.rdCloudView = rdView;
         eventInfo.function = func;
 
-        if(mEventMap.containsKey(action)){
-            mEventMap.get(action).add(eventInfo);
-        } else {
-            List<EventInfo> eventInfos = new ArrayList<EventInfo>();
-            eventInfos.add(eventInfo);
-            mEventMap.put(action, eventInfos);
+        if (!mEventMap.containsKey(action)) {
+            mEventMap.put(action, new ArrayList<EventInfo>());
         }
+        mEventMap.get(action).add(eventInfo);
+
+//        if(mEventMap.containsKey(action)){
+//            mEventMap.get(action).add(eventInfo);
+//        } else {
+//            List<EventInfo> eventInfos = new ArrayList<EventInfo>();
+//            eventInfos.add(eventInfo);
+//            mEventMap.put(action, eventInfos);
+//        }
     }
 
     @Override
@@ -149,7 +154,7 @@ public class EventBus extends PluginBase {
         }
     }
 
-    @JavascriptFunction
+    @JavascriptFunction(name = "removeEventListener")
     public void removeEventListener(HybridView rdView, String[] params) {
         String action = params[0];
         if (mEventMap.containsKey(action)) {
@@ -158,8 +163,7 @@ public class EventBus extends PluginBase {
         }
     }
 
-    String lastState = "11";
-    @JavascriptFunction
+    @JavascriptFunction(name = "sendEvent")
     public void sendEvent(HybridView rdCloudViews, String[] params) {
         String action = params[0];
         String content = params[1];

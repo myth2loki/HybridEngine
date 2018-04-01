@@ -77,6 +77,7 @@ public class HybridEnv {
             if (DEBUG) {
                 Log.d(TAG, "addPlugin: class of plugin is null.");
             }
+            return;
         }
         sPluginManager.addPlugin(clazz);
     }

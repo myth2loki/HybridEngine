@@ -388,40 +388,34 @@ public abstract class PluginManagerBase {
             base.onCreate(view);
             view.registerPlugin(base);
             ret = getJsByPlugin(base);
-        } else {
-            //调用插件方法
+        } else { //调用插件方法
             PluginBase base = null;
-            switch (pluginData.mScope) {
-                case App:
-                    base = mGlobalPluginMap.get(pluginData.mClass);
+            if (pluginData.mScope == PluginData.Scope.New) {
+                base = getViewInjectedJSObj(view).get(id);
+            } else {
+                Map<Class<?>, PluginBase> pluginMap = null;
+                switch (pluginData.mScope) {
+                    case App:
+                        pluginMap = mGlobalPluginMap;
+                        break;
+                    case Window:
+                        pluginMap = getWindowInjectedJSObj(view);
+                        break;
+                }
+                if (pluginMap != null) {
+                    base = pluginMap.get(pluginData.mClass);
                     if (base == null) {
                         base = (PluginBase) pluginData.mConsturctor.newInstance();
                         base.setPluginData(pluginData);
                         base.onCreate(view);
-                        mGlobalPluginMap.put(pluginData.mClass, base);
+                        pluginMap.put(pluginData.mClass, base);
                     }
                     view.registerPlugin(base);
-                    break;
-                case Window:
-                    Map<Class<?>, PluginBase> map = getWindowInjectedJSObj(view);
-                    base = map.get(pluginData.mClass);
-                    if (base == null) {
-                        base = (PluginBase) pluginData.mConsturctor.newInstance();
-                        base.setPluginData(pluginData);
-                        base.onCreate(view);
-                        map.put(pluginData.mClass, base);
-                    }
-                    view.registerPlugin(base);
-                    break;
-                case New:
-                    Map<Integer, PluginBase> map1 = getViewInjectedJSObj(view);
-                    base = map1.get(id);
-                    break;
+                }
             }
             if (base == null) {
                 return null;
             }
-
            ret = invokePluginMethodByName(view, base, pluginData, methodName, params, jsPromptResult);
         }
         return ret;
