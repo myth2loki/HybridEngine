@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent itt = new Intent(MainActivity.this, HybridActivity.class);
                 itt.putExtra(HybridActivity.TITLE, "internal_plugin");
                 itt.putExtra(HybridActivity.TYPE, HybridView.DATA_TYPE_ASSET);
-                itt.putExtra(HybridActivity.DATA, "internal_plugin.html");
+//                itt.putExtra(HybridActivity.DATA, "internal_plugin.html");
+                itt.putExtra(HybridActivity.DATA, "native_textview.html");
                 startActivity(itt);
             }
         });

@@ -163,6 +163,13 @@ public class HybridWindow extends RelativeLayout {
      * @param windowName 窗口名字，如果为空或空值则关闭当前页面， 非空值则关闭window
      */
     public void closeWindow(String windowName) {
+        if (mActivity == null) {
+            ViewGroup parentView = (ViewGroup) getParent();
+            if (parentView != null) {
+                parentView.removeView(this);
+            }
+            return;
+        }
         mActivity.closeWindow(windowName);
     }
 
@@ -171,6 +178,9 @@ public class HybridWindow extends RelativeLayout {
      * 关闭自己
      */
     public void closeSelf() {
+        if (mActivity == null) {
+
+        }
         closeWindow(getName());
     }
 

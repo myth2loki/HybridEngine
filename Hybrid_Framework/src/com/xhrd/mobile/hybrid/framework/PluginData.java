@@ -70,6 +70,8 @@ public class PluginData {
                 try {
                     Object mBase = constructor.newInstance();
                     UIPluginBase base = (UIPluginBase) mBase;
+                    mScope = base.getScope();
+                    mDomain = base.getDefaultDomain();
                     isUiPlugin = base.isUI();
                 } catch (Exception e) {
                     e.printStackTrace();

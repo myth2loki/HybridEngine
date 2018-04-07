@@ -12,8 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 供外部插件使用。
- * Created by wangqianyu on 15/4/13.
+ * 视图插件。
  */
 public abstract class UIPluginBase extends PluginBase {
     private int x, y, w, h;
@@ -164,7 +163,7 @@ public abstract class UIPluginBase extends PluginBase {
      * @return
      */
     public boolean isUI() {
-        return false;
+        return true;
     }
 
     protected void addMethodProp(PluginData data) {
@@ -192,7 +191,7 @@ public abstract class UIPluginBase extends PluginBase {
 
     @Override
     public final PluginData.Scope getScope() {
-        return getPluginData().mScope;
+        return PluginData.Scope.New;
     }
 
     /**

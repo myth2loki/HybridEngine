@@ -20,6 +20,8 @@ public class DemoApplication extends Application {
 
         HybridEnv.addPlugin(ActionSheet.class);
         HybridEnv.addPlugin(Audio.class);
+
+        HybridEnv.addPlugin(NativeTextView.class);
         HybridEnv.init(this);
     }
 }
